@@ -2188,9 +2188,14 @@ PrefabInstance:
       objectReference: {fileID: 498039244}
     - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
         type: 3}
-      propertyPath: playerText
+      propertyPath: countText1
       value: 
       objectReference: {fileID: 1155398842}
+    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
+        type: 3}
+      propertyPath: countText2
+      value: 
+      objectReference: {fileID: 1758269020}
     - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
         type: 3}
       propertyPath: reminderPanel
@@ -2201,20 +2206,5 @@ PrefabInstance:
       propertyPath: remMonsterPic
       value: 
       objectReference: {fileID: 1229496557}
-    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
-        type: 3}
-      propertyPath: countTest
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
-        type: 3}
-      propertyPath: countText1
-      value: 
-      objectReference: {fileID: 1155398842}
-    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
-        type: 3}
-      propertyPath: countText2
-      value: 
-      objectReference: {fileID: 1758269020}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67371818827af3041b20748bd7fdecaa, type: 3}
