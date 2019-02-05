@@ -67,20 +67,20 @@ public class GameController : MonoBehaviour
     public RawImage resMonsterPic;
 
     //Players UI
+    private List<Text> playerCountTexts;
     public GameObject playersPanel;
-    public Text playerText;
+    public Text countText1;
+    public Text countText2;
 
     //Reminder UI
     public GameObject reminderPanel;
     public RawImage remMonsterPic;
 
-    //Player Guesses
-    public CountTest countTest;
-
     //Other
     private bool canSpawn = false;
     private int monsterSum = 0;
     private int currentRound = 1;
+    private GameLogic gameLogic;
 
     private void Start()
     {
@@ -88,10 +88,17 @@ public class GameController : MonoBehaviour
         Monster birdple = new Monster("birdple", "Wild and Fast.", picPurpleBird, purpleBird);
         Monster purble = new Monster("purble", "Careful, they bite!", picPurpleBall, purpleBallx1);
 
-        //make lists
+        //Make Lists
         monsters = new List<GameObject> { purpleBird, purpleBallx1, purpleBallx2, purpleBallx3, roborg };
         spawnPoints = new List<Transform> { spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4 };
         definedMonsters = new List<Monster> { birdple, purble };
+        playerCountTexts = new List<Text> { countText1, countText2 };
+
+        //Find GameLogic for SetView access
+        if (GameObject.Find("GameLogic"))
+        {
+            gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
+        }
 
         SetRound(currentRound); //initialized to 1
     }
@@ -114,6 +121,19 @@ public class GameController : MonoBehaviour
         return spawnPoints[Random.Range(0, spawnPoints.Count)];
     }
 
+    //Get player estimates from each player prefab in the game
+    void GetPlayerEstimates()
+    {
+        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        for (int i = 0; i < players.Count; i++)
+        {
+            Player p = players[i].GetComponent<Player>();
+            playerCountTexts[i].text = p.GetPlayerCount().ToString();
+            p.ResetPlayerCount();
+        }
+
+    }
+
     //Sets up UI for each round (panels, pictures, names, flavortext, etc)
     void SetAllUI(int roundNumber, Monster curMon)
     {
@@ -131,7 +151,6 @@ public class GameController : MonoBehaviour
     void SetRound(int roundNumber)
     {
         monsterSum = 0;
-        countTest.count = 0; //for fake count script
 
         if (roundNumber < 4)
         {
@@ -153,18 +172,18 @@ public class GameController : MonoBehaviour
         roundPanel.SetActive(false);
         startEndText.enabled = true;
         yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
+        if (gameLogic != null) gameLogic.SetView("Ingame");
         startEndText.enabled = false;
         reminderPanel.SetActive(true);
-        countTest.canCount = true; //for fake count script
         canSpawn = true;
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
+        if (gameLogic != null) gameLogic.SetView("Start");
         startEndText.text = "FINISH!";
         startEndText.enabled = true;
         reminderPanel.SetActive(false);
-        countTest.canCount = false; //for fake count script
-        playerText.text = "" + countTest.count;
+        GetPlayerEstimates();
         yield return new WaitForSeconds(2f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
         answerText.text = "THERE WERE...\n";
         playersPanel.SetActive(true);

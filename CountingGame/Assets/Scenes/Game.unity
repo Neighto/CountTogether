@@ -1015,51 +1015,6 @@ Transform:
   m_Father: {fileID: 498039245}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1055882570
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1055882572}
-  - component: {fileID: 1055882571}
-  m_Layer: 0
-  m_Name: CountTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1055882571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055882570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26611308d2da5d241be314059fe30a93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  count: 0
-  canCount: 0
---- !u!4 &1055882572
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055882570}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1155398840
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,7 +1027,7 @@ GameObject:
   - component: {fileID: 1155398843}
   - component: {fileID: 1155398842}
   m_Layer: 5
-  m_Name: playerGuess
+  m_Name: countText1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1883,7 +1838,7 @@ GameObject:
   - component: {fileID: 1758269021}
   - component: {fileID: 1758269020}
   m_Layer: 5
-  m_Name: playerGuess
+  m_Name: countText2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2228,6 +2183,16 @@ PrefabInstance:
       objectReference: {fileID: 1555182668}
     - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
         type: 3}
+      propertyPath: playersPanel
+      value: 
+      objectReference: {fileID: 498039244}
+    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
+        type: 3}
+      propertyPath: playerText
+      value: 
+      objectReference: {fileID: 1155398842}
+    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
+        type: 3}
       propertyPath: reminderPanel
       value: 
       objectReference: {fileID: 214987620}
@@ -2238,24 +2203,18 @@ PrefabInstance:
       objectReference: {fileID: 1229496557}
     - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
         type: 3}
-      propertyPath: roborg
-      value: 
-      objectReference: {fileID: 5493532298611529165, guid: 19c81f3442602ba4e842180d811e6782,
-        type: 3}
-    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
-        type: 3}
-      propertyPath: playersPanel
-      value: 
-      objectReference: {fileID: 498039244}
-    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
-        type: 3}
       propertyPath: countTest
       value: 
-      objectReference: {fileID: 1055882571}
+      objectReference: {fileID: 0}
     - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
         type: 3}
-      propertyPath: playerText
+      propertyPath: countText1
       value: 
       objectReference: {fileID: 1155398842}
+    - target: {fileID: 747670156706111608, guid: 67371818827af3041b20748bd7fdecaa,
+        type: 3}
+      propertyPath: countText2
+      value: 
+      objectReference: {fileID: 1758269020}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67371818827af3041b20748bd7fdecaa, type: 3}

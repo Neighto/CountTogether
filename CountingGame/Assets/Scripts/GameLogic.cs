@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NDream.AirConsole;
 using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
@@ -80,7 +81,7 @@ public class GameLogic : MonoBehaviour
             {
                 Player player = GameObject.Find("" + active_player).GetComponent<Player>();
                 player.AddCount();
-                firstCount.text = "" + player.GetPlayerCount();
+                //firstCount.text = "" + player.GetPlayerCount();
             }
 
             if (action == "prepped")
@@ -165,7 +166,11 @@ public class GameLogic : MonoBehaviour
                 break;
             }
         }
-        if (readyCubesScript.allReady) SetView("Ingame"); //set all ready players in game scene!
+        if (readyCubesScript.allReady)
+        {
+            SetView("Start"); //set all ready players in game scene!
+            SceneManager.LoadScene("Game");
+        }
         else Debug.Log("Not everyone is ready!");
 
     }

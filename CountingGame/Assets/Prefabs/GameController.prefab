@@ -51,6 +51,7 @@ MonoBehaviour:
     type: 3}
   purpleBird: {fileID: 437717784218255909, guid: 9c63f04972eafa74f9f2c5df09e597ca,
     type: 3}
+  roborg: {fileID: 5493532298611529165, guid: 19c81f3442602ba4e842180d811e6782, type: 3}
   picPurpleBall: {fileID: 2800000, guid: 4b68f26b3e039de42a7ba7b72e9c7fb9, type: 3}
   picPurpleBird: {fileID: 2800000, guid: 384f195864083ce40a47c405369854e1, type: 3}
   spawnPoint1: {fileID: 0}
@@ -67,5 +68,8 @@ MonoBehaviour:
   youWereCountingText: {fileID: 0}
   answerText: {fileID: 0}
   resMonsterPic: {fileID: 0}
+  playersPanel: {fileID: 0}
+  countText1: {fileID: 0}
+  countText2: {fileID: 0}
   reminderPanel: {fileID: 0}
   remMonsterPic: {fileID: 0}
