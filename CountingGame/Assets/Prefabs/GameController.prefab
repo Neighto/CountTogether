@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &747670156706111609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 747670156706111615}
+  - component: {fileID: 747670156706111608}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &747670156706111615
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747670156706111609}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &747670156706111608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747670156706111609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2891ebd8c97d4ba48a52d402cfbf9a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  purpleBallx1: {fileID: 8837007232330866882, guid: 1fc8a366ded3fea479d0d54830f17fc2,
+    type: 3}
+  purpleBallx2: {fileID: 1353058038029506987, guid: 537e85b055de18748acf4e04ff919022,
+    type: 3}
+  purpleBallx3: {fileID: 7020358901492262145, guid: 8f2bec2c89df38c46b5a53be1fc9f85e,
+    type: 3}
+  purpleBird: {fileID: 437717784218255909, guid: 9c63f04972eafa74f9f2c5df09e597ca,
+    type: 3}
+  picPurpleBall: {fileID: 2800000, guid: 4b68f26b3e039de42a7ba7b72e9c7fb9, type: 3}
+  picPurpleBird: {fileID: 2800000, guid: 384f195864083ce40a47c405369854e1, type: 3}
+  spawnPoint1: {fileID: 0}
+  spawnPoint2: {fileID: 0}
+  spawnPoint3: {fileID: 0}
+  spawnPoint4: {fileID: 0}
+  roundPanel: {fileID: 0}
+  roundText: {fileID: 0}
+  flavorText: {fileID: 0}
+  rouMonsterPic: {fileID: 0}
+  startEndText: {fileID: 0}
+  resultsPanel: {fileID: 0}
+  roundText2: {fileID: 0}
+  youWereCountingText: {fileID: 0}
+  answerText: {fileID: 0}
+  resMonsterPic: {fileID: 0}
+  reminderPanel: {fileID: 0}
+  remMonsterPic: {fileID: 0}
