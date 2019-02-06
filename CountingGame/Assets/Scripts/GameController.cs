@@ -52,6 +52,9 @@ public class GameController : MonoBehaviour
     private float spawnRateBiased = 1.5f;
     private float nextSpawnBiased = 0.0f;
 
+    //All UI
+    public AnimateUI animateUI;
+
     //Round UI
     public GameObject roundPanel;
     public Text roundText;
@@ -174,7 +177,8 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
         if (gameLogic != null) gameLogic.SetView("Ingame");
         startEndText.enabled = false;
-        reminderPanel.SetActive(true);
+        //reminderPanel.SetActive(true);
+        animateUI.ShiftReminderPanel();
         canSpawn = true;
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
@@ -182,18 +186,21 @@ public class GameController : MonoBehaviour
         if (gameLogic != null) gameLogic.SetView("Start");
         startEndText.text = "FINISH!";
         startEndText.enabled = true;
-        reminderPanel.SetActive(false);
+        //reminderPanel.SetActive(false);
+        animateUI.ShiftReminderPanel();
         GetPlayerEstimates();
         yield return new WaitForSeconds(2f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
         answerText.text = "THERE WERE...\n";
-        playersPanel.SetActive(true);
+        //playersPanel.SetActive(true);
+        animateUI.ShiftPlayersPanel();
         startEndText.enabled = false;
         resultsPanel.SetActive(true);
         yield return new WaitForSeconds(2f); // SHOW MONSTER SUM
         answerText.text = "THERE WERE...\n" + monsterSum;
         yield return new WaitForSeconds(2f); // AWARD POINTS TO PLAYERS
         yield return new WaitForSeconds(1f); // HIDE PLAYER PANEL AND RESULTS PANEL
-        playersPanel.SetActive(false);
+        //playersPanel.SetActive(false);
+        animateUI.ShiftPlayersPanel();
         resultsPanel.SetActive(false);
         yield return new WaitForSeconds(1f); // PREPARE FOR NEW ROUND
         SetRound(++currentRound);
