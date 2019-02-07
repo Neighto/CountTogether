@@ -6,11 +6,11 @@ public class AnimateUI : MonoBehaviour
 {
 
     //UI Elements to Move
-    public RectTransform reminderPanel;
-    private RectTransform reminderPanelInit;
+    public RectTransform reminderPanel; //REMINDER PANEL
+    public RectTransform reminderPanelInit;
     public RectTransform reminderPanelDest;
-    public RectTransform playersPanel;
-    private RectTransform playersPanelInit;
+    public RectTransform playersPanel; //PLAYERS PANEL
+    public RectTransform playersPanelInit;
     public RectTransform playersPanelDest;
 
     //Basic Vars
@@ -20,17 +20,11 @@ public class AnimateUI : MonoBehaviour
     private bool movePlayPanIn = false;
     private bool movePlayPanOut = true;
 
-    private void Start()
-    {
-        reminderPanelInit = reminderPanel;
-        playersPanelInit = playersPanel;
-    }
-
     //SHIFT CALLS (CALL BRINGS IN / CALL BRINGS OUT)
 
     public void ShiftReminderPanel()
     {
-        moveRemPanIn = !movePlayPanIn;
+        moveRemPanIn = !moveRemPanIn;
         moveRemPanOut = !moveRemPanOut;
     }
 

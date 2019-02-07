@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -71,9 +72,11 @@ public class GameController : MonoBehaviour
 
     //Players UI
     private List<Text> playerCountTexts;
+    List<GameObject> players;
     public GameObject playersPanel;
     public Text countText1;
     public Text countText2;
+    public Text playerContextText;
 
     //Reminder UI
     public GameObject reminderPanel;
@@ -127,14 +130,26 @@ public class GameController : MonoBehaviour
     //Get player estimates from each player prefab in the game
     void GetPlayerEstimates()
     {
+        playerContextText.text = "WHAT DID YOU GUESS?";
         List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         for (int i = 0; i < players.Count; i++)
         {
             Player p = players[i].GetComponent<Player>();
             playerCountTexts[i].text = p.GetPlayerCount().ToString();
+            p.score += CalculateScore(p.GetPlayerCount(), monsterSum);
             p.ResetPlayerCount();
         }
+    }
 
+    void GetPlayerScores()
+    {
+        playerContextText.text = "PLAYER SCORES";
+        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        for (int i = 0; i < players.Count; i++)
+        {
+            Player p = players[i].GetComponent<Player>();
+            playerCountTexts[i].text = p.score.ToString();
+        }
     }
 
     //Sets up UI for each round (panels, pictures, names, flavortext, etc)
@@ -163,7 +178,8 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            print("Game Over");
+            if (gameLogic != null) gameLogic.SetView("Menu");
+            SceneManager.LoadScene("Lobby");
         }
     }
 
@@ -177,7 +193,6 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
         if (gameLogic != null) gameLogic.SetView("Ingame");
         startEndText.enabled = false;
-        //reminderPanel.SetActive(true);
         animateUI.ShiftReminderPanel();
         canSpawn = true;
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
@@ -186,20 +201,18 @@ public class GameController : MonoBehaviour
         if (gameLogic != null) gameLogic.SetView("Start");
         startEndText.text = "FINISH!";
         startEndText.enabled = true;
-        //reminderPanel.SetActive(false);
         animateUI.ShiftReminderPanel();
         GetPlayerEstimates();
         yield return new WaitForSeconds(2f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
         answerText.text = "THERE WERE...\n";
-        //playersPanel.SetActive(true);
         animateUI.ShiftPlayersPanel();
         startEndText.enabled = false;
         resultsPanel.SetActive(true);
         yield return new WaitForSeconds(2f); // SHOW MONSTER SUM
         answerText.text = "THERE WERE...\n" + monsterSum;
         yield return new WaitForSeconds(2f); // AWARD POINTS TO PLAYERS
+        GetPlayerScores();
         yield return new WaitForSeconds(1f); // HIDE PLAYER PANEL AND RESULTS PANEL
-        //playersPanel.SetActive(false);
         animateUI.ShiftPlayersPanel();
         resultsPanel.SetActive(false);
         yield return new WaitForSeconds(1f); // PREPARE FOR NEW ROUND
@@ -231,7 +244,21 @@ public class GameController : MonoBehaviour
                 Destroy(biasedMon, 15f);
             }
         }
+    }
 
+    //Score algorithm, called per player
+    int CalculateScore(int estimate, int actual)
+    {
+        //Rounds build in points
+        //Max is 150pts / 1: 10 / 2: 20 / 3: 30 / 4: 40 / 5: 50 For Correct
+        int points = 0;
+        if (currentRound == 1) points = 10;
+        else if (currentRound == 2) points = 20;
+        else if (currentRound == 3) points = 30;
+        else if (currentRound == 4) points = 40;
+        else if (currentRound == 5) points = 50;
 
+        //Off-estimate algorithm: max((actual-|actual-estimate|^2), 0)
+        return (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(actual - estimate), 2));
     }
 }

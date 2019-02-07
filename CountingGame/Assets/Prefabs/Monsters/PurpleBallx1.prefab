@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8837007232330866885}
   - component: {fileID: 6640804862060952842}
+  - component: {fileID: 4301961088919032082}
   m_Layer: 0
   m_Name: PurpleBallx1
   m_TagString: purble
@@ -125,6 +126,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3.5
   quantity: 1
+--- !u!65 &4301961088919032082
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8837007232330866882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0417244, y: 0.98666, z: 1}
+  m_Center: {x: -0.11401403, y: -0.006669998, z: 0}
 --- !u!1001 &8837007231745058924
 PrefabInstance:
   m_ObjectHideFlags: 0

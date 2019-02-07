@@ -89,6 +89,8 @@ GameObject:
   m_Component:
   - component: {fileID: 437717784218255910}
   - component: {fileID: 8142786020013854692}
+  - component: {fileID: 7264223163146749588}
+  - component: {fileID: 6592872484137746095}
   m_Layer: 0
   m_Name: Birdple
   m_TagString: birdple
@@ -125,6 +127,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   quantity: 1
+--- !u!65 &7264223163146749588
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437717784218255909}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.3477325, y: 0.98666, z: 1}
+  m_Center: {x: 0.022334099, y: -0.006669998, z: 0}
+--- !u!54 &6592872484137746095
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437717784218255909}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &437717783423020472
 PrefabInstance:
   m_ObjectHideFlags: 0

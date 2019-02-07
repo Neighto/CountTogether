@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public bool isReady = false;
+    public int score;
     private int playerCount = 0;
 
     private void Awake()
