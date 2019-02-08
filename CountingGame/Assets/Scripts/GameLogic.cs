@@ -8,11 +8,9 @@ using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
-    public Renderer cubeOne;
-    public Renderer cubeTwo;
-    public Renderer cubeThree;
-    public Renderer cubeFour;
-    public ReadyCubes readyCubesScript;
+
+    public GameObject readyCubesObj;
+    private ReadyCubes readyCubesScript;
     private Renderer[] readyCubes;
 
     private string[] colorNames = new string[] { "red", "blue", "green", "yellow", "orange", "purple", "pink" };
@@ -20,7 +18,6 @@ public class GameLogic : MonoBehaviour
     private bool allTrue = false;
 
     public GameObject player;
-    public Text firstCount;
     public Text uiText;
 #if !DISABLE_AIRCONSOLE
 
@@ -29,7 +26,8 @@ public class GameLogic : MonoBehaviour
         AirConsole.instance.onMessage += OnMessage;
         AirConsole.instance.onConnect += OnConnect;
         AirConsole.instance.onDisconnect += OnDisconnect;
-        readyCubes = new Renderer[] { cubeOne, cubeTwo, cubeThree, cubeFour };
+        readyCubes = readyCubesObj.GetComponentsInChildren<Renderer>();
+        readyCubesScript = readyCubesObj.GetComponent<ReadyCubes>();
     }
 
     void OnConnect(int device_id)
@@ -41,11 +39,14 @@ public class GameLogic : MonoBehaviour
         AirConsole.instance.SetCustomDeviceState(newGameState);
 
         //UI
-        StartGame(); //this will be called by every player each time (bad practice)
-        if (AirConsole.instance.GetActivePlayerDeviceIds.Count > 4) //Somehow prevent players from joining
+        if (AirConsole.instance.GetActivePlayerDeviceIds.Count > 2)
         {
-            //if (AirConsole.instance.GetControllerDeviceIds().Count >= 2) uiText.text = "GOOD TO GO";
-            //else uiText.text = "PLEASE CONNECT 2-4 PLAYERS";
+            //Do not make Player for them
+
+        }
+        else
+        {
+            StartGame(); //this will be called by every player each time (bad practice)
         }
 
     }
@@ -66,7 +67,7 @@ public class GameLogic : MonoBehaviour
             else
             {
                 AirConsole.instance.SetActivePlayers(0);
-                uiText.text = "PLEASE CONNECT 2-4 PLAYERS";
+                //uiText.text = "PLEASE CONNECT 2-4 PLAYERS";
             }
         }
     }
@@ -81,7 +82,6 @@ public class GameLogic : MonoBehaviour
             {
                 Player player = GameObject.Find("" + active_player).GetComponent<Player>();
                 player.AddCount();
-                //firstCount.text = "" + player.GetPlayerCount();
             }
 
             if (action == "prepped")
@@ -158,17 +158,19 @@ public class GameLogic : MonoBehaviour
     IEnumerator AllReadyDelay()
     {
         readyCubesScript.allReady = true; //gobal variable, will be set false if any disconnect or player presses ready again
-        for (int i = 0; i < 8; i++) //while everybody is ready OR timer ends
+        for (int i = 8; i > 0; i--) //while everybody is ready OR timer ends
         {
+            uiText.text = "START IN " + i;
             yield return new WaitForSeconds(0.5f);
             if (readyCubesScript.allReady == false)
             {
+                uiText.text = "PLAYERS";
                 break;
             }
         }
         if (readyCubesScript.allReady)
         {
-            SetView("Start"); //set all ready players in game scene!
+            SetView("Wait"); //set all ready players in game scene!
             SceneManager.LoadScene("Game");
         }
         else Debug.Log("Not everyone is ready!");

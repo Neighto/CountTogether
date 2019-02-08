@@ -178,16 +178,20 @@
 
 
 <body onload="App()">
-    <div class="view" id="Start">
-        <div style="color:white;">You're in! Wait for Instructions.</div>
-    </div>
-    <div class="view" id="Ingame">
+
+    <div class="view" id="Count">
         <div class="button" id="ingame-button" ontouchstart="count(1)"></div>
         <div class="button-text">COUNT</div>
+    </div>
+    <div class="view" id="Full">
+        <div class="button-text">The game is full!</div>
     </div>
     <div class="view" id="Menu">
         <div class="button" id="menu-button" ontouchstart="prepped()"></div>
         <div class="button-text">READY TO START</div>
+    </div>
+    <div class="view" id="Wait">
+        <div style="color:white;">You're in! Wait for Instructions.</div>
     </div>
     <div id="player_id"></div>
 </body>

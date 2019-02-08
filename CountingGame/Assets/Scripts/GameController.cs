@@ -191,14 +191,14 @@ public class GameController : MonoBehaviour
         roundPanel.SetActive(false);
         startEndText.enabled = true;
         yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
-        if (gameLogic != null) gameLogic.SetView("Ingame");
+        if (gameLogic != null) gameLogic.SetView("Count");
         startEndText.enabled = false;
         animateUI.ShiftReminderPanel();
         canSpawn = true;
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
-        if (gameLogic != null) gameLogic.SetView("Start");
+        if (gameLogic != null) gameLogic.SetView("Wait");
         startEndText.text = "FINISH!";
         startEndText.enabled = true;
         animateUI.ShiftReminderPanel();
