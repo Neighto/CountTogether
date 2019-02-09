@@ -7,28 +7,25 @@ public class MonsterStats : MonoBehaviour
     //Adjustable variables
     public float speed;
     public int quantity;
-
+    private bool goingRight = false;
     private Transform xform;
-    private bool changeLane = false;
 
     void Start()
     {
         xform = this.GetComponent<Transform>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void ChangeDirection()
     {
-        if (other.gameObject.transform.position.x < this.gameObject.transform.position.x && !changeLane)
-        {
-            changeLane = true;
-        }
+        transform.RotateAround(transform.position, transform.up, 180f);
+        goingRight = !goingRight;
     }
 
     void Update()
     {
-        if (changeLane)
+        if (goingRight)
         {
-            xform.position = new Vector3(xform.position.x, xform.position.y, xform.position.z - (speed * Time.deltaTime));
+            xform.position = new Vector3(xform.position.x + (speed * Time.deltaTime), xform.position.y, xform.position.z);
         }
         else
         {

@@ -39,14 +39,9 @@ public class GameLogic : MonoBehaviour
         AirConsole.instance.SetCustomDeviceState(newGameState);
 
         //UI
-        if (AirConsole.instance.GetActivePlayerDeviceIds.Count > 2)
+        if (AirConsole.instance.GetControllerDeviceIds().Count < 5)
         {
-            //Do not make Player for them
-
-        }
-        else
-        {
-            StartGame(); //this will be called by every player each time (bad practice)
+            StartGame(); //this will be called by every player each time
         }
 
     }
@@ -57,19 +52,9 @@ public class GameLogic : MonoBehaviour
 
         readyCubes[active_player].material.color = Color.white;
         readyCubesScript.allReady = false;
-        Destroy(GameObject.Find("" + active_player));
+        //readyCubes[active_player].GetComponent<Player>().isReady = false;
+        Destroy(GameObject.Find(active_player.ToString())); //maybe rem
 
-        if (active_player != -1)
-        {
-            if (AirConsole.instance.GetControllerDeviceIds().Count >= 2 && AirConsole.instance.GetControllerDeviceIds().Count <= 4)
-            {
-            }
-            else
-            {
-                AirConsole.instance.SetActivePlayers(0);
-                //uiText.text = "PLEASE CONNECT 2-4 PLAYERS";
-            }
-        }
     }
 
     void OnMessage(int device_id, JToken data)
@@ -106,17 +91,17 @@ public class GameLogic : MonoBehaviour
 
     }
 
-    void StartGame() //if you enter as player 3, never stop being player 3, a NEW player will take the place of disconnected
+    void StartGame() 
     {
         int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
         AirConsole.instance.SetActivePlayers(numberOfPlayers);
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            if (GameObject.Find("" + i) == null)
+            if (GameObject.Find(i.ToString()) == null)
             {
                 GameObject newPlayer = Instantiate(player, transform.position, transform.rotation);
-                newPlayer.name = "" + i;
+                newPlayer.name = i.ToString();
             }
         }
     }
@@ -139,10 +124,10 @@ public class GameLogic : MonoBehaviour
 
     void AllPlayersReady(int numberOfPlayers)
     {
-        allTrue = true;
+        allTrue = true;/*
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            if (GameObject.Find("" + i) != null)
+            if (GameObject.Find(i.ToString()) != null)
             {
                 if (GameObject.Find("" + i).GetComponent<Player>().isReady == false)
                 {
@@ -151,7 +136,17 @@ public class GameLogic : MonoBehaviour
                     break;
                 }
             }
+        }*/
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            if (p.GetComponent<Player>().isReady == false)
+            {
+                allTrue = false;
+                readyCubesScript.allReady = false;
+                break;
+            }
         }
+
         if (allTrue) StartCoroutine(AllReadyDelay()); //AND STOP LETTING PEOPLE IN??
     }
 

@@ -19,7 +19,7 @@
       show: function(id) {
         var view = this.views[id];
         if (view) {
-          this.current_view_id = id;
+            this.current_view_id = id;
           this.hideAll();
           view.style.display = "block";
         } else {
@@ -45,7 +45,7 @@
         me.airconsole = new AirConsole({ "orientation": "portrait" });
 
         me.airconsole.onActivePlayersChange = function(player_number) {
-            updateText(player_number);
+            updateText(player_number); //PROBLEM: THIS DOES NOT SEEM TO BE CALLED IF ENTERING PLAYER DOES NOT CALL START GAME??
         }
         me.airconsole.onReady = function() {
             updateText();
@@ -96,7 +96,8 @@
 
 	function updateText(player_number) {
 	  var div = document.getElementById("player_id");
-      if (player_number >= 4) {
+	  if (player_number >= 4) {
+	    ViewManager.show("Full");
         div.innerHTML = "Too many players!";
       } else {
         div.innerHTML = "YOU ARE PLAYER " + (player_number + 1);
@@ -184,7 +185,7 @@
         <div class="button-text">COUNT</div>
     </div>
     <div class="view" id="Full">
-        <div class="button-text">The game is full!</div>
+        <div class="button-text">The game is full! If space frees up, try reconnecting.</div>
     </div>
     <div class="view" id="Menu">
         <div class="button" id="menu-button" ontouchstart="prepped()"></div>

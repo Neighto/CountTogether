@@ -31,6 +31,10 @@ public class GameController : MonoBehaviour
     public GameObject purpleBallx3;
     public GameObject purpleBird;
     public GameObject roborg;
+    public GameObject ghost;
+    public GameObject fakeGreengo;
+    public GameObject greengox2;
+    public GameObject greengox3;
 
     //Defined Monsters
     private List<Monster> definedMonsters;
@@ -41,11 +45,10 @@ public class GameController : MonoBehaviour
     public Texture picPurpleBird;
 
     //Spawn Points
-    private List<Transform> spawnPoints;
-    public Transform spawnPoint1;
-    public Transform spawnPoint2;
-    public Transform spawnPoint3;
-    public Transform spawnPoint4;
+    private List<Transform> spawnPoints = new List<Transform>();
+    private List<Transform> revSpawnPoints = new List<Transform>();
+    public GameObject spawnPointsObj;
+    public GameObject revSpawnPointObj;
 
     //Timers
     private float spawnRateRandom = 2.0f;
@@ -84,9 +87,12 @@ public class GameController : MonoBehaviour
 
     //Other
     private bool canSpawn = false;
+    private bool reverseMonsters = false;
     private int monsterSum = 0;
     private int currentRound = 1;
     private GameLogic gameLogic;
+    private Transform ranTran;
+    private Transform revRanTran;
 
     private void Start()
     {
@@ -95,10 +101,14 @@ public class GameController : MonoBehaviour
         Monster purble = new Monster("purble", "Careful, they bite!", picPurpleBall, purpleBallx1);
 
         //Make Lists
-        monsters = new List<GameObject> { purpleBird, purpleBallx1, purpleBallx2, purpleBallx3, roborg };
-        spawnPoints = new List<Transform> { spawnPoint1, spawnPoint2, spawnPoint3, spawnPoint4 };
+        monsters = new List<GameObject>
+        { purpleBird, purpleBallx1, purpleBallx2, purpleBallx3, roborg, ghost, fakeGreengo, greengox2, greengox3 };
         definedMonsters = new List<Monster> { birdple, purble };
         playerCountTexts = new List<Text> { countText1, countText2 };
+        foreach (Transform t in spawnPointsObj.transform)
+            spawnPoints.Add(t);
+        foreach (Transform t in revSpawnPointObj.transform)
+            revSpawnPoints.Add(t);
 
         //Find GameLogic for SetView access
         if (GameObject.Find("GameLogic"))
@@ -125,6 +135,11 @@ public class GameController : MonoBehaviour
     Transform GetRandomSpawn()
     {
         return spawnPoints[Random.Range(0, spawnPoints.Count)];
+    }
+
+    Transform GetReverseRandomSpawn()
+    {
+        return revSpawnPoints[Random.Range(0, revSpawnPoints.Count)];
     }
 
     //Get player estimates from each player prefab in the game
@@ -170,13 +185,33 @@ public class GameController : MonoBehaviour
     {
         monsterSum = 0;
 
-        if (roundNumber < 4)
+        if (roundNumber < 6) //number of rounds
         {
+            if (roundNumber == 1)
+            {
+
+            }
+            else if (roundNumber == 2)
+            {
+                spawnRateRandom = 0.6f * spawnRateRandom; //increase randoms spawn rate
+            }
+            else if (roundNumber == 3)
+            {
+                reverseMonsters = true;
+            }
+            else if (roundNumber == 4)
+            {
+
+            }
+            else if (roundNumber == 5)
+            {
+
+            }
             curMon = GetDefinedMonster();
             SetAllUI(roundNumber, curMon);
             StartCoroutine(StartRound());
         }
-        else
+        else //when all rounds are over:
         {
             if (gameLogic != null) gameLogic.SetView("Menu");
             SceneManager.LoadScene("Lobby");
@@ -208,14 +243,14 @@ public class GameController : MonoBehaviour
         animateUI.ShiftPlayersPanel();
         startEndText.enabled = false;
         resultsPanel.SetActive(true);
-        yield return new WaitForSeconds(2f); // SHOW MONSTER SUM
+        yield return new WaitForSeconds(2.4f); // SHOW MONSTER SUM
         answerText.text = "THERE WERE...\n" + monsterSum;
         yield return new WaitForSeconds(2f); // AWARD POINTS TO PLAYERS
         GetPlayerScores();
         yield return new WaitForSeconds(1f); // HIDE PLAYER PANEL AND RESULTS PANEL
         animateUI.ShiftPlayersPanel();
         resultsPanel.SetActive(false);
-        yield return new WaitForSeconds(1f); // PREPARE FOR NEW ROUND
+        yield return new WaitForSeconds(1.5f); // PREPARE FOR NEW ROUND
         SetRound(++currentRound);
     }
 
@@ -224,18 +259,30 @@ public class GameController : MonoBehaviour
     {
         if (canSpawn)
         {
-            if (Time.time > nextSpawnRandom)
+            if (Time.time > nextSpawnRandom) //SPAWN RANDOM CREATURES
             {
                 nextSpawnRandom = Time.time + spawnRateRandom;
-                Transform ranTran = GetRandomSpawn();
+                ranTran = GetRandomSpawn();
                 GameObject mon = Instantiate(GetRandomMonster(), ranTran.position, ranTran.rotation);
                 if (mon.tag.Equals(curMon.name))
                 {
                     monsterSum += mon.GetComponent<MonsterStats>().quantity;
                 }
                 Destroy(mon, 15f);
+                if (reverseMonsters)
+                {
+                    revRanTran = GetReverseRandomSpawn();
+                    GameObject revMon = Instantiate(GetRandomMonster(), revRanTran.position, revRanTran.rotation);
+                    revMon.GetComponent<MonsterStats>().ChangeDirection();
+                    if (revMon.tag.Equals(curMon.name))
+                    {
+                        monsterSum += revMon.GetComponent<MonsterStats>().quantity;
+                    }
+                    Destroy(revMon, 15f);
+                }
+
             }
-            else if (Time.time > nextSpawnBiased)
+            else if (Time.time > nextSpawnBiased) //SPAWN BIASED CREATURES FOR PROMPT
             {
                 nextSpawnBiased = Time.time + spawnRateBiased;
                 Transform ranTran2 = GetRandomSpawn();
