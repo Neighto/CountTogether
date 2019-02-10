@@ -51,6 +51,13 @@
             updateText();
         }
 
+        me.airconsole.onMessage(device_id, data) = function () {
+            if (data.view) {
+                showView(data.view);
+            }
+        }
+
+
         //initialize the view manager and set the first view
         ViewManager.init();
         ViewManager.show("Menu");
@@ -96,11 +103,11 @@
 
 	function updateText(player_number) {
 	  var div = document.getElementById("player_id");
-	  if (player_number >= 4) {
-	    ViewManager.show("Full");
-        div.innerHTML = "Too many players!";
+	  if (player_number >= 0 && player_number <= 2) {
+	      div.innerHTML = "YOU ARE PLAYER " + (player_number + 1);
       } else {
-        div.innerHTML = "YOU ARE PLAYER " + (player_number + 1);
+	      //ViewManager.show("Full");
+	      div.innerHTML = "Too many players!";
       };
 	}
 
@@ -185,7 +192,7 @@
         <div class="button-text">COUNT</div>
     </div>
     <div class="view" id="Full">
-        <div class="button-text">The game is full! If space frees up, try reconnecting.</div>
+        <div class="button-text">You cannot join right now!</div>
     </div>
     <div class="view" id="Menu">
         <div class="button" id="menu-button" ontouchstart="prepped()"></div>

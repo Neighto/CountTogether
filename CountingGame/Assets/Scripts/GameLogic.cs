@@ -39,10 +39,14 @@ public class GameLogic : MonoBehaviour
         AirConsole.instance.SetCustomDeviceState(newGameState);
 
         //UI
-        if (AirConsole.instance.GetControllerDeviceIds().Count < 5)
+        List<int> ids = AirConsole.instance.GetControllerDeviceIds();
+        if (ids.Count >= 3)
         {
-            StartGame(); //this will be called by every player each time
+            AirConsole.instance.Message(ids[ids.Count], "Full");
         }
+
+
+        StartGame(); //this will be called by every player each time
 
     }
 
