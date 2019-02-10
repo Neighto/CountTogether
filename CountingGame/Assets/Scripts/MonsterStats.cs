@@ -7,12 +7,14 @@ public class MonsterStats : MonoBehaviour
     //Adjustable variables
     public float speed;
     public int quantity;
+    public int deathTime;
     private bool goingRight = false;
     private Transform xform;
 
     void Start()
     {
         xform = this.GetComponent<Transform>();
+        Destroy(this.gameObject, deathTime);
     }
 
     public void ChangeDirection()

@@ -95,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   quantity: 1
+  deathTime: 20
 --- !u!114 &1253205411
 MonoBehaviour:
   m_ObjectHideFlags: 0

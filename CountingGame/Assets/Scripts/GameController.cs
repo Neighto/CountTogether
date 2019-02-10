@@ -65,6 +65,7 @@ public class GameController : MonoBehaviour
     public Text flavorText;
     public RawImage rouMonsterPic;
     public Text startEndText;
+    public Text stakesText;
 
     //Results UI
     public GameObject resultsPanel;
@@ -79,7 +80,17 @@ public class GameController : MonoBehaviour
     public GameObject playersPanel;
     public Text countText1;
     public Text countText2;
+    public Text countText3;
+    public Text countText4;
+    public Text countText5;
+    public Text countText6;
+    public Text countText7;
+    public Text countText8;
     public Text playerContextText;
+
+    //Winner UI
+    public GameObject winnerPanel;
+    public Text winnerName;
 
     //Reminder UI
     public GameObject reminderPanel;
@@ -88,11 +99,14 @@ public class GameController : MonoBehaviour
     //Other
     private bool canSpawn = false;
     private bool reverseMonsters = false;
+    private bool gameTied = false;
     private int monsterSum = 0;
     private int currentRound = 1;
+    private int points = 10;
     private GameLogic gameLogic;
     private Transform ranTran;
     private Transform revRanTran;
+    Player winner;
 
     private void Start()
     {
@@ -104,7 +118,7 @@ public class GameController : MonoBehaviour
         monsters = new List<GameObject>
         { purpleBird, purpleBallx1, purpleBallx2, purpleBallx3, roborg, ghost, fakeGreengo, greengox2, greengox3 };
         definedMonsters = new List<Monster> { birdple, purble };
-        playerCountTexts = new List<Text> { countText1, countText2 };
+        playerCountTexts = new List<Text> { countText1, countText2, countText3, countText4, countText5, countText6, countText7, countText8 };
         foreach (Transform t in spawnPointsObj.transform)
             spawnPoints.Add(t);
         foreach (Transform t in revSpawnPointObj.transform)
@@ -151,7 +165,7 @@ public class GameController : MonoBehaviour
         {
             Player p = players[i].GetComponent<Player>();
             playerCountTexts[i].text = p.GetPlayerCount().ToString();
-            p.score += CalculateScore(p.GetPlayerCount(), monsterSum);
+            p.score += (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(p.GetPlayerCount() - monsterSum), 2));
             p.ResetPlayerCount();
         }
     }
@@ -167,6 +181,27 @@ public class GameController : MonoBehaviour
         }
     }
 
+    //Compare everybody's scores
+    void WhoWon()
+    {
+        int best = -1;
+        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        for (int i = 0; i < players.Count; i++)
+        {
+            Player p = players[i].GetComponent<Player>();
+            if (p.score > best)
+            {
+                best = p.score;
+                winner = p;
+            }
+            else if (p.score == best)
+            {
+                gameTied = true;
+                break;
+            }
+        }
+    }
+
     //Sets up UI for each round (panels, pictures, names, flavortext, etc)
     void SetAllUI(int roundNumber, Monster curMon)
     {
@@ -178,6 +213,17 @@ public class GameController : MonoBehaviour
         rouMonsterPic.texture = curMon.monsterPic;
         resMonsterPic.texture = curMon.monsterPic;
         remMonsterPic.texture = curMon.monsterPic;
+        stakesText.text = "PLAYING FOR: " + points + " POINTS";
+
+
+        if (roundNumber == 5)
+        {
+            //rouMonsterPic.texture = curMon.monsterPic; //Picture of all!
+            //resMonsterPic.texture = curMon.monsterPic;
+            //remMonsterPic.texture = curMon.monsterPic;
+            flavorText.text = "The ultimate test!";
+        }
+
     }
 
     //Handles start of each round (function calls and difficulty)
@@ -187,25 +233,23 @@ public class GameController : MonoBehaviour
 
         if (roundNumber < 6) //number of rounds
         {
-            if (roundNumber == 1)
-            {
-
-            }
-            else if (roundNumber == 2)
+            if (roundNumber == 2)
             {
                 spawnRateRandom = 0.6f * spawnRateRandom; //increase randoms spawn rate
+                points = 20;
             }
             else if (roundNumber == 3)
             {
                 reverseMonsters = true;
+                points = 30;
             }
             else if (roundNumber == 4)
             {
-
+                points = 40;
             }
-            else if (roundNumber == 5)
+            else if (roundNumber == 5) //Count everything
             {
-
+                points = 50;
             }
             curMon = GetDefinedMonster();
             SetAllUI(roundNumber, curMon);
@@ -213,8 +257,7 @@ public class GameController : MonoBehaviour
         }
         else //when all rounds are over:
         {
-            if (gameLogic != null) gameLogic.SetView("Menu");
-            SceneManager.LoadScene("Lobby");
+            StartCoroutine(EndGame());
         }
     }
 
@@ -254,6 +297,26 @@ public class GameController : MonoBehaviour
         SetRound(++currentRound);
     }
 
+    //Show the winner and exit scene (does not account for ties!)
+    IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(1f);
+        winnerPanel.SetActive(true);
+        WhoWon();
+        yield return new WaitForSeconds(2f);
+        if (gameTied)
+        {
+            winnerName.text = "NOBODY! A TIE GAME";
+        }
+        else
+        {
+            winnerName.text = "PLAYER " + (winner.name + 1);
+        }
+        yield return new WaitForSeconds(3f);
+        if (gameLogic != null) gameLogic.SetView("Menu");
+        SceneManager.LoadScene("Lobby");
+    }
+
     //Update for instantiating monsters in a timely fashion
     void Update()
     {
@@ -268,7 +331,6 @@ public class GameController : MonoBehaviour
                 {
                     monsterSum += mon.GetComponent<MonsterStats>().quantity;
                 }
-                Destroy(mon, 15f);
                 if (reverseMonsters)
                 {
                     revRanTran = GetReverseRandomSpawn();
@@ -278,7 +340,6 @@ public class GameController : MonoBehaviour
                     {
                         monsterSum += revMon.GetComponent<MonsterStats>().quantity;
                     }
-                    Destroy(revMon, 15f);
                 }
 
             }
@@ -293,19 +354,4 @@ public class GameController : MonoBehaviour
         }
     }
 
-    //Score algorithm, called per player
-    int CalculateScore(int estimate, int actual)
-    {
-        //Rounds build in points
-        //Max is 150pts / 1: 10 / 2: 20 / 3: 30 / 4: 40 / 5: 50 For Correct
-        int points = 0;
-        if (currentRound == 1) points = 10;
-        else if (currentRound == 2) points = 20;
-        else if (currentRound == 3) points = 30;
-        else if (currentRound == 4) points = 40;
-        else if (currentRound == 5) points = 50;
-
-        //Off-estimate algorithm: max((actual-|actual-estimate|^2), 0)
-        return (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(actual - estimate), 2));
-    }
 }

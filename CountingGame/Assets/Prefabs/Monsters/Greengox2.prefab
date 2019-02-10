@@ -125,6 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   quantity: 2
+  deathTime: 20
 --- !u!1001 &5887904123762701345
 PrefabInstance:
   m_ObjectHideFlags: 0

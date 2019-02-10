@@ -159,7 +159,7 @@ public class GameLogic : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             if (readyCubesScript.allReady == false)
             {
-                uiText.text = "PLAYERS";
+                uiText.text = "COUNT TOGETHER";
                 break;
             }
         }

@@ -95,6 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   quantity: 3
+  deathTime: 20
 --- !u!65 &893299736014854287
 BoxCollider:
   m_ObjectHideFlags: 0

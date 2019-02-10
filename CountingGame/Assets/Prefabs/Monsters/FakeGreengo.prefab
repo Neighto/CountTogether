@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   quantity: 1
+  deathTime: 22
 --- !u!1 &7577732907711828211
 GameObject:
   m_ObjectHideFlags: 0

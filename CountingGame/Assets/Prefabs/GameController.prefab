@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2891ebd8c97d4ba48a52d402cfbf9a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purpleBallx1: {fileID: 8837007232330866882, guid: 1fc8a366ded3fea479d0d54830f17fc2,
+  purpleBallx1: {fileID: 978700640439219459, guid: b074b67278c10de478dc43ec56485e84,
     type: 3}
   purpleBallx2: {fileID: 1353058038029506987, guid: 537e85b055de18748acf4e04ff919022,
     type: 3}
@@ -52,17 +52,24 @@ MonoBehaviour:
   purpleBird: {fileID: 437717784218255909, guid: 9c63f04972eafa74f9f2c5df09e597ca,
     type: 3}
   roborg: {fileID: 5493532298611529165, guid: 19c81f3442602ba4e842180d811e6782, type: 3}
+  ghost: {fileID: 5387218323395902951, guid: 98949219d3241b849ba52091359711c4, type: 3}
+  fakeGreengo: {fileID: 7577732907118618952, guid: 640d0421ecc78f645b4836d968bf72f6,
+    type: 3}
+  greengox2: {fileID: 5887904123655874979, guid: 3776b77fbfc710b4cbaacbf0c07ba037,
+    type: 3}
+  greengox3: {fileID: 8303753656490230682, guid: daad193aeab6cf548ac3a2487d1a49ed,
+    type: 3}
   picPurpleBall: {fileID: 2800000, guid: 4b68f26b3e039de42a7ba7b72e9c7fb9, type: 3}
   picPurpleBird: {fileID: 2800000, guid: 384f195864083ce40a47c405369854e1, type: 3}
-  spawnPoint1: {fileID: 0}
-  spawnPoint2: {fileID: 0}
-  spawnPoint3: {fileID: 0}
-  spawnPoint4: {fileID: 0}
+  spawnPointsObj: {fileID: 0}
+  revSpawnPointObj: {fileID: 0}
+  animateUI: {fileID: 0}
   roundPanel: {fileID: 0}
   roundText: {fileID: 0}
   flavorText: {fileID: 0}
   rouMonsterPic: {fileID: 0}
   startEndText: {fileID: 0}
+  stakesText: {fileID: 0}
   resultsPanel: {fileID: 0}
   roundText2: {fileID: 0}
   youWereCountingText: {fileID: 0}
@@ -71,5 +78,14 @@ MonoBehaviour:
   playersPanel: {fileID: 0}
   countText1: {fileID: 0}
   countText2: {fileID: 0}
+  countText3: {fileID: 0}
+  countText4: {fileID: 0}
+  countText5: {fileID: 0}
+  countText6: {fileID: 0}
+  countText7: {fileID: 0}
+  countText8: {fileID: 0}
+  playerContextText: {fileID: 0}
+  winnerPanel: {fileID: 0}
+  winnerName: {fileID: 0}
   reminderPanel: {fileID: 0}
   remMonsterPic: {fileID: 0}
