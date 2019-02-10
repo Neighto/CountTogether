@@ -42,7 +42,6 @@ public class GameLogic : MonoBehaviour
         List<int> ids = AirConsole.instance.GetControllerDeviceIds();
         if (ids.Count >= 3)
         {
-            AirConsole.instance.Message(ids[ids.Count], "Full");
         }
 
 
