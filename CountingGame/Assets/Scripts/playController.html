@@ -41,17 +41,6 @@
     <style type=text/css>
         /* the style sheet dictates what our elements (buttons, backgrounds etc.) will look like. */
 
-        menu-button {
-            background-image: url(player1_bg.png);
-            position: absolute;
-            top: 20%;
-            left: 10%;
-            width: 80%;
-            height: 60%;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
         #background {
            /* background: url(player1_bg.png);
             width: auto;
@@ -59,41 +48,26 @@
             height: auto;*/
         }
 
-        .button {
-            background: #3B3B3B;
-            font-size: 14px;
-            padding: 5px 10px 5px 10px;
-            border: solid #1f1f1f 2px;
-            width: 100%;
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            left: 25%;
-            top: 25%;
+        #menu-button {
+            background-image: url("player1_bg.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+        }
+
+        #ingame-button {
+            background-image: url("button.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
         }
 
         .button-active {
             border: solid #727272 2px;
         }
 
-        .button-text {
-            position: absolute;
-            color: white;
-            font-family: sans-serif;
-            text-align: center;
-            pointer-events: none;
-            width: 50%;
-            height: 20%;
-            left: 25%;
-            top: 40%;
-        }
-
-        #content {
-            position: absolute;
-            font-family: Arial;
-            color: white;
-            bottom: 5%;
-        }
     </style>
 
     <script type="text/javascript">
@@ -155,15 +129,12 @@
 </head>
 <body onload="window.app = new App()">
 
-
-
     <div id="background"></div>
     <div class="view" id="Start">
         <div style="color:white;">Loading...</div>
     </div>
     <div class="view" id="Ingame">
         <div class="button" id="ingame-button" ontouchstart="window.app.pressIngameScreenButton()"></div>
-        <div class="button-text">Ingame Screen Button</div>
     </div>
     <div class="view" id="Menu">
         <div class="button" id="menu-button" ontouchstart="window.app.pressMenuScreenButton()"></div>
@@ -173,6 +144,5 @@
         <div class="button"></div>
         <div style="color:white;">Please look at the screen.</div>
     </div>
-    <div id="content"><!--Incoming messages get displayed in this container--></div>
 </body>
 </html>
