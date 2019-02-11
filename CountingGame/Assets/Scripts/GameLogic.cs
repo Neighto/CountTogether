@@ -12,9 +12,6 @@ public class GameLogic : MonoBehaviour
     public GameObject readyCubesObj;
     private ReadyCubes readyCubesScript;
     private Renderer[] readyCubes;
-
-    private string[] colorNames = new string[] { "red", "blue", "green", "yellow", "orange", "purple", "pink" };
-    private int colorIndex;
     private bool allTrue = false;
 
     public GameObject player;
@@ -43,18 +40,21 @@ public class GameLogic : MonoBehaviour
 
     void OnConnect(int device_id)
     {
-        JObject playerColorData = AirConsole.instance.GetCustomDeviceState(0)["playerColors"] as JObject;
-        string randomColor = colorNames[Random.Range(0, colorNames.Length)];
-        //playerColorData.Add(device_id.ToString(), randomColor);
-        //AirConsole.instance.SetCustomDeviceStateProperty("playerColors", playerColorData);
-        StartGame(device_id);
-        //print("" + AirConsole.instance.GetActivePlayerDeviceIds.Count);
-        //if (AirConsole.instance.GetActivePlayerDeviceIds.Count <= 2)
-        //{
-         //   SetView("Menu");
-          //  StartGame(device_id); //this will be called by every player each time
-        //}
+        int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
+        AirConsole.instance.SetActivePlayers(numberOfPlayers);
 
+        if (numberOfPlayers <= 8)
+        {
+            AirConsole.instance.Message(device_id, "Menu");
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                if (GameObject.Find(i.ToString()) == null)
+                {
+                    GameObject newPlayer = Instantiate(player, transform.position, transform.rotation);
+                    newPlayer.name = i.ToString();
+                }
+            }
+        }
     }
 
     void OnDisconnect(int device_id)
@@ -101,77 +101,6 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    public void AssignPlayerColors()
-    {
-        if (!AirConsole.instance.IsAirConsoleUnityPluginReady())
-        {
-            Debug.LogWarning("can't assign player colors until plugin is ready");
-            return;
-        }
-
-        //make a copy of connected controller IDs so it can't change while I loop through it
-        List<int> controllerIDs = AirConsole.instance.GetControllerDeviceIds();
-
-        //loop through connected devices
-        for (int i = 0; i < controllerIDs.Count; ++i)
-        {
-            AirConsole.instance.SetCustomDeviceStateProperty("playerColors", UpdatePlayerColorData(AirConsole.instance.GetCustomDeviceState(0), controllerIDs[i], colorNames[colorIndex]));
-            colorIndex++;
-            if (colorIndex == colorNames.Length)
-            {
-                colorIndex = 0;
-            }
-        }
-    }
-
-    public static JToken UpdatePlayerColorData(JToken oldGameState, int deviceId, string colorName)
-    {
-
-        //take out the existing playerColorData and store it as a JObject so I can modify it
-        JObject playerColorData = oldGameState["playerColors"] as JObject;
-
-        //check if the playerColorData object within the game state already has data for this device
-        if (playerColorData.HasValues && playerColorData[deviceId.ToString()] != null)
-        {
-            //there is already color data for this device, replace it
-            playerColorData[deviceId.ToString()] = colorName;
-        }
-        else
-        {
-            playerColorData.Add(deviceId.ToString(), colorName);
-            //there is no color data for this device yet, create it new
-        }
-
-        //logging and returning the updated playerColorData
-        Debug.Log("AssignPlayerColor for device " + deviceId + " returning new playerColorData: " + playerColorData);
-        return playerColorData;
-    }
-
-    void StartGame(int device_id) 
-    {
-        int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
-        AirConsole.instance.SetActivePlayers(numberOfPlayers);
-        //AirConsole.instance.Message(device_id, "Menu");
-        print("ID: " + device_id);
-        print("players: " + numberOfPlayers);
-
-        if (numberOfPlayers <= 2)
-        {
-            print("In the loop: " + device_id);
-            AirConsole.instance.Message(device_id, "Menu");
-        }
-
-
-        for (int i = 0; i < numberOfPlayers; i++)
-        {
-            if (GameObject.Find(i.ToString()) == null)
-            {
-                GameObject newPlayer = Instantiate(player, transform.position, transform.rotation);
-                newPlayer.name = i.ToString();
-            }
-        }
-    }
-
     void OnDestroy()
     {
         if (AirConsole.instance != null)
@@ -185,26 +114,16 @@ public class GameLogic : MonoBehaviour
 
     public void SetView(string viewName)
     {
-        //I don't need to replace the entire game state, I can just set the view property
-        AirConsole.instance.SetCustomDeviceStateProperty("view", viewName);
-        //the controller listens for the onCustomDeviceStateChanged event. See the  controller-gamestates.html file for how this is handled there. 
+        foreach (int id in AirConsole.instance.GetActivePlayerDeviceIds)
+        {
+            AirConsole.instance.Message(id, viewName);
+        }
+
     }
 
     void AllPlayersReady(int numberOfPlayers)
     {
-        allTrue = true;/*
-        for (int i = 0; i < numberOfPlayers; i++)
-        {
-            if (GameObject.Find(i.ToString()) != null)
-            {
-                if (GameObject.Find("" + i).GetComponent<Player>().isReady == false)
-                {
-                    allTrue = false;
-                    readyCubesScript.allReady = false;
-                    break;
-                }
-            }
-        }*/
+        allTrue = true;
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
         {
             if (p.GetComponent<Player>().isReady == false)
@@ -239,6 +158,6 @@ public class GameLogic : MonoBehaviour
         else Debug.Log("Not everyone is ready!");
 
     }
-
+ 
 #endif
 }

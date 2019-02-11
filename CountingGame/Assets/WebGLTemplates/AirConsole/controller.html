@@ -40,10 +40,23 @@
 
     <style type=text/css>
         /* the style sheet dictates what our elements (buttons, backgrounds etc.) will look like. */
-        #background {
-            width: 100%;
-            height: 100%;
+
+        menu-button {
+            background-image: url(player1_bg.png);
             position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 80%;
+            height: 60%;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        #background {
+           /* background: url(player1_bg.png);
+            width: auto;
+            max-width: 100%;
+            height: auto;*/
         }
 
         .button {
@@ -85,9 +98,7 @@
 
     <script type="text/javascript">
 
-        var airconsole;
-
-
+    var airconsole;
 
     function App() {
       var me = this;
@@ -108,38 +119,9 @@
 
       me.airconsole.onCustomDeviceStateChange = function (device_id, device_data) {
 
-          /*
-        //to see logs from the controller, start your game in the "virtual controllers" browser start mode from Unity and open your browser's developer console.
-        console.log("onCustomDeviceStateChange", device_id, device_data);
-
-            //check if the device that sent the custom device state change is the Screen (i.e. the Unity Game, in this case), and not one of the other controllers
-        if (device_id == AirConsole.SCREEN) {
-            //check if the CustomDeviceStateChange data contains any view data
-            if (device_data["view"] != null && device_data["view"] != "") {
-                //set a new view accordingly
-                ViewManager.show(device_data["view"]);
-            }
-
-            //check if there's any player color data
-            if (device_data["playerColors"] != null) {
-                //check the CustomDeviceStateChange data contains any playerColorData for this particular device
-                if (device_data["playerColors"][me.airconsole.getDeviceId()]) {
-                    //this works for named colors. If you want to use colors that don't have a name, you could pass a hex code instead of a string/name
-                    document.getElementById("background").style.backgroundColor = device_data["playerColors"][me.airconsole.getDeviceId()];
-                }
-            }
-        }*/
           if (device_data["view"] != null && device_data["view"] != "" && device_id != airconsole.SCREEN) {
               //set a new view accordingly
               ViewManager.show(device_data["view"]);
-          }
-          //check if there's any player color data
-          if (device_data["playerColors"] != null) {
-              //check the CustomDeviceStateChange data contains any playerColorData for this particular device
-              if (device_data["playerColors"][me.airconsole.getDeviceId()]) {
-                  //this works for named colors. If you want to use colors that don't have a name, you could pass a hex code instead of a string/name
-                  document.getElementById("background").style.backgroundColor = device_data["playerColors"][me.airconsole.getDeviceId()];
-              }
           }
 
       };
@@ -172,9 +154,12 @@
 
 </head>
 <body onload="window.app = new App()">
+
+
+
     <div id="background"></div>
     <div class="view" id="Start">
-        <div style="color:white;">No Controller view has been set</div>
+        <div style="color:white;">Loading...</div>
     </div>
     <div class="view" id="Ingame">
         <div class="button" id="ingame-button" ontouchstart="window.app.pressIngameScreenButton()"></div>
