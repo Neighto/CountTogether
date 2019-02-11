@@ -25,27 +25,35 @@ public class GameLogic : MonoBehaviour
     {
         AirConsole.instance.onMessage += OnMessage;
         AirConsole.instance.onConnect += OnConnect;
+        AirConsole.instance.onReady += OnReady;
         AirConsole.instance.onDisconnect += OnDisconnect;
         readyCubes = readyCubesObj.GetComponentsInChildren<Renderer>();
         readyCubesScript = readyCubesObj.GetComponent<ReadyCubes>();
     }
 
-    void OnConnect(int device_id)
+    void OnReady(string code)
     {
         //Initialize Game State
         JObject newGameState = new JObject();
         newGameState.Add("view", new JObject());
         newGameState.Add("playerColors", new JObject());
+
         AirConsole.instance.SetCustomDeviceState(newGameState);
+    }
 
-        //UI
-        List<int> ids = AirConsole.instance.GetControllerDeviceIds();
-        if (ids.Count >= 3)
-        {
-        }
-
-
-        StartGame(); //this will be called by every player each time
+    void OnConnect(int device_id)
+    {
+        JObject playerColorData = AirConsole.instance.GetCustomDeviceState(0)["playerColors"] as JObject;
+        string randomColor = colorNames[Random.Range(0, colorNames.Length)];
+        //playerColorData.Add(device_id.ToString(), randomColor);
+        //AirConsole.instance.SetCustomDeviceStateProperty("playerColors", playerColorData);
+        StartGame(device_id);
+        //print("" + AirConsole.instance.GetActivePlayerDeviceIds.Count);
+        //if (AirConsole.instance.GetActivePlayerDeviceIds.Count <= 2)
+        //{
+         //   SetView("Menu");
+          //  StartGame(device_id); //this will be called by every player each time
+        //}
 
     }
 
@@ -60,19 +68,19 @@ public class GameLogic : MonoBehaviour
 
     }
 
-    void OnMessage(int device_id, JToken data)
+    void OnMessage(int deviceId, JToken message)
     {
-        int active_player = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
-        string action = (string)data["action"];
+        int active_player = AirConsole.instance.ConvertDeviceIdToPlayerNumber(deviceId);
+        string action = (string)message["action"];
         if (action != null)
         {
-            if (action == "count")
+            if (action == "ingame-button")
             {
-                Player player = GameObject.Find("" + active_player).GetComponent<Player>();
-                player.AddCount();
+                 Player player = GameObject.Find("" + active_player).GetComponent<Player>();
+                 player.AddCount();
             }
 
-            if (action == "prepped")
+            if (action == "menu-button")
             {
                 Player player = GameObject.Find("" + active_player).GetComponent<Player>();
                 player.isReady = !player.isReady;
@@ -91,13 +99,68 @@ public class GameLogic : MonoBehaviour
 
             }
         }
-
     }
 
-    void StartGame() 
+    public void AssignPlayerColors()
+    {
+        if (!AirConsole.instance.IsAirConsoleUnityPluginReady())
+        {
+            Debug.LogWarning("can't assign player colors until plugin is ready");
+            return;
+        }
+
+        //make a copy of connected controller IDs so it can't change while I loop through it
+        List<int> controllerIDs = AirConsole.instance.GetControllerDeviceIds();
+
+        //loop through connected devices
+        for (int i = 0; i < controllerIDs.Count; ++i)
+        {
+            AirConsole.instance.SetCustomDeviceStateProperty("playerColors", UpdatePlayerColorData(AirConsole.instance.GetCustomDeviceState(0), controllerIDs[i], colorNames[colorIndex]));
+            colorIndex++;
+            if (colorIndex == colorNames.Length)
+            {
+                colorIndex = 0;
+            }
+        }
+    }
+
+    public static JToken UpdatePlayerColorData(JToken oldGameState, int deviceId, string colorName)
+    {
+
+        //take out the existing playerColorData and store it as a JObject so I can modify it
+        JObject playerColorData = oldGameState["playerColors"] as JObject;
+
+        //check if the playerColorData object within the game state already has data for this device
+        if (playerColorData.HasValues && playerColorData[deviceId.ToString()] != null)
+        {
+            //there is already color data for this device, replace it
+            playerColorData[deviceId.ToString()] = colorName;
+        }
+        else
+        {
+            playerColorData.Add(deviceId.ToString(), colorName);
+            //there is no color data for this device yet, create it new
+        }
+
+        //logging and returning the updated playerColorData
+        Debug.Log("AssignPlayerColor for device " + deviceId + " returning new playerColorData: " + playerColorData);
+        return playerColorData;
+    }
+
+    void StartGame(int device_id) 
     {
         int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
         AirConsole.instance.SetActivePlayers(numberOfPlayers);
+        //AirConsole.instance.Message(device_id, "Menu");
+        print("ID: " + device_id);
+        print("players: " + numberOfPlayers);
+
+        if (numberOfPlayers <= 2)
+        {
+            print("In the loop: " + device_id);
+            AirConsole.instance.Message(device_id, "Menu");
+        }
+
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
@@ -111,12 +174,14 @@ public class GameLogic : MonoBehaviour
 
     void OnDestroy()
     {
-        // unregister airconsole events on scene change
         if (AirConsole.instance != null)
         {
+            AirConsole.instance.onConnect -= OnConnect;
+            AirConsole.instance.onReady -= OnReady;
             AirConsole.instance.onMessage -= OnMessage;
         }
     }
+
 
     public void SetView(string viewName)
     {
@@ -175,58 +240,5 @@ public class GameLogic : MonoBehaviour
 
     }
 
-    /*
-    public void AssignPlayerColors()
-    {
-        if (!AirConsole.instance.IsAirConsoleUnityPluginReady())
-        {
-            Debug.LogWarning("can't assign player colors until plugin is ready");
-            return;
-        }
-
-        //make a copy of connected controller IDs so it can't change while I loop through it
-        List<int> controllerIDs = AirConsole.instance.GetControllerDeviceIds();
-
-        //loop through connected devices
-        for (int i = 0; i < controllerIDs.Count; ++i)
-        {
-            //ideally, you'd write all the data into the game state first and then set it only once. 
-            //I'm doing it this way for simplicity, but updating the device state too often can mean your updates get delayed because of rate limiting
-            //the more devices are connected, the more this becomes a problem
-            AirConsole.instance.SetCustomDeviceStateProperty("playerColors", UpdatePlayerColorData(AirConsole.instance.GetCustomDeviceState(0), controllerIDs[i], colorNames[colorIndex]));
-            //the controller listens for the onCustomDeviceStateChanged event. See the  controller-gamestates.html file for how this is handled there. 
-
-            //different color for the next player
-            colorIndex++;
-            if (colorIndex == colorNames.Length)
-            {
-                colorIndex = 0;
-            }
-        }
-    }
-
-    public static JToken UpdatePlayerColorData(JToken oldGameState, int deviceId, string colorName)
-    {
-
-        //take out the existing playerColorData and store it as a JObject so I can modify it
-        JObject playerColorData = oldGameState["playerColors"] as JObject;
-
-        //check if the playerColorData object within the game state already has data for this device
-        if (playerColorData.HasValues && playerColorData[deviceId.ToString()] != null)
-        {
-            //there is already color data for this device, replace it
-            playerColorData[deviceId.ToString()] = colorName;
-        }
-        else
-        {
-            playerColorData.Add(deviceId.ToString(), colorName);
-            //there is no color data for this device yet, create it new
-        }
-
-        //logging and returning the updated playerColorData
-        Debug.Log("AssignPlayerColor for device " + deviceId + " returning new playerColorData: " + playerColorData);
-        return playerColorData;
-    }
-    */
 #endif
 }

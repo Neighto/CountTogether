@@ -41,7 +41,17 @@ public class GamestateExampleLogic : MonoBehaviour {
 	}
 
 	void OnMessage (int deviceId, JToken message){
-		Debug.Log ("received message from device " + deviceId + ". content: " + message);
+        string action = (string)message["action"];
+        if (action != null)
+        {
+            if (action == "ingame-button")
+            {
+                // Player player = GameObject.Find("" + active_player).GetComponent<Player>();
+                // player.AddCount();
+                print("HALLULUJAH");
+            }
+        }
+            Debug.Log ("received message from device " + deviceId + ". content: " + message);
 	}
 
 	public void AssignPlayerColors(){
