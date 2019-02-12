@@ -13,7 +13,7 @@ public class Ghost : MonoBehaviour
     {
         xform = this.GetComponent<Transform>();
         //xform.position = new Vector3(xform.position.x, xform.position.y + rand, xform.position.z);
-        rand = Random.Range(0.3f, 3.0f);
+        rand = Random.Range(3f, 9.0f);
     }
 
     private void Update()

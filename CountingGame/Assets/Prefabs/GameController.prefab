@@ -43,11 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2891ebd8c97d4ba48a52d402cfbf9a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purpleBallx1: {fileID: 978700640439219459, guid: b074b67278c10de478dc43ec56485e84,
+  purblex1: {fileID: 978700640439219459, guid: b074b67278c10de478dc43ec56485e84, type: 3}
+  purblex2: {fileID: 1353058038029506987, guid: 537e85b055de18748acf4e04ff919022,
     type: 3}
-  purpleBallx2: {fileID: 1353058038029506987, guid: 537e85b055de18748acf4e04ff919022,
+  purblex3: {fileID: 7020358901492262145, guid: 8f2bec2c89df38c46b5a53be1fc9f85e,
     type: 3}
-  purpleBallx3: {fileID: 7020358901492262145, guid: 8f2bec2c89df38c46b5a53be1fc9f85e,
+  flyingPurble: {fileID: 390935730143558517, guid: a231dae2811e6174ca769038e4940447,
     type: 3}
   purpleBird: {fileID: 437717784218255909, guid: 9c63f04972eafa74f9f2c5df09e597ca,
     type: 3}
@@ -55,28 +56,31 @@ MonoBehaviour:
   ghost: {fileID: 5387218323395902951, guid: 98949219d3241b849ba52091359711c4, type: 3}
   fakeGreengo: {fileID: 7577732907118618952, guid: 640d0421ecc78f645b4836d968bf72f6,
     type: 3}
+  greengox1: {fileID: 2707461135048041920, guid: ecc4fa9094386f0478574b6824debd3a,
+    type: 3}
   greengox2: {fileID: 5887904123655874979, guid: 3776b77fbfc710b4cbaacbf0c07ba037,
     type: 3}
   greengox3: {fileID: 8303753656490230682, guid: daad193aeab6cf548ac3a2487d1a49ed,
     type: 3}
+  flyingGreengo: {fileID: 3675602985338700273, guid: 387c76261117f46438e389da506ca9c9,
+    type: 3}
   doog: {fileID: 2303692773176815312, guid: 266fc4b908af51a4aa7ef60e9e28f360, type: 3}
   cherb: {fileID: 6413841232322626185, guid: aa83e1c87ab5d1f48ac26f618cbabd3a, type: 3}
-  cherpPurple: {fileID: 3790461346401709341, guid: 7cd378cb25dfbe445892c47963b29d2d,
+  cherbPurple: {fileID: 3790461346401709341, guid: 7cd378cb25dfbe445892c47963b29d2d,
     type: 3}
   gruub: {fileID: 3022764213183122022, guid: ed02d22c07599ab458fe99c90a88c62d, type: 3}
+  bluebey: {fileID: 1707131924357411036, guid: 8fb67f2420a77364c9db00a0cacefd94, type: 3}
+  batte: {fileID: 1597933006004000689, guid: a5164d002217786469b0ea370c47ad63, type: 3}
+  fisk: {fileID: 7348825052707233747, guid: 54bbde146068bd94cb43fe59bb802c31, type: 3}
   round: {fileID: 0}
   purbleSwarmFlavor: {fileID: 0}
   spawnPointsObj: {fileID: 0}
   revSpawnPointObj: {fileID: 0}
   roborgSpawn: {fileID: 0}
+  fiskSpawn: {fileID: 0}
   purbleAnim: {fileID: 0}
   startAnim: {fileID: 0}
   animateUI: {fileID: 0}
-  resultsPanel: {fileID: 0}
-  roundText2: {fileID: 0}
-  youWereCountingText: {fileID: 0}
-  answerText: {fileID: 0}
-  resMonsterPic: {fileID: 0}
   playersPanel: {fileID: 0}
   countText1: {fileID: 0}
   countText2: {fileID: 0}
@@ -87,5 +91,7 @@ MonoBehaviour:
   countText7: {fileID: 0}
   countText8: {fileID: 0}
   playerContextText: {fileID: 0}
+  roundText: {fileID: 0}
+  answerText: {fileID: 0}
   winnerPanel: {fileID: 0}
   winnerName: {fileID: 0}

@@ -28,20 +28,25 @@ public class GameController : MonoBehaviour
 
     //Monsters
     private List<GameObject> monsters;
-    public GameObject purpleBallx1;
-    public GameObject purpleBallx2;
-    public GameObject purpleBallx3;
+    public GameObject purblex1;
+    public GameObject purblex2;
+    public GameObject purblex3;
+    public GameObject flyingPurble;
     public GameObject purpleBird;
     public GameObject roborg;
     public GameObject ghost;
     public GameObject fakeGreengo;
+    public GameObject greengox1;
     public GameObject greengox2;
     public GameObject greengox3;
+    public GameObject flyingGreengo;
     public GameObject doog;
     public GameObject cherb;
-    public GameObject cherpPurple;
+    public GameObject cherbPurple;
     public GameObject gruub;
     public GameObject bluebey;
+    public GameObject batte;
+    public GameObject fisk;
 
     //Sets
     private List<Set> easySets;
@@ -61,23 +66,22 @@ public class GameController : MonoBehaviour
     public GameObject spawnPointsObj;
     public GameObject revSpawnPointObj;
     public Transform roborgSpawn;
+    public Transform fiskSpawn;
 
     //Animations
     public GameObject purbleAnim;
+    public GameObject greengoAnim;
     public Animator startAnim;
+    public Animator endAnim;
 
     //Timers
     private float spawnRateRandom = 1.5f;
     private float nextSpawnRandom = 0.0f;
+    private float fishSpawnRate = 6f;
+    private float nextFishSpawn = 0.0f;
 
     //All UI
     public AnimateUI animateUI;
-
-    //Results UI
-    /*
-    public GameObject resultsPanel;
-    public Text youWereCountingText;
-    public RawImage resMonsterPic;*/
 
     //Players UI
     private List<Text> playerCountTexts;
@@ -103,6 +107,7 @@ public class GameController : MonoBehaviour
     private bool canSpawn = false;
     private bool reverseMonsters = false;
     private bool gameTied = false;
+    private bool fishSpawning = false;
     private int monsterSum = 0;
     private int currentRound = 1;
     private int points = 10;
@@ -123,15 +128,18 @@ public class GameController : MonoBehaviour
             revSpawnPoints.Add(t);
 
         //Make Sets
-        Set purbleSwarm = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBallx1, purpleBallx2, purpleBallx3 } );
-        Set greenConfusion = new Set("greengo", purbleAnim, purbleSwarmFlavor, new GameObject[] { cherb, fakeGreengo, greengox2, greengox3, greengox2, ghost });
-        Set purpleConfusion = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBallx1, purpleBallx2, purpleBallx3, purpleBird, cherpPurple });
-        Set birdsOfFeather = new Set("bird", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBird, doog });
-        Set blueConfusion = new Set("bluebey", purbleAnim, purbleSwarmFlavor, new GameObject[] { bluebey, gruub });
-        easySets = new List<Set> { purbleSwarm, blueConfusion, greenConfusion, purpleConfusion };
-        hardSets = new List<Set> { birdsOfFeather };
-        countEverything = new Set("all", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBallx1, purpleBallx2, purpleBallx3, greengox2, greengox3, bluebey,
-        purpleBird, gruub, fakeGreengo, cherb, cherpPurple, doog, ghost});
+        Set purbleSwarm = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble } );
+        Set greengoSwarm = new Set("greengo", greengoAnim, purbleSwarmFlavor, new GameObject[] { greengox1, greengox2, greengox3, flyingGreengo, fakeGreengo, cherb });
+        Set purpleConfusion = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, flyingGreengo, purpleBird, cherbPurple, doog });
+        Set blueConfusion = new Set("bluebey", purbleAnim, purbleSwarmFlavor, new GameObject[] { bluebey, gruub, batte, ghost });
+        Set birdsOfFeather = new Set("bird", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBird, batte, cherb, cherbPurple, flyingPurble, flyingGreengo });
+        Set noPurbles = new Set("cherb", purbleAnim, purbleSwarmFlavor, new GameObject[] { cherb, cherbPurple, doog, batte, purpleBird, ghost });
+        Set allPurbles = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, bluebey, greengox1, greengox2, greengox3 });
+
+        easySets = new List<Set> { purbleSwarm, blueConfusion, greengoSwarm, purpleConfusion };
+        hardSets = new List<Set> { birdsOfFeather, noPurbles, allPurbles };
+        countEverything = new Set("all", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, greengox2, greengox3, bluebey,
+        purpleBird, gruub, fakeGreengo, cherb, cherbPurple, doog, ghost, batte, flyingGreengo, fisk});
 
         //Find GameLogic for SetView access
         if (GameObject.Find("GameLogic")) gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
@@ -222,12 +230,6 @@ public class GameController : MonoBehaviour
         roundList[currentRound - 1].enabled = turnOn;
         curSet.flavorText.SetActive(turnOn);
         curSet.biasMonsterAnim.SetActive(turnOn);
-
-        if (currentRound == 5)
-        {
-
-            //flavorText.text = "The ultimate test!";
-        }
     }
 
     //Handles start of each round (function calls and difficulty)
@@ -244,6 +246,7 @@ public class GameController : MonoBehaviour
             else if (roundNumber == 2)
             {
                 curSet = GetEasySet();
+                fishSpawning = true;
                 spawnRateRandom = 0.6f * spawnRateRandom; //increase randoms spawn rate
                 points = 20;
             }
@@ -262,6 +265,7 @@ public class GameController : MonoBehaviour
             else if (roundNumber == 5) //Count everything
             {
                 curSet = countEverything;
+                fishSpawnRate = 0.5f * fishSpawnRate; //increase fish spawn rate
                 points = 50;
             }
             StartCoroutine(StartRound());
@@ -282,13 +286,16 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
         if (gameLogic != null) gameLogic.SetCountScreens();
         canSpawn = true;
-        Instantiate(roborg, roborgSpawn.position, roborgSpawn.rotation);
+        if (currentRound == 5)
+        {
+            Instantiate(roborg, roborgSpawn.position, roborgSpawn.rotation);
+            monsterSum++;
+        }
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
-        //if (gameLogic != null) gameLogic.SetView("Wait");
         if (gameLogic != null) gameLogic.SetWaitScreens();
-        //startEndText.text = "FINISH!";
+        endAnim.SetTrigger("End");
         GetPlayerEstimates();
         yield return new WaitForSeconds(2f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
         animateUI.ShiftPlayersPanel();
@@ -325,7 +332,7 @@ public class GameController : MonoBehaviour
             winnerName.text = "PLAYER " + (winner.name + 1);
         }
         yield return new WaitForSeconds(6f);
-        //if (gameLogic != null) gameLogic.SetView("Menu");
+        if (gameLogic != null) gameLogic.ResetVariables();
         SceneManager.LoadScene("Lobby");
     }
 
@@ -353,8 +360,14 @@ public class GameController : MonoBehaviour
                         monsterSum += revMon.GetComponent<MonsterStats>().quantity;
                     }
                 }
-
             }
+            else if (fishSpawning && Time.time > nextFishSpawn)
+            {
+                nextFishSpawn = Time.time + fishSpawnRate;
+                Instantiate(fisk, fiskSpawn.position, fiskSpawn.rotation);
+                monsterSum++;
+            }
+
         }
     }
 
