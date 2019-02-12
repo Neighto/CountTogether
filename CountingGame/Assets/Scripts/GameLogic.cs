@@ -15,7 +15,8 @@ public class GameLogic : MonoBehaviour
     private bool allTrue = false;
 
     public GameObject player;
-    public Text uiText;
+    public Text timerText;
+    public Text timerTextShadow;
 #if !DISABLE_AIRCONSOLE
 
     void Awake()
@@ -111,14 +112,34 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-
-    public void SetView(string viewName)
+    public void SetCountScreens()
     {
-        foreach (int id in AirConsole.instance.GetActivePlayerDeviceIds)
+        int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
+        print("number of players: " + numberOfPlayers);
+        AirConsole.instance.SetActivePlayers(numberOfPlayers);
+        for (int i = 0; i < numberOfPlayers; i++)
         {
-            AirConsole.instance.Message(id, viewName);
+            if (i == 0) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count1");
+            else if (i == 1) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count2");
+            else if (i == 2) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count3");
+            else if (i == 3) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count4");
+            else if (i == 4) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count5");
         }
+    }
 
+    public void SetWaitScreens()
+    {
+        int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
+        print("number of players: " + numberOfPlayers);
+        AirConsole.instance.SetActivePlayers(numberOfPlayers);
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            if (i == 0) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait1");
+            else if (i == 1) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait2");
+            else if (i == 2) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait3");
+            else if (i == 3) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait4");
+            else if (i == 4) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait5");
+        }
     }
 
     void AllPlayersReady(int numberOfPlayers)
@@ -140,19 +161,22 @@ public class GameLogic : MonoBehaviour
     IEnumerator AllReadyDelay()
     {
         readyCubesScript.allReady = true; //gobal variable, will be set false if any disconnect or player presses ready again
-        for (int i = 8; i > 0; i--) //while everybody is ready OR timer ends
+        for (int i = 3; i >= 0; i--) //while everybody is ready OR timer ends
         {
-            uiText.text = "START IN " + i;
-            yield return new WaitForSeconds(0.5f);
+            timerText.text = "START IN " + i;
+            timerTextShadow.text = "START IN " + i;
+            yield return new WaitForSeconds(1f);
             if (readyCubesScript.allReady == false)
             {
-                uiText.text = "";
+                timerText.text = "";
+                timerTextShadow.text = "";
                 break;
             }
         }
         if (readyCubesScript.allReady)
         {
-            SetView("Wait"); //set all ready players in game scene!
+            //SetView("Wait"); //set all ready players in game scene!
+            SetWaitScreens();
             SceneManager.LoadScene("Game");
         }
         else Debug.Log("Not everyone is ready!");

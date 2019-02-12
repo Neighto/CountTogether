@@ -74,11 +74,10 @@ public class GameController : MonoBehaviour
     public AnimateUI animateUI;
 
     //Results UI
+    /*
     public GameObject resultsPanel;
-    public Text roundText2;
     public Text youWereCountingText;
-    public Text answerText;
-    public RawImage resMonsterPic;
+    public RawImage resMonsterPic;*/
 
     //Players UI
     private List<Text> playerCountTexts;
@@ -93,6 +92,8 @@ public class GameController : MonoBehaviour
     public Text countText7;
     public Text countText8;
     public Text playerContextText;
+    public Text roundText;
+    public Text answerText;
 
     //Winner UI
     public GameObject winnerPanel;
@@ -217,16 +218,14 @@ public class GameController : MonoBehaviour
     void SetAllUI(bool turnOn)
     {
         //Set-up UI
-        roundText2.text = "ROUND " + currentRound;
+        roundText.text = "ROUND " + currentRound;
         roundList[currentRound - 1].enabled = turnOn;
         curSet.flavorText.SetActive(turnOn);
         curSet.biasMonsterAnim.SetActive(turnOn);
 
         if (currentRound == 5)
         {
-            //rouMonsterPic.texture = curMon.monsterPic; //Picture of all!
-            //resMonsterPic.texture = curMon.monsterPic;
-            //remMonsterPic.texture = curMon.monsterPic;
+
             //flavorText.text = "The ultimate test!";
         }
     }
@@ -281,28 +280,31 @@ public class GameController : MonoBehaviour
         SetAllUI(false);
         startAnim.SetTrigger("Start");
         yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
-        if (gameLogic != null) gameLogic.SetView("Ingame");
+        if (gameLogic != null) gameLogic.SetCountScreens();
         canSpawn = true;
         Instantiate(roborg, roborgSpawn.position, roborgSpawn.rotation);
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
-        if (gameLogic != null) gameLogic.SetView("Wait");
+        //if (gameLogic != null) gameLogic.SetView("Wait");
+        if (gameLogic != null) gameLogic.SetWaitScreens();
         //startEndText.text = "FINISH!";
-        //startEndText.enabled = true;
         GetPlayerEstimates();
         yield return new WaitForSeconds(2f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
-        answerText.text = "THERE WERE...\n";
         animateUI.ShiftPlayersPanel();
-        //startEndText.enabled = false;
-        resultsPanel.SetActive(true);
-        yield return new WaitForSeconds(2.4f); // SHOW MONSTER SUM
-        answerText.text = "THERE WERE...\n" + monsterSum;
+        answerText.text = "THERE WERE";
+        yield return new WaitForSeconds(0.5f); // SHOW MONSTER SUM
+        answerText.text += ".";
+        yield return new WaitForSeconds(0.5f); // SHOW MONSTER SUM
+        answerText.text += ".";
+        yield return new WaitForSeconds(0.5f); // SHOW MONSTER SUM
+        answerText.text += ". ";
+        yield return new WaitForSeconds(0.5f); // SHOW MONSTER SUM
+        answerText.text = "THERE WERE..." + monsterSum;
         yield return new WaitForSeconds(2f); // AWARD POINTS TO PLAYERS
         GetPlayerScores();
-        yield return new WaitForSeconds(1f); // HIDE PLAYER PANEL AND RESULTS PANEL
+        yield return new WaitForSeconds(1.4f); // HIDE PLAYER PANEL AND RESULTS PANEL
         animateUI.ShiftPlayersPanel();
-        resultsPanel.SetActive(false);
         yield return new WaitForSeconds(1.5f); // PREPARE FOR NEW ROUND
         SetRound(++currentRound);
     }
@@ -316,14 +318,14 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (gameTied || winner == null)
         {
-            winnerName.text = "NOBODY! A TIE GAME";
+            winnerName.text = "IT'S A TIE";
         }
         else
         {
             winnerName.text = "PLAYER " + (winner.name + 1);
         }
-        yield return new WaitForSeconds(3f);
-        if (gameLogic != null) gameLogic.SetView("Menu");
+        yield return new WaitForSeconds(6f);
+        //if (gameLogic != null) gameLogic.SetView("Menu");
         SceneManager.LoadScene("Lobby");
     }
 
