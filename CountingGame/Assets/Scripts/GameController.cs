@@ -7,20 +7,22 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
 
-    //DEFINED MONSTER CLASS
-    public class Monster
+    //DEFINED SET CLASS
+    public class Set
     {
         public string name;
-        public string flavorText;
-        public Texture monsterPic;
-        public GameObject monster;
+        public GameObject biasMonsterAnim;
+        public GameObject flavorText;
+        public GameObject[] monsters;
 
-        public Monster(string name, string flavorText, Texture monsterPic, GameObject monster)
+
+        public Set(string name, GameObject biasMonsterAnim, 
+            GameObject flavorText, GameObject[] monsters)
         {
-            this.name = name;
+            this.name = name; //tag of what you are counting
+            this.biasMonsterAnim = biasMonsterAnim;
             this.flavorText = flavorText;
-            this.monsterPic = monsterPic;
-            this.monster = monster;
+            this.monsters = monsters;
         }
     }
 
@@ -35,37 +37,41 @@ public class GameController : MonoBehaviour
     public GameObject fakeGreengo;
     public GameObject greengox2;
     public GameObject greengox3;
+    public GameObject doog;
+    public GameObject cherb;
+    public GameObject cherpPurple;
+    public GameObject gruub;
+    public GameObject bluebey;
 
-    //Defined Monsters
-    private List<Monster> definedMonsters;
-    Monster curMon;
+    //Sets
+    private List<Set> easySets;
+    private List<Set> hardSets;
+    private Set countEverything;
 
-    //Textures
-    public Texture picPurpleBall;
-    public Texture picPurpleBird;
+    //Rounds UI
+    public GameObject round;
+    private List<RawImage> roundList;
+
+    //Flavors UI
+    public GameObject purbleSwarmFlavor;
 
     //Spawn Points
     private List<Transform> spawnPoints = new List<Transform>();
     private List<Transform> revSpawnPoints = new List<Transform>();
     public GameObject spawnPointsObj;
     public GameObject revSpawnPointObj;
+    public Transform roborgSpawn;
+
+    //Animations
+    public GameObject purbleAnim;
+    public Animator startAnim;
 
     //Timers
-    private float spawnRateRandom = 2.0f;
+    private float spawnRateRandom = 1.5f;
     private float nextSpawnRandom = 0.0f;
-    private float spawnRateBiased = 1.5f;
-    private float nextSpawnBiased = 0.0f;
 
     //All UI
     public AnimateUI animateUI;
-
-    //Round UI
-    public GameObject roundPanel;
-    public Text roundText;
-    public Text flavorText;
-    public RawImage rouMonsterPic;
-    public Text startEndText;
-    public Text stakesText;
 
     //Results UI
     public GameObject resultsPanel;
@@ -92,10 +98,6 @@ public class GameController : MonoBehaviour
     public GameObject winnerPanel;
     public Text winnerName;
 
-    //Reminder UI
-    public GameObject reminderPanel;
-    public RawImage remMonsterPic;
-
     //Other
     private bool canSpawn = false;
     private bool reverseMonsters = false;
@@ -106,43 +108,52 @@ public class GameController : MonoBehaviour
     private GameLogic gameLogic;
     private Transform ranTran;
     private Transform revRanTran;
+    private Set curSet;
     Player winner;
 
     private void Start()
     {
-        //Define Monsters
-        Monster birdple = new Monster("birdple", "Wild and Fast.", picPurpleBird, purpleBird);
-        Monster purble = new Monster("purble", "Careful, they bite!", picPurpleBall, purpleBallx1);
-
         //Make Lists
-        monsters = new List<GameObject>
-        { purpleBird, purpleBallx1, purpleBallx2, purpleBallx3, roborg, ghost, fakeGreengo, greengox2, greengox3 };
-        definedMonsters = new List<Monster> { birdple, purble };
+        roundList = new List<RawImage>(round.GetComponentsInChildren<RawImage>());
         playerCountTexts = new List<Text> { countText1, countText2, countText3, countText4, countText5, countText6, countText7, countText8 };
         foreach (Transform t in spawnPointsObj.transform)
             spawnPoints.Add(t);
         foreach (Transform t in revSpawnPointObj.transform)
             revSpawnPoints.Add(t);
 
+        //Make Sets
+        Set purbleSwarm = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBallx1, purpleBallx2, purpleBallx3 } );
+        Set greenConfusion = new Set("greengo", purbleAnim, purbleSwarmFlavor, new GameObject[] { cherb, fakeGreengo, greengox2, greengox3, greengox2, ghost });
+        Set purpleConfusion = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBallx1, purpleBallx2, purpleBallx3, purpleBird, cherpPurple });
+        Set birdsOfFeather = new Set("bird", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBird, doog });
+        Set blueConfusion = new Set("bluebey", purbleAnim, purbleSwarmFlavor, new GameObject[] { bluebey, gruub });
+        easySets = new List<Set> { purbleSwarm, blueConfusion, greenConfusion, purpleConfusion };
+        hardSets = new List<Set> { birdsOfFeather };
+        countEverything = new Set("all", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBallx1, purpleBallx2, purpleBallx3, greengox2, greengox3, bluebey,
+        purpleBird, gruub, fakeGreengo, cherb, cherpPurple, doog, ghost});
+
         //Find GameLogic for SetView access
-        if (GameObject.Find("GameLogic"))
-        {
-            gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
-        }
+        if (GameObject.Find("GameLogic")) gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
 
         SetRound(currentRound); //initialized to 1
     }
 
-    //Defined monster: One designed for counting in a round
-    Monster GetDefinedMonster()
+    //Get an easy set
+    Set GetEasySet()
     {
-        return definedMonsters[Random.Range(0, definedMonsters.Count)];
+        return easySets[Random.Range(0, easySets.Count)];
     }
 
-    //Undefined monster: All monsters in the game
-    GameObject GetRandomMonster()
+    //Get a hard set
+    Set GetHardSet()
     {
-        return monsters[Random.Range(0, monsters.Count)];
+        return hardSets[Random.Range(0, hardSets.Count)];
+    }
+
+    //Get random monster from a given set
+    GameObject GetRandomMonster(GameObject[] monsters)
+    {
+        return monsters[Random.Range(0, monsters.Length)];
     }
 
     //Where monsters spawn (add diversity)
@@ -203,27 +214,21 @@ public class GameController : MonoBehaviour
     }
 
     //Sets up UI for each round (panels, pictures, names, flavortext, etc)
-    void SetAllUI(int roundNumber, Monster curMon)
+    void SetAllUI(bool turnOn)
     {
         //Set-up UI
-        roundText.text = "ROUND " + roundNumber;
-        roundText2.text = "ROUND " + roundNumber;
-        startEndText.text = "START COUNTING!";
-        flavorText.text = curMon.flavorText;
-        rouMonsterPic.texture = curMon.monsterPic;
-        resMonsterPic.texture = curMon.monsterPic;
-        remMonsterPic.texture = curMon.monsterPic;
-        stakesText.text = "PLAYING FOR: " + points + " POINTS";
+        roundText2.text = "ROUND " + currentRound;
+        roundList[currentRound - 1].enabled = turnOn;
+        curSet.flavorText.SetActive(turnOn);
+        curSet.biasMonsterAnim.SetActive(turnOn);
 
-
-        if (roundNumber == 5)
+        if (currentRound == 5)
         {
             //rouMonsterPic.texture = curMon.monsterPic; //Picture of all!
             //resMonsterPic.texture = curMon.monsterPic;
             //remMonsterPic.texture = curMon.monsterPic;
-            flavorText.text = "The ultimate test!";
+            //flavorText.text = "The ultimate test!";
         }
-
     }
 
     //Handles start of each round (function calls and difficulty)
@@ -233,26 +238,33 @@ public class GameController : MonoBehaviour
 
         if (roundNumber < 6) //number of rounds
         {
-            if (roundNumber == 2)
+            if (roundNumber == 1)
             {
+                curSet = GetEasySet();
+            }
+            else if (roundNumber == 2)
+            {
+                curSet = GetEasySet();
                 spawnRateRandom = 0.6f * spawnRateRandom; //increase randoms spawn rate
                 points = 20;
             }
             else if (roundNumber == 3)
             {
+                curSet = GetHardSet();
                 reverseMonsters = true;
                 points = 30;
             }
             else if (roundNumber == 4)
             {
+                curSet = GetHardSet();
+                spawnRateRandom = 0.6f * spawnRateRandom; //increase randoms spawn rate
                 points = 40;
             }
             else if (roundNumber == 5) //Count everything
             {
+                curSet = countEverything;
                 points = 50;
             }
-            curMon = GetDefinedMonster();
-            SetAllUI(roundNumber, curMon);
             StartCoroutine(StartRound());
         }
         else //when all rounds are over:
@@ -264,27 +276,25 @@ public class GameController : MonoBehaviour
     //Handles critical timing of UI and when to spawn
     IEnumerator StartRound()
     {
-        roundPanel.SetActive(true);
+        SetAllUI(true);
         yield return new WaitForSeconds(3f); // HIDE ROUND PANEL / SHOW ROUND START TEXT
-        roundPanel.SetActive(false);
-        startEndText.enabled = true;
+        SetAllUI(false);
+        startAnim.SetTrigger("Start");
         yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
         if (gameLogic != null) gameLogic.SetView("Ingame");
-        startEndText.enabled = false;
-        animateUI.ShiftReminderPanel();
         canSpawn = true;
+        Instantiate(roborg, roborgSpawn.position, roborgSpawn.rotation);
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
         if (gameLogic != null) gameLogic.SetView("Wait");
-        startEndText.text = "FINISH!";
-        startEndText.enabled = true;
-        animateUI.ShiftReminderPanel();
+        //startEndText.text = "FINISH!";
+        //startEndText.enabled = true;
         GetPlayerEstimates();
         yield return new WaitForSeconds(2f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
         answerText.text = "THERE WERE...\n";
         animateUI.ShiftPlayersPanel();
-        startEndText.enabled = false;
+        //startEndText.enabled = false;
         resultsPanel.SetActive(true);
         yield return new WaitForSeconds(2.4f); // SHOW MONSTER SUM
         answerText.text = "THERE WERE...\n" + monsterSum;
@@ -304,7 +314,7 @@ public class GameController : MonoBehaviour
         winnerPanel.SetActive(true);
         WhoWon();
         yield return new WaitForSeconds(2f);
-        if (gameTied)
+        if (gameTied || winner == null)
         {
             winnerName.text = "NOBODY! A TIE GAME";
         }
@@ -326,30 +336,22 @@ public class GameController : MonoBehaviour
             {
                 nextSpawnRandom = Time.time + spawnRateRandom;
                 ranTran = GetRandomSpawn();
-                GameObject mon = Instantiate(GetRandomMonster(), ranTran.position, ranTran.rotation);
-                if (mon.tag.Equals(curMon.name))
+                GameObject mon = Instantiate(GetRandomMonster(curSet.monsters), ranTran.position, ranTran.rotation);
+                if (mon.tag.Equals(curSet.name) || currentRound == 5)
                 {
                     monsterSum += mon.GetComponent<MonsterStats>().quantity;
                 }
                 if (reverseMonsters)
                 {
                     revRanTran = GetReverseRandomSpawn();
-                    GameObject revMon = Instantiate(GetRandomMonster(), revRanTran.position, revRanTran.rotation);
+                    GameObject revMon = Instantiate(GetRandomMonster(curSet.monsters), revRanTran.position, revRanTran.rotation);
                     revMon.GetComponent<MonsterStats>().ChangeDirection();
-                    if (revMon.tag.Equals(curMon.name))
+                    if (revMon.tag.Equals(curSet.name) || currentRound == 5)
                     {
                         monsterSum += revMon.GetComponent<MonsterStats>().quantity;
                     }
                 }
 
-            }
-            else if (Time.time > nextSpawnBiased) //SPAWN BIASED CREATURES FOR PROMPT
-            {
-                nextSpawnBiased = Time.time + spawnRateBiased;
-                Transform ranTran2 = GetRandomSpawn();
-                GameObject biasedMon = Instantiate(curMon.monster, ranTran2.position, ranTran2.rotation);
-                monsterSum++;
-                Destroy(biasedMon, 15f);
             }
         }
     }

@@ -63,7 +63,12 @@ ModelImporter:
     7400000: anim_stack
     9500000: //RootNode
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Single Sided Material
+    second: {fileID: 2100000, guid: 0451c5217dd08594e8a01612398c3993, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

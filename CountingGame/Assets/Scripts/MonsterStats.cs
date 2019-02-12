@@ -15,6 +15,14 @@ public class MonsterStats : MonoBehaviour
     {
         xform = this.GetComponent<Transform>();
         Destroy(this.gameObject, deathTime);
+        if (Random.Range(0, 10) == 7)
+        {
+            speed = 2 * speed;
+        }
+        else
+        {
+            speed = Random.Range(0.9f * speed, 1.1f * speed);
+        }
     }
 
     public void ChangeDirection()

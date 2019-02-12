@@ -59,17 +59,19 @@ MonoBehaviour:
     type: 3}
   greengox3: {fileID: 8303753656490230682, guid: daad193aeab6cf548ac3a2487d1a49ed,
     type: 3}
-  picPurpleBall: {fileID: 2800000, guid: 4b68f26b3e039de42a7ba7b72e9c7fb9, type: 3}
-  picPurpleBird: {fileID: 2800000, guid: 384f195864083ce40a47c405369854e1, type: 3}
+  doog: {fileID: 2303692773176815312, guid: 266fc4b908af51a4aa7ef60e9e28f360, type: 3}
+  cherb: {fileID: 6413841232322626185, guid: aa83e1c87ab5d1f48ac26f618cbabd3a, type: 3}
+  cherpPurple: {fileID: 3790461346401709341, guid: 7cd378cb25dfbe445892c47963b29d2d,
+    type: 3}
+  gruub: {fileID: 3022764213183122022, guid: ed02d22c07599ab458fe99c90a88c62d, type: 3}
+  round: {fileID: 0}
+  purbleSwarmFlavor: {fileID: 0}
   spawnPointsObj: {fileID: 0}
   revSpawnPointObj: {fileID: 0}
+  roborgSpawn: {fileID: 0}
+  purbleAnim: {fileID: 0}
+  startAnim: {fileID: 0}
   animateUI: {fileID: 0}
-  roundPanel: {fileID: 0}
-  roundText: {fileID: 0}
-  flavorText: {fileID: 0}
-  rouMonsterPic: {fileID: 0}
-  startEndText: {fileID: 0}
-  stakesText: {fileID: 0}
   resultsPanel: {fileID: 0}
   roundText2: {fileID: 0}
   youWereCountingText: {fileID: 0}
@@ -87,5 +89,3 @@ MonoBehaviour:
   playerContextText: {fileID: 0}
   winnerPanel: {fileID: 0}
   winnerName: {fileID: 0}
-  reminderPanel: {fileID: 0}
-  remMonsterPic: {fileID: 0}
