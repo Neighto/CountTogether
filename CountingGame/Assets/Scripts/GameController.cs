@@ -58,7 +58,17 @@ public class GameController : MonoBehaviour
     private List<RawImage> roundList;
 
     //Flavors UI
-    public GameObject purbleSwarmFlavor;
+    public GameObject wildAndFast;
+    public GameObject birdsOfAFeather;
+    public GameObject blueConfusions;
+    public GameObject countThemAll;
+    public GameObject greengoSwarm;
+    public GameObject greenerGood;
+    public GameObject noKidsAllowed;
+    public GameObject purbleParade;
+    public GameObject purpleProblems;
+    public GameObject purbleSwarm;
+    public GameObject powerInNumbers;
 
     //Spawn Points
     private List<Transform> spawnPoints = new List<Transform>();
@@ -71,6 +81,12 @@ public class GameController : MonoBehaviour
     //Animations
     public GameObject purbleAnim;
     public GameObject greengoAnim;
+    public GameObject bluebeyAnim;
+    public GameObject batteAnim;
+    public GameObject birdpleAnim;
+    public GameObject cherbAnim;
+    public GameObject doogAnim;
+    public GameObject everything;
     public Animator startAnim;
     public Animator endAnim;
 
@@ -128,18 +144,24 @@ public class GameController : MonoBehaviour
             revSpawnPoints.Add(t);
 
         //Make Sets
-        Set purbleSwarm = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble } );
-        Set greengoSwarm = new Set("greengo", greengoAnim, purbleSwarmFlavor, new GameObject[] { greengox1, greengox2, greengox3, flyingGreengo, fakeGreengo, cherb });
-        Set purpleConfusion = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, flyingGreengo, purpleBird, cherbPurple, doog });
-        Set blueConfusion = new Set("bluebey", purbleAnim, purbleSwarmFlavor, new GameObject[] { bluebey, gruub, batte, ghost });
-        Set birdsOfFeather = new Set("bird", purbleAnim, purbleSwarmFlavor, new GameObject[] { purpleBird, batte, cherb, cherbPurple, flyingPurble, flyingGreengo });
-        Set noPurbles = new Set("cherb", purbleAnim, purbleSwarmFlavor, new GameObject[] { cherb, cherbPurple, doog, batte, purpleBird, ghost });
-        Set allPurbles = new Set("purble", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, bluebey, greengox1, greengox2, greengox3 });
-
-        easySets = new List<Set> { purbleSwarm, blueConfusion, greengoSwarm, purpleConfusion };
-        hardSets = new List<Set> { birdsOfFeather, noPurbles, allPurbles };
-        countEverything = new Set("all", purbleAnim, purbleSwarmFlavor, new GameObject[] { purblex1, purblex2, purblex3, greengox2, greengox3, bluebey,
-        purpleBird, gruub, fakeGreengo, cherb, cherbPurple, doog, ghost, batte, flyingGreengo, fisk});
+        Set purbleSwarm = new Set("purble", purbleAnim, purbleParade, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, batte } );
+        Set greengoSwarm = new Set("greengo", greengoAnim, greenerGood, new GameObject[] { greengox1, greengox2, greengox3, flyingGreengo, fakeGreengo, cherb });
+        Set purpleConfusion = new Set("purble", purbleAnim, purpleProblems, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, flyingGreengo, purpleBird, cherbPurple });
+        Set purpleConfusion2 = new Set("birdple", birdpleAnim, purpleProblems, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, purpleBird, purpleBird, purpleBird, cherbPurple });
+        Set blueConfusion = new Set("bluebey", bluebeyAnim, blueConfusions, new GameObject[] { bluebey, bluebey, bluebey, gruub, batte, ghost });
+        Set blueConfusion2 = new Set("batte", batteAnim, blueConfusions, new GameObject[] { bluebey, gruub, batte, batte, batte, ghost, ghost });
+        Set birdsOfFeather = new Set("birdple", birdpleAnim, birdsOfAFeather, new GameObject[] { purpleBird, purpleBird, purpleBird, batte, cherb, cherbPurple, flyingPurble });
+        Set birdsOfFeather2 = new Set("cherb", cherbAnim, birdsOfAFeather, new GameObject[] { purpleBird, batte, cherb, cherb, cherb, cherbPurple, flyingPurble });
+        Set noPurbles = new Set("cherb", cherbAnim, noKidsAllowed, new GameObject[] { cherb, cherb, cherb, cherbPurple, doog, batte, purpleBird, ghost });
+        Set noPurbles2 = new Set("doog", doogAnim, noKidsAllowed, new GameObject[] { cherb, cherbPurple, doog, doog, doog, doog, batte, purpleBird, ghost });
+        Set weirdos = new Set("doog", doogAnim, wildAndFast, new GameObject[] { doog, doog, doog, doog, doog, roborg });
+        Set allPurbles = new Set("purble", purbleAnim, powerInNumbers, new GameObject[] { purblex1, purblex2, purblex3, purblex1, purblex2, purblex3, flyingPurble, bluebey, greengox1, greengox2, greengox3 });
+        Set allPurbles2 = new Set("greengo", greengoAnim, powerInNumbers, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, bluebey, greengox1, greengox2, greengox3, greengox1, greengox2, greengox3 });
+        Set allPurbles3 = new Set("bluebey", bluebeyAnim, powerInNumbers, new GameObject[] { purblex1, purblex2, flyingPurble, bluebey, bluebey, bluebey, bluebey, bluebey, bluebey, greengox1, greengox2 });
+        easySets = new List<Set> { purbleSwarm, blueConfusion, blueConfusion2, greengoSwarm, purpleConfusion };
+        hardSets = new List<Set> { birdsOfFeather, birdsOfFeather2, noPurbles, noPurbles2, allPurbles, allPurbles2, allPurbles3, weirdos };
+        countEverything = new Set("all", everything, countThemAll, new GameObject[] { purblex1, purblex2, purblex3, greengox2, greengox3, bluebey,
+        purpleBird, gruub, fakeGreengo, cherb, cherbPurple, doog, ghost, batte, flyingGreengo});
 
         //Find GameLogic for SetView access
         if (GameObject.Find("GameLogic")) gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
@@ -219,6 +241,8 @@ public class GameController : MonoBehaviour
                 gameTied = true;
                 break;
             }
+            p.score = 0;
+            p.isReady = false;
         }
     }
 
@@ -245,9 +269,9 @@ public class GameController : MonoBehaviour
             }
             else if (roundNumber == 2)
             {
+                spawnRateRandom = 0.3f * spawnRateRandom; //increase randoms spawn rate
                 curSet = GetEasySet();
                 fishSpawning = true;
-                spawnRateRandom = 0.6f * spawnRateRandom; //increase randoms spawn rate
                 points = 20;
             }
             else if (roundNumber == 3)
@@ -265,6 +289,7 @@ public class GameController : MonoBehaviour
             else if (roundNumber == 5) //Count everything
             {
                 curSet = countEverything;
+                spawnRateRandom = 2f * spawnRateRandom; //increase randoms spawn rate
                 fishSpawnRate = 0.5f * fishSpawnRate; //increase fish spawn rate
                 points = 50;
             }
@@ -329,10 +354,11 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            winnerName.text = "PLAYER " + (winner.name + 1);
+            int n = int.Parse(winner.name) + 1;
+            winnerName.text = "PLAYER " + n;
         }
         yield return new WaitForSeconds(6f);
-        if (gameLogic != null) gameLogic.ResetVariables();
+        if (gameLogic != null) gameLogic.SetMenuScreens();
         SceneManager.LoadScene("Lobby");
     }
 
@@ -365,7 +391,7 @@ public class GameController : MonoBehaviour
             {
                 nextFishSpawn = Time.time + fishSpawnRate;
                 Instantiate(fisk, fiskSpawn.position, fiskSpawn.rotation);
-                monsterSum++;
+                if (currentRound == 5) monsterSum++;
             }
 
         }

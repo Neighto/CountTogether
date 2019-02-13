@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1019323196}
   m_Layer: 0
   m_Name: Roborg
-  m_TagString: roburg
+  m_TagString: roborg
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3.2
   quantity: 1
-  deathTime: 22
+  deathTime: 20
 --- !u!1 &5493532298706975976
 GameObject:
   m_ObjectHideFlags: 0

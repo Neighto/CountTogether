@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 6413841232322626230}
   m_Layer: 0
   m_Name: Cherb
-  m_TagString: Untagged
+  m_TagString: cherb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,9 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09f41ad12e074d499ab76119fa4bc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 9
   quantity: 1
-  deathTime: 15
+  deathTime: 10
 --- !u!1001 &6413841231599787288
 PrefabInstance:
   m_ObjectHideFlags: 0

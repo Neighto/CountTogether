@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 2303692773176815318}
   m_Layer: 0
   m_Name: Doog
-  m_TagString: Untagged
+  m_TagString: doog
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,9 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09f41ad12e074d499ab76119fa4bc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 9
   quantity: 1
-  deathTime: 15
+  deathTime: 12
 --- !u!1 &2303692773428630851
 GameObject:
   m_ObjectHideFlags: 0

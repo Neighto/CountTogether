@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
-    public static GameLogic instance;
+    private static GameLogic instance;
     public GameObject player;
 
     private GameObject readySpots;
@@ -23,17 +23,21 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            return;
+        }
+        Destroy(this.gameObject);
+    }
+
+    private void Start()
+    {
         AirConsole.instance.onMessage += OnMessage;
         AirConsole.instance.onConnect += OnConnect;
         AirConsole.instance.onReady += OnReady;
         AirConsole.instance.onDisconnect += OnDisconnect;
-
-        ResetVariables();
-    }
-
-    public void ResetVariables()
-    {
         inGame = false;
         allTrue = false;
         readySpots = GameObject.Find("ReadySpots");
@@ -165,6 +169,17 @@ public class GameLogic : MonoBehaviour
 
         }
     }
+
+    public void SetMenuScreens()
+    {
+        int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
+        AirConsole.instance.SetActivePlayers(numberOfPlayers);
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Menu");
+        }
+    }
+
 
     void AllPlayersReady(int numberOfPlayers)
     {

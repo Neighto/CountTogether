@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8303753656490230680}
   m_Layer: 0
   m_Name: Greengox3
-  m_TagString: Untagged
+  m_TagString: greengo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09f41ad12e074d499ab76119fa4bc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 5
   quantity: 3
-  deathTime: 20
+  deathTime: 15
 --- !u!1 &8303753657097827298
 GameObject:
   m_ObjectHideFlags: 0

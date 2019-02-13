@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1707131924357411037}
   m_Layer: 0
   m_Name: Bluebey
-  m_TagString: Untagged
+  m_TagString: bluebey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09f41ad12e074d499ab76119fa4bc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  speed: 13
   quantity: 1
-  deathTime: 14
+  deathTime: 9
 --- !u!1 &1707131924729505229
 GameObject:
   m_ObjectHideFlags: 0

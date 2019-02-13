@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09f41ad12e074d499ab76119fa4bc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 9
   quantity: 1
-  deathTime: 15
+  deathTime: 10
 --- !u!1 &3790461347469244404
 GameObject:
   m_ObjectHideFlags: 0

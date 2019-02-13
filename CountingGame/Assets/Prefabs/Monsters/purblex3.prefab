@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 4653888044784340136}
   - component: {fileID: 893299736014854287}
   m_Layer: 0
-  m_Name: PurpleBallx3
+  m_Name: purblex3
   m_TagString: purble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,9 +93,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09f41ad12e074d499ab76119fa4bc04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 5
   quantity: 3
-  deathTime: 20
+  deathTime: 15
 --- !u!65 &893299736014854287
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -73,13 +73,31 @@ MonoBehaviour:
   batte: {fileID: 1597933006004000689, guid: a5164d002217786469b0ea370c47ad63, type: 3}
   fisk: {fileID: 7348825052707233747, guid: 54bbde146068bd94cb43fe59bb802c31, type: 3}
   round: {fileID: 0}
-  purbleSwarmFlavor: {fileID: 0}
+  wildAndFast: {fileID: 0}
+  birdsOfAFeather: {fileID: 0}
+  blueConfusions: {fileID: 0}
+  countThemAll: {fileID: 0}
+  greengoSwarm: {fileID: 0}
+  greenerGood: {fileID: 0}
+  noKidsAllowed: {fileID: 0}
+  purbleParade: {fileID: 0}
+  purpleProblems: {fileID: 0}
+  purbleSwarm: {fileID: 0}
+  powerInNumbers: {fileID: 0}
   spawnPointsObj: {fileID: 0}
   revSpawnPointObj: {fileID: 0}
   roborgSpawn: {fileID: 0}
   fiskSpawn: {fileID: 0}
   purbleAnim: {fileID: 0}
+  greengoAnim: {fileID: 0}
+  bluebeyAnim: {fileID: 0}
+  batteAnim: {fileID: 0}
+  birdpleAnim: {fileID: 0}
+  cherbAnim: {fileID: 0}
+  doogAnim: {fileID: 0}
+  everything: {fileID: 0}
   startAnim: {fileID: 0}
+  endAnim: {fileID: 0}
   animateUI: {fileID: 0}
   playersPanel: {fileID: 0}
   countText1: {fileID: 0}

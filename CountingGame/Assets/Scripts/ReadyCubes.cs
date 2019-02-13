@@ -7,5 +7,4 @@ public class ReadyCubes : MonoBehaviour
 
     public bool allReady = false;
 
-    
 }
