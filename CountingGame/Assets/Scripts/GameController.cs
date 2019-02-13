@@ -241,13 +241,19 @@ public class GameController : MonoBehaviour
         }
 
         //Find Ties
+        bool once = false;
         for (int i = 0; i < players.Count; i++)
         {
             Player p = players[i].GetComponent<Player>();
+            
             if (p.score == best)
             {
-                gameTied = true;
-                break;
+                if (once)
+                {
+                    gameTied = true;
+                    break;
+                }
+                once = true;
             }
         }
     }
