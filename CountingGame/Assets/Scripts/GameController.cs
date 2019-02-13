@@ -314,7 +314,9 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(3f); // HIDE ROUND PANEL / SHOW ROUND START TEXT
         SetAllUI(false);
         startAnim.SetTrigger("Start");
-        yield return new WaitForSeconds(2f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
+        yield return new WaitForSeconds(1f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
+        animateUI.ShiftDarkenBackground(); //Lighten
+        yield return new WaitForSeconds(1f);
         if (gameLogic != null) gameLogic.SetCountScreens();
         canSpawn = true;
         if (currentRound == 5)
@@ -328,7 +330,9 @@ public class GameController : MonoBehaviour
         if (gameLogic != null) gameLogic.SetWaitScreens();
         endAnim.SetTrigger("End");
         GetPlayerEstimates();
-        yield return new WaitForSeconds(2f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
+        yield return new WaitForSeconds(0.5f);
+        animateUI.ShiftDarkenBackground(); //Darken
+        yield return new WaitForSeconds(1.5f); // SHOW RESULTS PANEL AND PLAYER ESTIMATES / HIDE ROUND END TEXT
         animateUI.ShiftPlayersPanel();
         answerText.text = "THERE WERE";
         yield return new WaitForSeconds(0.5f); // SHOW MONSTER SUM
