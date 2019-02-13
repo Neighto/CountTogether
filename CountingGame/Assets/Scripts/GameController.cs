@@ -228,6 +228,8 @@ public class GameController : MonoBehaviour
     {
         int best = -1;
         List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+
+        //Find Best Score
         for (int i = 0; i < players.Count; i++)
         {
             Player p = players[i].GetComponent<Player>();
@@ -236,13 +238,17 @@ public class GameController : MonoBehaviour
                 best = p.score;
                 winner = p;
             }
-            else if (p.score == best)
+        }
+
+        //Find Ties
+        for (int i = 0; i < players.Count; i++)
+        {
+            Player p = players[i].GetComponent<Player>();
+            if (p.score == best)
             {
                 gameTied = true;
                 break;
             }
-            p.score = 0;
-            p.isReady = false;
         }
     }
 

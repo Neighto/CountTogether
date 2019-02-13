@@ -42,10 +42,6 @@
         /* the style sheet dictates what our elements (buttons, backgrounds etc.) will look like. */
 
         #background {
-           /* background: url(player1_bg.png);
-            width: auto;
-            max-width: 100%;
-            height: auto;*/
         }
 
         .button {
@@ -128,7 +124,6 @@
   	  ViewManager.show("Start");
 
   	  me.airconsole.onMessage = function (from, data) {
-  	      //document.getElementById("content").innerHTML = "You are player " + data;
   	      ViewManager.show(data);
       };
 
@@ -229,9 +224,6 @@
     <div class="view" id="Menu">
         <div class="button" id="menu-button" ontouchstart="window.app.pressMenuScreenButton()"></div>
         <div class="button-text">Menu Screen Button</div>
-    </div>
-    <div class="view" id="Wait">
-        <div class="button"></div>
     </div>
 </body>
 </html>
