@@ -21,7 +21,6 @@ public class GameLogic : MonoBehaviour
     private Text timerTextShadow;
 
     private int numberOfPlayers;
-    private bool allTrue = false;
     private bool inGame = false;
 
 #if !DISABLE_AIRCONSOLE
@@ -50,7 +49,6 @@ public class GameLogic : MonoBehaviour
     public void FindVariables()
     {
         inGame = false;
-        allTrue = false;
         readySpots = GameObject.Find("ReadySpots");
         readyAnims = readySpots.GetComponentsInChildren<Animator>();
         readyCubes = readySpots.GetComponent<ReadyCubes>();
@@ -60,7 +58,9 @@ public class GameLogic : MonoBehaviour
         {
             p.GetComponent<Player>().score = 0;
             p.GetComponent<Player>().isReady = false;
+            readyAnims[int.Parse(p.name)].SetBool("Joined", true);
         }
+
     }
 
     void OnReady(string code)
@@ -81,7 +81,9 @@ public class GameLogic : MonoBehaviour
 
             if (numberOfPlayers <= 8)
             {
-                AirConsole.instance.Message(device_id, "Menu");
+                if (numberOfPlayers == 1) AirConsole.instance.Message(device_id, "Menu"); //player one can choose to start!
+                else WaitScreen(device_id); //tell players to sit tight and wait!
+
                 for (int i = 0; i < numberOfPlayers; i++)
                 {
                     if (GameObject.Find(i.ToString()) == null)
@@ -90,6 +92,8 @@ public class GameLogic : MonoBehaviour
                         newPlayer.name = i.ToString();
                     }
                 }
+                int playerNum = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
+                readyAnims[playerNum].SetBool("Joined", true);
             }
         }
 
@@ -119,20 +123,8 @@ public class GameLogic : MonoBehaviour
 
             if (action == "menu-button")
             {
-                Player player = GameObject.Find("" + active_player).GetComponent<Player>();
-                player.isReady = !player.isReady;
-
-                if (player.isReady == true)
-                {
-                    AllPlayersReady(AirConsole.instance.GetControllerDeviceIds().Count);
-                    readyAnims[active_player].SetBool("Joined", true);
-                }
-                else
-                {
-                    readyCubes.allReady = false;
-                    readyAnims[active_player].SetBool("Joined", false);
-                }
-
+                readyCubes.allReady = !readyCubes.allReady;
+                if (readyCubes.allReady) StartCoroutine(AllReadyDelay());
             }
         }
     }
@@ -164,43 +156,26 @@ public class GameLogic : MonoBehaviour
 
     public void SetWaitScreens()
     {
-        for (int i = 0; i < numberOfPlayers; i++)
+        for (int i = 0; i < numberOfPlayers;)
         {
-            if (i == 0) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait1");
-            else if (i == 1) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait2");
-            else if (i == 2) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait3");
-            else if (i == 3) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait4");
-            else if (i == 4) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait5");
-            else if (i == 5) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait6");
-            else if (i == 6) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait7");
-            else if (i == 7) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Wait8");
+            int device_id = AirConsole.instance.ConvertPlayerNumberToDeviceId(i);
+            AirConsole.instance.Message(device_id, "Wait" + ++i);
         }
+    }
+
+    private void WaitScreen(int device_id)
+    {
+        int playerNum = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
+        AirConsole.instance.Message(device_id, "Wait" + ++playerNum);
     }
 
     public void SetMenuScreens()
     {
-        for (int i = 0; i < numberOfPlayers; i++) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Menu");
-    }
-
-    void AllPlayersReady(int numberOfPlayers)
-    {
-        allTrue = true;
-        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            if (p.GetComponent<Player>().isReady == false)
-            {
-                allTrue = false;
-                readyCubes.allReady = false;
-                break;
-            }
-        }
-
-        if (allTrue) StartCoroutine(AllReadyDelay()); //AND STOP LETTING PEOPLE IN??
+        AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(0), "Menu");
     }
 
     IEnumerator AllReadyDelay()
     {
-        readyCubes.allReady = true; //gobal variable, will be set false if any disconnect or player presses ready again
         for (int i = 5; i >= 0; i--) //while everybody is ready OR timer ends
         {
             timerText.text = "START IN " + i;

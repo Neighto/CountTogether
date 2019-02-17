@@ -130,7 +130,8 @@ public class GameController : MonoBehaviour
     private GameLogic gameLogic;
     private Transform ranTran;
     private Transform revRanTran;
-    private Set curSet;
+    private Set curSet = null;
+    private Set prevSet = null;
     Player winner;
 
     private void Start()
@@ -172,13 +173,25 @@ public class GameController : MonoBehaviour
     //Get an easy set
     Set GetEasySet()
     {
-        return easySets[Random.Range(0, easySets.Count)];
+        Set set = easySets[Random.Range(0, easySets.Count)];
+        while (set == prevSet)
+        {
+            set = easySets[Random.Range(0, easySets.Count)];
+        }
+        prevSet = set;
+        return set;
     }
 
     //Get a hard set
     Set GetHardSet()
     {
-        return hardSets[Random.Range(0, hardSets.Count)];
+        Set set = hardSets[Random.Range(0, hardSets.Count)];
+        while (set == prevSet)
+        {
+            set = hardSets[Random.Range(0, hardSets.Count)];
+        }
+        prevSet = set;
+        return set;
     }
 
     //Get random monster from a given set
@@ -295,7 +308,7 @@ public class GameController : MonoBehaviour
             else if (roundNumber == 4)
             {
                 curSet = GetHardSet();
-                spawnRateRandom = 0.6f * spawnRateRandom; //increase randoms spawn rate
+                spawnRateRandom = 0.8f * spawnRateRandom; //increase randoms spawn rate
                 points = 40;
             }
             else if (roundNumber == 5) //Count everything
