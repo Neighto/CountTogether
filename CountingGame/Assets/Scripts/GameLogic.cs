@@ -68,7 +68,6 @@ public class GameLogic : MonoBehaviour
         //Initialize Game State
         JObject newGameState = new JObject();
         newGameState.Add("view", new JObject());
-        //newGameState.Add("playerColors", new JObject());
 
         AirConsole.instance.SetCustomDeviceState(newGameState);
     }
@@ -202,7 +201,7 @@ public class GameLogic : MonoBehaviour
     IEnumerator AllReadyDelay()
     {
         readyCubes.allReady = true; //gobal variable, will be set false if any disconnect or player presses ready again
-        for (int i = 3; i >= 0; i--) //while everybody is ready OR timer ends
+        for (int i = 5; i >= 0; i--) //while everybody is ready OR timer ends
         {
             timerText.text = "START IN " + i;
             timerTextShadow.text = "START IN " + i;

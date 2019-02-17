@@ -154,7 +154,7 @@ public class GameController : MonoBehaviour
         Set birdsOfFeather2 = new Set("cherb", cherbAnim, birdsOfAFeather, new GameObject[] { purpleBird, batte, cherb, cherb, cherb, cherbPurple, flyingPurble });
         Set noPurbles = new Set("cherb", cherbAnim, noKidsAllowed, new GameObject[] { cherb, cherb, cherb, cherbPurple, doog, batte, purpleBird, ghost });
         Set noPurbles2 = new Set("doog", doogAnim, noKidsAllowed, new GameObject[] { cherb, cherbPurple, doog, doog, doog, doog, batte, purpleBird, ghost });
-        Set weirdos = new Set("doog", doogAnim, wildAndFast, new GameObject[] { doog, doog, doog, doog, doog, roborg });
+        Set weirdos = new Set("doog", doogAnim, wildAndFast, new GameObject[] { doog, doog, doog, doog, gruub, roborg });
         Set allPurbles = new Set("purble", purbleAnim, powerInNumbers, new GameObject[] { purblex1, purblex2, purblex3, purblex1, purblex2, purblex3, flyingPurble, bluebey, greengox1, greengox2, greengox3 });
         Set allPurbles2 = new Set("greengo", greengoAnim, powerInNumbers, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, bluebey, greengox1, greengox2, greengox3, greengox1, greengox2, greengox3 });
         Set allPurbles3 = new Set("bluebey", bluebeyAnim, powerInNumbers, new GameObject[] { purblex1, purblex2, flyingPurble, bluebey, bluebey, bluebey, bluebey, bluebey, bluebey, greengox1, greengox2 });
