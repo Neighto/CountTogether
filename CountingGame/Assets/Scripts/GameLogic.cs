@@ -10,8 +10,6 @@ public class GameLogic : MonoBehaviour
 {
     private static GameLogic instance;
 
-    public GameObject player;
-
     private GameObject readySpots;
     private ReadyCubes readyCubes;
 
@@ -20,7 +18,7 @@ public class GameLogic : MonoBehaviour
     private Text timerText;
     private Text timerTextShadow;
 
-    private int numberOfPlayers;
+    public int numberOfPlayers;
     private bool inGame = false;
 
 #if !DISABLE_AIRCONSOLE
@@ -54,12 +52,8 @@ public class GameLogic : MonoBehaviour
         readyCubes = readySpots.GetComponent<ReadyCubes>();
         timerText = GameObject.Find("timerText").GetComponent<Text>();
         timerTextShadow = GameObject.Find("timerTextShadow").GetComponent<Text>();
-        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            p.GetComponent<Player>().score = 0;
-            p.GetComponent<Player>().isReady = false;
-            readyAnims[int.Parse(p.name)].SetBool("Joined", true);
-        }
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player")) p.GetComponent<Player>().score = 0;
+        for (int i = 0; i < numberOfPlayers; i++) readyAnims[i].SetBool("Joined", true);
 
     }
 
@@ -76,37 +70,32 @@ public class GameLogic : MonoBehaviour
     {
         if (!inGame)
         {
-            int numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
+            numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
 
             if (numberOfPlayers <= 8)
             {
                 if (numberOfPlayers == 1) AirConsole.instance.Message(device_id, "Menu"); //player one can choose to start!
-                else WaitScreen(device_id); //tell players to sit tight and wait!
+                else SetWaitScreens(false); //tell players to sit tight and wait!
 
-                for (int i = 0; i < numberOfPlayers; i++)
-                {
-                    if (GameObject.Find(i.ToString()) == null)
-                    {
-                        GameObject newPlayer = Instantiate(player, transform.position, transform.rotation);
-                        newPlayer.name = i.ToString();
-                    }
-                }
-                int playerNum = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
-                readyAnims[playerNum].SetBool("Joined", true);
+                for (int i = 0; i < numberOfPlayers; i++) readyAnims[i].SetBool("Joined", true);
             }
         }
-
     }
 
     void OnDisconnect(int device_id)
     {
-        int active_player = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
+        if (!inGame)
+        {
+            readyCubes.allReady = false;
+            numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
+            AirConsole.instance.SetActivePlayers(numberOfPlayers);
 
-        readyAnims[active_player].SetBool("Joined", false);
-        readyCubes.allReady = false;
-        Destroy(GameObject.Find(active_player.ToString())); 
+            if (numberOfPlayers == 1) AirConsole.instance.Message(AirConsole.instance.GetActivePlayerDeviceIds[0], "Menu"); //player one can choose to start!
+            else SetWaitScreens(false); //tell players to sit tight and wait!
 
+            if (readyAnims[numberOfPlayers] != null) readyAnims[numberOfPlayers].SetBool("Joined", false);
+        }
     }
 
     void OnMessage(int deviceId, JToken message)
@@ -154,19 +143,14 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    public void SetWaitScreens()
+    public void SetWaitScreens(bool andMain)
     {
         for (int i = 0; i < numberOfPlayers;)
         {
             int device_id = AirConsole.instance.ConvertPlayerNumberToDeviceId(i);
             AirConsole.instance.Message(device_id, "Wait" + ++i);
         }
-    }
-
-    private void WaitScreen(int device_id)
-    {
-        int playerNum = AirConsole.instance.ConvertDeviceIdToPlayerNumber(device_id);
-        AirConsole.instance.Message(device_id, "Wait" + ++playerNum);
+        if (!andMain) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(0), "Menu");
     }
 
     public void SetMenuScreens()
@@ -193,7 +177,7 @@ public class GameLogic : MonoBehaviour
             numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
             inGame = true;
-            SetWaitScreens();
+            SetWaitScreens(true);
             SceneManager.LoadScene("Game");
         }
         else Debug.Log("Not everyone is ready!");

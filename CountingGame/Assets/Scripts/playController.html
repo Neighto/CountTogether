@@ -129,12 +129,11 @@
 
   	  me.airconsole.onMessage = function (from, data) {
   	      ViewManager.show(data);
-  	      document.getElementById("Start").textContent = "YOU ARE PLAYER " + data;
       };
 
       me.airconsole.onCustomDeviceStateChange = function (device_id, device_data) {
 
-          if (device_data["view"] != null && device_data["view"] != "" && device_id != airconsole.SCREEN) {
+          if (device_data["view"] != null && device_data["view"] != "" && device_id != me.airconsole.SCREEN) {
               ViewManager.show(device_data["view"]); //set a new view accordingly
           }
 

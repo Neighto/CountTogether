@@ -102,6 +102,7 @@ public class GameController : MonoBehaviour
     //Players UI
     private List<Text> playerCountTexts;
     List<GameObject> players;
+    private int numberOfPlayers;
     public GameObject playersPanel;
     public Text countText1;
     public Text countText2;
@@ -165,7 +166,24 @@ public class GameController : MonoBehaviour
         purpleBird, gruub, fakeGreengo, cherb, cherbPurple, doog, ghost, batte, flyingGreengo});
 
         //Find GameLogic for SetView access
-        if (GameObject.Find("GameLogic")) gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
+        if (GameObject.Find("GameLogic"))
+        {
+            gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
+            numberOfPlayers = gameLogic.numberOfPlayers;
+        }
+
+        //Get players
+        //players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+
+        players = new List<GameObject>();
+        players.Add(GameObject.Find("0"));
+        players.Add(GameObject.Find("1"));
+        players.Add(GameObject.Find("2"));
+        players.Add(GameObject.Find("3"));
+        players.Add(GameObject.Find("4"));
+        players.Add(GameObject.Find("5"));
+        players.Add(GameObject.Find("6"));
+        players.Add(GameObject.Find("7"));
 
         SetRound(currentRound); //initialized to 1
     }
@@ -215,8 +233,7 @@ public class GameController : MonoBehaviour
     void GetPlayerEstimates()
     {
         playerContextText.text = "WHAT DID YOU GUESS?";
-        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
             playerCountTexts[i].text = p.GetPlayerCount().ToString();
@@ -228,8 +245,7 @@ public class GameController : MonoBehaviour
     void GetPlayerScores()
     {
         playerContextText.text = "PLAYER SCORES";
-        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
             playerCountTexts[i].text = p.score.ToString();
@@ -240,10 +256,9 @@ public class GameController : MonoBehaviour
     void WhoWon()
     {
         int best = -1;
-        List<GameObject> players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
 
         //Find Best Score
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
             if (p.score > best)
@@ -255,7 +270,7 @@ public class GameController : MonoBehaviour
 
         //Find Ties
         bool once = false;
-        for (int i = 0; i < players.Count; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
             
@@ -346,7 +361,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
-        if (gameLogic != null) gameLogic.SetWaitScreens();
+        if (gameLogic != null) gameLogic.SetWaitScreens(true);
         endAnim.SetTrigger("End");
         GetPlayerEstimates();
         yield return new WaitForSeconds(0.5f);
