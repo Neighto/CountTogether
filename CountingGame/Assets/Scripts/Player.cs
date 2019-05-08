@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int score;
+    public int roundScore;
     private int playerCount = 0;
 
     public int GetPlayerCount()

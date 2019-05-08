@@ -54,6 +54,7 @@ public class GameController : MonoBehaviour
     private Set countEverything;
 
     //Rounds UI
+    public GameObject instructionsText;
     public GameObject round;
     private List<RawImage> roundList;
 
@@ -175,7 +176,8 @@ public class GameController : MonoBehaviour
         players.Add(GameObject.Find("6"));
         players.Add(GameObject.Find("7"));
 
-        SetRound(currentRound); //initialized to 1
+        StartCoroutine(InstructionDisplay()); //this calls setround
+        //SetRound(currentRound); //initialized to 1
     }
 
     //Get an easy set
@@ -227,14 +229,28 @@ public class GameController : MonoBehaviour
         {
             Player p = players[i].GetComponent<Player>();
             dynamicPlayerNames.playerCountTexts[i].text = p.GetPlayerCount().ToString();
-            p.score += (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(p.GetPlayerCount() - monsterSum), 2));
+            p.roundScore = (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(p.GetPlayerCount() - monsterSum), 2));
             p.ResetPlayerCount();
         }
     }
 
     void GetPlayerScores()
     {
-        playerContextText.text = "PLAYER SCORES";
+        playerContextText.text = "AWARDING POINTS...";
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            Player p = players[i].GetComponent<Player>();
+            dynamicPlayerNames.playerPointTexts[i].text = p.roundScore.ToString(); //should be just points of round
+            dynamicPlayerNames.playerAnimators[i].SetTrigger("Add");
+            dynamicPlayerNames.playerCountTexts[i].text = p.score.ToString();
+            p.score += p.roundScore;
+            StartCoroutine(DelayAddition()); //pretty inefficient
+        }
+    }
+
+    IEnumerator DelayAddition()
+    {
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
@@ -341,12 +357,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
         animateUI.ShiftDarkenBackground(); //Lighten
         yield return new WaitForSeconds(1f);
-        if (gameLogic != null)
-        {
-            gameLogic.SetCountScreens();
-            dynamicPlayerNames.Setup(numberOfPlayers); //new
-            gameLogic.SetNames(dynamicPlayerNames.playerNameTexts); //make more efficient
-        }
+        if (gameLogic != null) gameLogic.SetCountScreens();
         canSpawn = true;
         if (currentRound == 5)
         {
@@ -374,7 +385,9 @@ public class GameController : MonoBehaviour
         answerText.text = "THERE WERE..." + monsterSum;
         yield return new WaitForSeconds(2f); // AWARD POINTS TO PLAYERS
         GetPlayerScores();
-        yield return new WaitForSeconds(1.4f); // HIDE PLAYER PANEL AND RESULTS PANEL
+        yield return new WaitForSeconds(1.4f);
+        playerContextText.text = "PLAYER SCORES";
+        yield return new WaitForSeconds(1.6f); // HIDE PLAYER PANEL AND RESULTS PANEL
         animateUI.ShiftPlayersPanel();
         yield return new WaitForSeconds(1.5f); // PREPARE FOR NEW ROUND
         SetRound(++currentRound);
@@ -399,6 +412,17 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(6f);
         if (gameLogic != null) gameLogic.SetMenuScreens();
         SceneManager.LoadScene("Lobby");
+    }
+
+    //Initial instructions
+    IEnumerator InstructionDisplay()
+    {
+        instructionsText.SetActive(true);
+        yield return new WaitForSeconds(3f); //comment out to skip
+        instructionsText.SetActive(false);
+        dynamicPlayerNames.Setup(numberOfPlayers);
+        if (gameLogic != null) gameLogic.SetNames(dynamicPlayerNames.playerNameTexts);
+        SetRound(currentRound); //initialized to 1
     }
 
     //Update for instantiating monsters in a timely fashion

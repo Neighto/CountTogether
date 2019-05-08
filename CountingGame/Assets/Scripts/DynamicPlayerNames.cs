@@ -10,10 +10,12 @@ public class DynamicPlayerNames : MonoBehaviour
 
     public Text[] playerCountTexts;
     public Text[] playerNameTexts;
+    public Animator[] playerAnimators;
+    public Text[] playerPointTexts;
 
     private GameObject[] adjustedPlayerDisplays;
     private GameObject[] playerDisplays = new GameObject[13];
-    private bool setupOnce = false;
+
     // 1   2   9    3   10   4   C   5   11   6   12   7   8
     //[0] [1] [A2] [2] [A3] [3] [8] [4] [A5] [5] [A6] [6] [7]
 
@@ -23,18 +25,14 @@ public class DynamicPlayerNames : MonoBehaviour
         int i = 0;
         foreach (Transform child in this.transform)
         {
-            print(i);
             playerDisplays[i] = child.gameObject;
             playerDisplays[i].SetActive(false);
             i++;
         }
-
     }
 
     public void Setup(int numberOfPlayers) //called from GameController
     {
-        if (setupOnce == true) return;
-
         adjustedPlayerDisplays = new GameObject[numberOfPlayers];
 
         if (numberOfPlayers == 1)
@@ -134,19 +132,22 @@ public class DynamicPlayerNames : MonoBehaviour
             adjustedPlayerDisplays[7] = playerDisplays[7];
         }
 
-        SetPublicTextArrays();
-        setupOnce = true;
+        SetPublicPlayerArrays();
     }
 
-    void SetPublicTextArrays()
+    void SetPublicPlayerArrays()
     {
         playerCountTexts = new Text[adjustedPlayerDisplays.Length];
         playerNameTexts = new Text[adjustedPlayerDisplays.Length];
+        playerAnimators = new Animator[adjustedPlayerDisplays.Length];
+        playerPointTexts = new Text[adjustedPlayerDisplays.Length];
 
         for (int i = 0; i < adjustedPlayerDisplays.Length; i++)
         {
             playerCountTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(1).GetComponent<Text>();
             playerNameTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(0).GetComponent<Text>();
+            playerAnimators[i] = adjustedPlayerDisplays[i].transform.GetChild(2).GetComponent<Animator>();
+            playerPointTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(2).GetComponent<Text>();
         }
     }
 
