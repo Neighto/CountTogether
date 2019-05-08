@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &747670156706111609
+--- !u!1 &2548478813779332603
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 747670156706111615}
-  - component: {fileID: 747670156706111608}
+  - component: {fileID: 2548478813779332605}
+  - component: {fileID: 2548478813779332602}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &747670156706111615
+--- !u!4 &2548478813779332605
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 747670156706111609}
+  m_GameObject: {fileID: 2548478813779332603}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &747670156706111608
+--- !u!114 &2548478813779332602
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 747670156706111609}
+  m_GameObject: {fileID: 2548478813779332603}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2891ebd8c97d4ba48a52d402cfbf9a81, type: 3}
@@ -100,14 +100,7 @@ MonoBehaviour:
   endAnim: {fileID: 0}
   animateUI: {fileID: 0}
   playersPanel: {fileID: 0}
-  countText1: {fileID: 0}
-  countText2: {fileID: 0}
-  countText3: {fileID: 0}
-  countText4: {fileID: 0}
-  countText5: {fileID: 0}
-  countText6: {fileID: 0}
-  countText7: {fileID: 0}
-  countText8: {fileID: 0}
+  dynamicPlayerNames: {fileID: 0}
   playerContextText: {fileID: 0}
   roundText: {fileID: 0}
   answerText: {fileID: 0}
