@@ -183,6 +183,19 @@ public class GameLogic : MonoBehaviour
         else Debug.Log("Not everyone is ready!");
 
     }
+
+    //get nickname as user joins
+    public void SetNames(Text[] playerNameTexts) //was text
+    {
+        for (int i = 0; i < playerNameTexts.Length; i++)
+        {
+            string name = AirConsole.instance.GetNickname(AirConsole.instance.GetActivePlayerDeviceIds[i]); //may or may not work
+            if (name != null)
+            {
+                playerNameTexts[i].text = name;
+            }
+        }
+    }
  
 #endif
 }

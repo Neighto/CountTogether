@@ -100,18 +100,10 @@ public class GameController : MonoBehaviour
     public AnimateUI animateUI;
 
     //Players UI
-    private List<Text> playerCountTexts;
     List<GameObject> players;
     private int numberOfPlayers;
     public GameObject playersPanel;
-    public Text countText1;
-    public Text countText2;
-    public Text countText3;
-    public Text countText4;
-    public Text countText5;
-    public Text countText6;
-    public Text countText7;
-    public Text countText8;
+    public DynamicPlayerNames dynamicPlayerNames;
     public Text playerContextText;
     public Text roundText;
     public Text answerText;
@@ -139,7 +131,6 @@ public class GameController : MonoBehaviour
     {
         //Make Lists
         roundList = new List<RawImage>(round.GetComponentsInChildren<RawImage>());
-        playerCountTexts = new List<Text> { countText1, countText2, countText3, countText4, countText5, countText6, countText7, countText8 };
         foreach (Transform t in spawnPointsObj.transform)
             spawnPoints.Add(t);
         foreach (Transform t in revSpawnPointObj.transform)
@@ -172,9 +163,8 @@ public class GameController : MonoBehaviour
             numberOfPlayers = gameLogic.numberOfPlayers;
         }
 
-        //Get players
-        //players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
 
+        //Get players
         players = new List<GameObject>();
         players.Add(GameObject.Find("0"));
         players.Add(GameObject.Find("1"));
@@ -233,10 +223,10 @@ public class GameController : MonoBehaviour
     void GetPlayerEstimates()
     {
         playerContextText.text = "WHAT DID YOU GUESS?";
-        for (int i = 0; i < numberOfPlayers; i++)
+        for (int i = 0; i < numberOfPlayers; i++) //might cause an array error
         {
             Player p = players[i].GetComponent<Player>();
-            playerCountTexts[i].text = p.GetPlayerCount().ToString();
+            dynamicPlayerNames.playerCountTexts[i].text = p.GetPlayerCount().ToString();
             p.score += (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(p.GetPlayerCount() - monsterSum), 2));
             p.ResetPlayerCount();
         }
@@ -248,7 +238,7 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
-            playerCountTexts[i].text = p.score.ToString();
+            dynamicPlayerNames.playerCountTexts[i].text = p.score.ToString();
         }
     }
 
@@ -351,7 +341,12 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
         animateUI.ShiftDarkenBackground(); //Lighten
         yield return new WaitForSeconds(1f);
-        if (gameLogic != null) gameLogic.SetCountScreens();
+        if (gameLogic != null)
+        {
+            gameLogic.SetCountScreens();
+            dynamicPlayerNames.Setup(numberOfPlayers); //new
+            gameLogic.SetNames(dynamicPlayerNames.playerNameTexts); //make more efficient
+        }
         canSpawn = true;
         if (currentRound == 5)
         {
