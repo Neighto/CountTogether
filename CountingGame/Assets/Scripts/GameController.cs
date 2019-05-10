@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class GameController : MonoBehaviour
     }
 
     //Monsters
-    private List<GameObject> monsters;
     public GameObject purblex1;
     public GameObject purblex2;
     public GameObject purblex3;
@@ -111,7 +111,9 @@ public class GameController : MonoBehaviour
 
     //Winner UI
     public GameObject winnerPanel;
+    List<Tuple<int, int>> winners = new List<Tuple<int, int>>();
     public Text winnerName;
+    public Text winnerText;
 
     //Other
     private bool canSpawn = false;
@@ -126,7 +128,6 @@ public class GameController : MonoBehaviour
     private Transform revRanTran;
     private Set curSet = null;
     private Set prevSet = null;
-    Player winner;
 
     private void Start()
     {
@@ -164,7 +165,6 @@ public class GameController : MonoBehaviour
             numberOfPlayers = gameLogic.numberOfPlayers;
         }
 
-
         //Get players
         players = new List<GameObject>();
         players.Add(GameObject.Find("0"));
@@ -177,16 +177,15 @@ public class GameController : MonoBehaviour
         players.Add(GameObject.Find("7"));
 
         StartCoroutine(InstructionDisplay()); //this calls setround
-        //SetRound(currentRound); //initialized to 1
     }
 
     //Get an easy set
     Set GetEasySet()
     {
-        Set set = easySets[Random.Range(0, easySets.Count)];
+        Set set = easySets[UnityEngine.Random.Range(0, easySets.Count)];
         while (set == prevSet)
         {
-            set = easySets[Random.Range(0, easySets.Count)];
+            set = easySets[UnityEngine.Random.Range(0, easySets.Count)];
         }
         prevSet = set;
         return set;
@@ -195,10 +194,10 @@ public class GameController : MonoBehaviour
     //Get a hard set
     Set GetHardSet()
     {
-        Set set = hardSets[Random.Range(0, hardSets.Count)];
+        Set set = hardSets[UnityEngine.Random.Range(0, hardSets.Count)];
         while (set == prevSet)
         {
-            set = hardSets[Random.Range(0, hardSets.Count)];
+            set = hardSets[UnityEngine.Random.Range(0, hardSets.Count)];
         }
         prevSet = set;
         return set;
@@ -207,18 +206,18 @@ public class GameController : MonoBehaviour
     //Get random monster from a given set
     GameObject GetRandomMonster(GameObject[] monsters)
     {
-        return monsters[Random.Range(0, monsters.Length)];
+        return monsters[UnityEngine.Random.Range(0, monsters.Length)];
     }
 
     //Where monsters spawn (add diversity)
     Transform GetRandomSpawn()
     {
-        return spawnPoints[Random.Range(0, spawnPoints.Count)];
+        return spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
     }
 
     Transform GetReverseRandomSpawn()
     {
-        return revSpawnPoints[Random.Range(0, revSpawnPoints.Count)];
+        return revSpawnPoints[UnityEngine.Random.Range(0, revSpawnPoints.Count)];
     }
 
     //Get player estimates from each player prefab in the game
@@ -240,17 +239,23 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
-            dynamicPlayerNames.playerPointTexts[i].text = p.roundScore.ToString(); //should be just points of round
-            dynamicPlayerNames.playerAnimators[i].SetTrigger("Add");
             dynamicPlayerNames.playerCountTexts[i].text = p.score.ToString();
-            p.score += p.roundScore;
-            StartCoroutine(DelayAddition()); //pretty inefficient
+            if (p.roundScore > 0)
+            {
+                dynamicPlayerNames.playerPointTexts[i].text = "+" + p.roundScore.ToString(); //should be just points of round
+                dynamicPlayerNames.playerAnimators[i].SetTrigger("Add");
+                p.score += p.roundScore;
+            }
+
+            //StartCoroutine(DelayAddition()); 
         }
+        StartCoroutine(DelayAddition());
+
     }
 
     IEnumerator DelayAddition()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.05f);
         for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
@@ -259,37 +264,31 @@ public class GameController : MonoBehaviour
     }
 
     //Compare everybody's scores
-    void WhoWon()
+    void WhoWon() //get playerID name, if tie, crown multiple winners (up to 8)
     {
-        int best = -1;
-
-        //Find Best Score
+        //Sort scores
         for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
-            if (p.score > best)
-            {
-                best = p.score;
-                winner = p;
-            }
+            winners.Add(new Tuple<int, int>(p.score, i));
         }
+        winners.Sort((x, y) => y.Item1.CompareTo(x.Item1));
 
-        //Find Ties
-        bool once = false;
-        for (int i = 0; i < numberOfPlayers; i++)
+        int j = 1;
+        for (int i = 1; i < numberOfPlayers; i++)
         {
-            Player p = players[i].GetComponent<Player>();
-            
-            if (p.score == best)
+            if (winners[j].Item1 != winners[j - 1].Item1)
             {
-                if (once)
-                {
-                    gameTied = true;
-                    break;
-                }
-                once = true;
+                winners.RemoveAt(j); 
+            }
+            else
+            {
+                j++;
             }
         }
+        winners.TrimExcess();
+        if (winners.Count > 1) winnerText.text = "AND THE WINNERS ARE";
+        else winnerText.text = "AND THE WINNER IS";
     }
 
     //Sets up UI for each round (panels, pictures, names, flavortext, etc)
@@ -387,7 +386,7 @@ public class GameController : MonoBehaviour
         GetPlayerScores();
         yield return new WaitForSeconds(1.4f);
         playerContextText.text = "PLAYER SCORES";
-        yield return new WaitForSeconds(1.6f); // HIDE PLAYER PANEL AND RESULTS PANEL
+        yield return new WaitForSeconds(2f); // HIDE PLAYER PANEL AND RESULTS PANEL
         animateUI.ShiftPlayersPanel();
         yield return new WaitForSeconds(1.5f); // PREPARE FOR NEW ROUND
         SetRound(++currentRound);
@@ -400,15 +399,23 @@ public class GameController : MonoBehaviour
         winnerPanel.SetActive(true);
         WhoWon();
         yield return new WaitForSeconds(2f);
-        if (gameTied || winner == null)
+
+        for (int i = 0; i < winners.Count; i++) //winner text 1 tab 2 enter repeat
         {
-            winnerName.text = "IT'S A TIE";
+            int n = winners[i].Item2;
+            if (i % 2 != 0)
+            {
+                winnerName.text += dynamicPlayerNames.playerNameTexts[n].text;
+                if (i + 1 != winners.Count) winnerName.text += "\n";
+            }
+            else
+            {
+                winnerName.text += dynamicPlayerNames.playerNameTexts[n].text;
+                if (i + 1 != winners.Count) winnerName.text += "\t";
+            }
         }
-        else
-        {
-            int n = int.Parse(winner.name) + 1;
-            winnerName.text = "PLAYER " + n;
-        }
+
+
         yield return new WaitForSeconds(6f);
         if (gameLogic != null) gameLogic.SetMenuScreens();
         SceneManager.LoadScene("Lobby");
