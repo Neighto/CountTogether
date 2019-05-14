@@ -160,7 +160,7 @@ public class GameLogic : MonoBehaviour
 
     IEnumerator AllReadyDelay()
     {
-        for (int i = 5; i >= 0; i--) //while everybody is ready OR timer ends
+        for (int i = 5; i > 0; i--) //while everybody is ready OR timer ends
         {
             timerText.text = "START IN " + i;
             timerTextShadow.text = "START IN " + i;

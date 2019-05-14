@@ -53,10 +53,13 @@ public class GameController : MonoBehaviour
     private List<Set> hardSets;
     private Set countEverything;
 
+    //Music
+    public AudioSource music;
+
     //Rounds UI
-    public GameObject instructionsText;
-    public GameObject round;
-    private List<RawImage> roundList;
+    public GameObject startGame;
+    public Text startCountText;
+    public List<GameObject> roundList;
 
     //Flavors UI
     public GameObject wildAndFast;
@@ -132,7 +135,6 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         //Make Lists
-        roundList = new List<RawImage>(round.GetComponentsInChildren<RawImage>());
         foreach (Transform t in spawnPointsObj.transform)
             spawnPoints.Add(t);
         foreach (Transform t in revSpawnPointObj.transform)
@@ -246,8 +248,6 @@ public class GameController : MonoBehaviour
                 dynamicPlayerNames.playerAnimators[i].SetTrigger("Add");
                 p.score += p.roundScore;
             }
-
-            //StartCoroutine(DelayAddition()); 
         }
         StartCoroutine(DelayAddition());
 
@@ -296,7 +296,8 @@ public class GameController : MonoBehaviour
     {
         //Set-up UI
         roundText.text = "ROUND " + currentRound;
-        roundList[currentRound - 1].enabled = turnOn;
+        //roundList[currentRound - 1].enabled = turnOn;
+        roundList[currentRound - 1].SetActive(turnOn);
         curSet.flavorText.SetActive(turnOn);
         curSet.biasMonsterAnim.SetActive(turnOn);
     }
@@ -424,9 +425,14 @@ public class GameController : MonoBehaviour
     //Initial instructions
     IEnumerator InstructionDisplay()
     {
-        instructionsText.SetActive(true);
-        yield return new WaitForSeconds(3f); //comment out to skip
-        instructionsText.SetActive(false);
+        startGame.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        startCountText.text = "START IN...2";
+        yield return new WaitForSeconds(1f);
+        startCountText.text = "START IN...1";
+        yield return new WaitForSeconds(1f);
+        startGame.SetActive(false);
+        music.Play();
         dynamicPlayerNames.Setup(numberOfPlayers);
         if (gameLogic != null) gameLogic.SetNames(dynamicPlayerNames.playerNameTexts);
         SetRound(currentRound); //initialized to 1
