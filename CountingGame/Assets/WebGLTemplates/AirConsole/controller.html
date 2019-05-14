@@ -9,11 +9,17 @@
     var ViewManager = {
       views: {},
       current_view_id: null,
+      current_creature_id: null,
+      creatures: {},
 
       init: function() {
         var views = document.querySelectorAll('.view');
+        var creatures = document.querySelectorAll('.creature');
         for (var i = 0; i < views.length; i++) {
           this.views[views[i].id] = views[i];
+        }
+        for (var i = 0; i < creatures.length; i++) {
+            this.creatures[creatures[i].id] = creatures[i];
         }
         return this;
       },
@@ -34,6 +40,27 @@
         for (var key in this.views) {
           this.views[key].style.display = "none";
         }
+        for (var key in this.creatures) {
+            this.creatures[key].style.display = "none";
+        }
+      },
+
+      showCreature: function (id) {
+          var view = this.creatures[id];
+          if (view) {
+              this.current_creature_id = id;
+              this.hideAllCreatures();
+              view.style.display = "block";
+          } else {
+              console.warn("Could not find creature with ID:", id);
+          }
+          return this;
+      },
+
+      hideAllCreatures: function () {
+          for (var key in this.creatures) {
+              this.creatures[key].style.display = "none";
+          }
       }
     };
     </script>
@@ -49,6 +76,7 @@
         }
 
         .button {
+            position: relative;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -60,14 +88,29 @@
         }
 
         .wait {
+            position: relative;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             height: 100%;
         }
 
+        .creaturePic {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
         #menu-button {
             background-image: url("PhoneUI/begingame.jpg");
+        }
+
+        #buttonerror {
+            background-image: url("PhoneUI/buttonerror.jpg");
         }
 
         #wait-1 {
@@ -94,9 +137,15 @@
         #wait-8 {
             background-image: url("PhoneUI/player8_wait.jpg");
         }
-
+        #greengo {
+            background-image: url("PhoneUI/greengo.png");
+        }
+        /*
         #ingame-button1 {
             background-image: url("PhoneUI/player1_button.jpg");
+        }*/
+        #ingame-button1 {
+            background-image: url("PhoneUI/player1_button_2.jpg");
         }
         #ingame-button2 {
             background-image: url("PhoneUI/player2_button.png");
@@ -135,14 +184,15 @@
       var me = this;
       me.airconsole = new AirConsole({ "orientation": "portrait", "synchronize_time": "true" });
 
-      me.airconsole.getPremium(); //not working
+      //me.airconsole.getPremium(); //not working
 
       //initialize the view manager and set the first view
       ViewManager.init();
   	  ViewManager.show("Start");
 
   	  me.airconsole.onMessage = function (from, data) {
-  	      ViewManager.show(data);
+  	      if (data[0] == "_") ViewManager.showCreature(data);
+          else ViewManager.show(data);
       };
       
       me.airconsole.onCustomDeviceStateChange = function (device_id, device_data) {
@@ -184,6 +234,12 @@
 
     <div class="view" id="Start">
         <div>Loading...</div>
+    </div>
+    <div class="view" id="Error">
+        <div class="wait" id="buttonerror"></div>
+    </div>
+    <div class="creature" id="_Greengo">
+        <div class="creaturePic" id="greengo"></div>
     </div>
     <div class="view" id="Count1">
         <div class="button" id="ingame-button1" ontouchstart="window.app.pressIngameScreenButton()"></div>

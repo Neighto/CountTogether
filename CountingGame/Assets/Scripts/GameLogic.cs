@@ -18,6 +18,8 @@ public class GameLogic : MonoBehaviour
     private Text timerText;
     private Text timerTextShadow;
 
+    private readonly int maxPlayers = 8;
+
     public int numberOfPlayers;
     private bool inGame = false;
 
@@ -72,14 +74,22 @@ public class GameLogic : MonoBehaviour
         {
             numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
-
-            if (numberOfPlayers <= 8)
+            
+            if (numberOfPlayers <= maxPlayers)
             {
                 if (numberOfPlayers == 1) AirConsole.instance.Message(device_id, "Menu"); //player one can choose to start!
                 else SetWaitScreens(false); //tell players to sit tight and wait!
 
                 for (int i = 0; i < numberOfPlayers; i++) readyAnims[i].SetBool("Joined", true);
             }
+            else
+            {
+                AirConsole.instance.Message(device_id, "Error");
+            }
+        }
+        else
+        {
+            AirConsole.instance.Message(device_id, "Error");
         }
     }
 
@@ -128,9 +138,18 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    public void SetGreengoScreens()
+    {
+        for (int i = 0; i < numberOfPlayers && i < maxPlayers; i++)
+        {
+            int device_id = AirConsole.instance.ConvertPlayerNumberToDeviceId(i);
+            AirConsole.instance.Message(device_id, "_Greengo");
+        }
+    }
+
     public void SetCountScreens()
     {
-        for (int i = 0; i < numberOfPlayers; i++)
+        for (int i = 0; i < numberOfPlayers && i < maxPlayers; i++)
         {
             if (i == 0) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count1");
             else if (i == 1) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count2");
@@ -145,10 +164,11 @@ public class GameLogic : MonoBehaviour
 
     public void SetWaitScreens(bool andMain)
     {
-        for (int i = 0; i < numberOfPlayers;)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             int device_id = AirConsole.instance.ConvertPlayerNumberToDeviceId(i);
-            AirConsole.instance.Message(device_id, "Wait" + ++i);
+            if (i >= maxPlayers) AirConsole.instance.Message(device_id, "Error");
+            else AirConsole.instance.Message(device_id, "Wait" + (i + 1));
         }
         if (!andMain) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(0), "Menu");
     }

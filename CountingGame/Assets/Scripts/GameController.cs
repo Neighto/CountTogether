@@ -362,11 +362,12 @@ public class GameController : MonoBehaviour
         {
             Instantiate(roborg, roborgSpawn.position, roborgSpawn.rotation);
             monsterSum++;
+            yield return new WaitForSeconds(3f);
         }
-        if (currentRound < 3) yield return new WaitForSeconds(7f);
-        else yield return new WaitForSeconds(12f); // SPAWNING DISABLED AFTER X SECONDS
+        if (currentRound < 2) yield return new WaitForSeconds(6f);
+        else yield return new WaitForSeconds(8f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
-        yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
+        yield return new WaitForSeconds(9f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
         if (gameLogic != null) gameLogic.SetWaitScreens(true);
         endAnim.SetTrigger("End");
         GetPlayerEstimates();
@@ -445,7 +446,7 @@ public class GameController : MonoBehaviour
         {
             if (Time.time > nextSpawnRandom) //SPAWN RANDOM CREATURES
             {
-                nextSpawnRandom = Time.time + spawnRateRandom;
+                nextSpawnRandom = Time.time + spawnRateRandom + UnityEngine.Random.Range(-0.2f, 0.2f);
                 ranTran = GetRandomSpawn();
                 GameObject mon = Instantiate(GetRandomMonster(curSet.monsters), ranTran.position, ranTran.rotation);
                 if (mon.tag.Equals(curSet.name) || currentRound == 5)
