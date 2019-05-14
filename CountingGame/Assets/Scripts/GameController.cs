@@ -296,7 +296,6 @@ public class GameController : MonoBehaviour
     {
         //Set-up UI
         roundText.text = "ROUND " + currentRound;
-        //roundList[currentRound - 1].enabled = turnOn;
         roundList[currentRound - 1].SetActive(turnOn);
         curSet.flavorText.SetActive(turnOn);
         curSet.biasMonsterAnim.SetActive(turnOn);
@@ -364,7 +363,8 @@ public class GameController : MonoBehaviour
             Instantiate(roborg, roborgSpawn.position, roborgSpawn.rotation);
             monsterSum++;
         }
-        yield return new WaitForSeconds(10f); // SPAWNING DISABLED AFTER X SECONDS
+        if (currentRound < 3) yield return new WaitForSeconds(7f);
+        else yield return new WaitForSeconds(12f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
         if (gameLogic != null) gameLogic.SetWaitScreens(true);
