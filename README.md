@@ -33,9 +33,9 @@ Get to know the cast:
 | Gruub |  |
 
 # Pictures
-<img src="Gameplay1.png" width="800px" height="400px">
-<img src="Gameplay2.png" width="800px" height="400px">
-<img src="Gameplay3.png">
+<img src="Images/Gameplay1.PNG" width="900px" height="500px">
+<img src="Images/Gameplay2.PNG" width="900px" height="500px">
+<img src="Images/Gameplay3.PNG" width="900px" height="500px">
 
 
 # Todos
