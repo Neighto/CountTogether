@@ -2,7 +2,7 @@
 
 ### Put your observation skills to the test in this competitive counting game for up to 8 players!
 
-![alt text](Cover.png)
+<img src="Cover.png" width="400px" height="400px">
 
 # How to Play
 The game will be available on AirConsole. Select *Count Together* on the website. To play, go to www.airconsole.com or download the AirConsole app on your phone and enter the code shown on screen. Once everyone is in, the host can start the game. Each round will show you what critter to count before they dash across the screen. Tap anywhere on your phone to count how many you see! The closer the guess, the higher the score.
@@ -33,8 +33,10 @@ Get to know the cast:
 | Gruub |  |
 
 # Pictures
-![alt text](Cover.png)
-<img src="Cover.png" width="400px" height="100px">
+<img src="Cover.png" width="800px" height="400px">
+<img src="Cover.png" width="800px" height="400px">
+<img src="Cover.png" width="800px" height="400px">
+
 
 # Todos
 ```sh
