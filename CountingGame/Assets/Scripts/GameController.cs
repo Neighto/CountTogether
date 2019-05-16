@@ -237,9 +237,9 @@ public class GameController : MonoBehaviour
         for (int i = 0; i < numberOfPlayers; i++) //might cause an array error
         {
             Player p = players[i].GetComponent<Player>();
-            dynamicPlayerNames.playerCountTexts[i].text = p.GetPlayerCount().ToString();
-            p.roundScore = (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(p.GetPlayerCount() - monsterSum), 2));
-            p.ResetPlayerCount();
+            dynamicPlayerNames.playerCountTexts[i].text = p.playerCount.ToString();
+            p.roundScore = (int)Mathf.Max(0, points - Mathf.Pow(Mathf.Abs(p.playerCount - monsterSum), 2));
+            p.playerCount = 0; //Reset
         }
     }
 

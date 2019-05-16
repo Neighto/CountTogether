@@ -6,21 +6,5 @@ public class Player : MonoBehaviour
 {
     public int score;
     public int roundScore;
-    private int playerCount = 0;
-
-    public int GetPlayerCount()
-    {
-        return playerCount;
-    }
-
-    public void ResetPlayerCount()
-    {
-        playerCount = 0;
-    }
-
-    public void AddCount()
-    {
-        playerCount++;
-    }
-
+    public int playerCount = 0;
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ghost : MonoBehaviour
+public class Fly : MonoBehaviour
 {
     public float period;
     private float time;
@@ -12,7 +12,6 @@ public class Ghost : MonoBehaviour
     void Start()
     {
         xform = this.GetComponent<Transform>();
-        //xform.position = new Vector3(xform.position.x, xform.position.y + rand, xform.position.z);
         rand = Random.Range(3f, 9.0f);
     }
 

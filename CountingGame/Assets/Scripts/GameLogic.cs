@@ -11,17 +11,14 @@ public class GameLogic : MonoBehaviour
     private static GameLogic instance;
 
     private GameObject readySpots;
-    private ReadyCubes readyCubes;
-
     private Animator[] readyAnims;
-
     private Text timerText;
     private Text timerTextShadow;
 
+    [HideInInspector] public int numberOfPlayers;
     private readonly int maxPlayers = 8;
-
-    public int numberOfPlayers;
     private bool inGame = false;
+    private bool allReady = false;
 
 #if !DISABLE_AIRCONSOLE
 
@@ -45,18 +42,16 @@ public class GameLogic : MonoBehaviour
         FindVariables();
     }
 
-    //Find Variables as a separate function so Ready Cubes Script can call it on return to Lobby Scene
+    //Find Variables as a separate function so LogicReload Script can call it on return to Lobby Scene
     public void FindVariables()
     {
         inGame = false;
         readySpots = GameObject.Find("ReadySpots");
         readyAnims = readySpots.GetComponentsInChildren<Animator>();
-        readyCubes = readySpots.GetComponent<ReadyCubes>();
         timerText = GameObject.Find("timerText").GetComponent<Text>();
         timerTextShadow = GameObject.Find("timerTextShadow").GetComponent<Text>();
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player")) p.GetComponent<Player>().score = 0;
         for (int i = 0; i < numberOfPlayers; i++) readyAnims[i].SetBool("Joined", true);
-
     }
 
     void OnReady(string code)
@@ -64,7 +59,6 @@ public class GameLogic : MonoBehaviour
         //Initialize Game State
         JObject newGameState = new JObject();
         newGameState.Add("view", new JObject());
-
         AirConsole.instance.SetCustomDeviceState(newGameState);
     }
 
@@ -97,7 +91,7 @@ public class GameLogic : MonoBehaviour
     {
         if (!inGame)
         {
-            readyCubes.allReady = false;
+            allReady = false;
             numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
 
@@ -117,13 +111,13 @@ public class GameLogic : MonoBehaviour
             if (action == "ingame-button")
             {
                  Player player = GameObject.Find("" + active_player).GetComponent<Player>();
-                 player.AddCount();
+                 player.playerCount++; //Add 1 to count
             }
 
             if (action == "menu-button")
             {
-                readyCubes.allReady = !readyCubes.allReady;
-                if (readyCubes.allReady) StartCoroutine(AllReadyDelay());
+                allReady = !allReady;
+                if (allReady) StartCoroutine(AllReadyDelay());
             }
         }
     }
@@ -185,14 +179,14 @@ public class GameLogic : MonoBehaviour
             timerText.text = "START IN " + i;
             timerTextShadow.text = "START IN " + i;
             yield return new WaitForSeconds(1f);
-            if (readyCubes.allReady == false)
+            if (allReady == false)
             {
                 timerText.text = "";
                 timerTextShadow.text = "";
                 break;
             }
         }
-        if (readyCubes.allReady) //The game is starting NOW
+        if (allReady) //The game is starting NOW
         {
             numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);

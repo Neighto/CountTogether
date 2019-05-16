@@ -50,7 +50,7 @@ MeshRenderer:
   m_GameObject: {fileID: 48119371}
   m_Enabled: 1
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -102,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3554843276563786080}
   m_Layer: 0
-  m_Name: Background2
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

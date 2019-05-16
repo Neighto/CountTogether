@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReadyCubes : MonoBehaviour
+public class LogicReload : MonoBehaviour
 {
-
-    public bool allReady = false;
+    //SCRIPT EXISTS TO CALL GAMELOGIC UPON SCENE RELOAD
     private GameLogic gameLogic;
-
     private void Start()
     {
         gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
         gameLogic.FindVariables();
     }
-
 }

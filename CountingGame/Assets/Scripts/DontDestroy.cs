@@ -6,6 +6,6 @@ public class DontDestroy : MonoBehaviour
 {
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject); //For Players Folder
     }
 }
