@@ -56,9 +56,14 @@ public class GameController : MonoBehaviour
     //Music
     public AudioSource music;
 
+    //SFX
+    private AudioSource source;
+    public AudioClip[] pops;
+    public AudioClip[] whistles;
+
     //Rounds UI
     public GameObject startGame;
-    public Text startCountText;
+    public GameObject[] instructionTexts;
     public List<GameObject> roundList;
 
     //Flavors UI
@@ -139,6 +144,9 @@ public class GameController : MonoBehaviour
             spawnPoints.Add(t);
         foreach (Transform t in revSpawnPointObj.transform)
             revSpawnPoints.Add(t);
+
+        //Get AudioSource
+        source = this.GetComponent<AudioSource>();
 
         //Make Sets
         Set purbleSwarm = new Set("purble", purbleAnim, purbleParade, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, batte } );
@@ -427,12 +435,18 @@ public class GameController : MonoBehaviour
     //Initial instructions
     IEnumerator InstructionDisplay()
     {
-        startGame.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        startCountText.text = "START IN...2";
-        yield return new WaitForSeconds(1f);
-        startCountText.text = "START IN...1";
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+        instructionTexts[0].SetActive(true);
+        source.PlayOneShot(pops[0]);
+        yield return new WaitForSeconds(1.3f);
+        instructionTexts[1].SetActive(true);
+        source.PlayOneShot(pops[1]);
+        yield return new WaitForSeconds(1.3f);
+        instructionTexts[2].SetActive(true);
+        source.PlayOneShot(pops[2]);
+        yield return new WaitForSeconds(0.8f);
+        source.PlayOneShot(whistles[0]);
+        yield return new WaitForSeconds(1.2f);
         startGame.SetActive(false);
         music.Play();
         dynamicPlayerNames.Setup(numberOfPlayers);
