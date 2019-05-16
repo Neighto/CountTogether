@@ -8,13 +8,15 @@ public class DynamicPlayerNames : MonoBehaviour
     //Depending on the number of players, will adjust the UI
     //Shows Player Guesses and Player Scores
 
-    public Text[] playerCountTexts;
-    public Text[] playerNameTexts;
-    public Animator[] playerAnimators;
-    public Text[] playerPointTexts;
+    [HideInInspector] public Text[] playerCountTexts;
+    [HideInInspector] public Text[] playerNameTexts;
+    [HideInInspector] public Text[] playerPointTexts;
+    [HideInInspector] public Animator[] playerAnimators;
+    [HideInInspector] public RawImage[] playerColorImages;
+    public Texture[] colorImages = new Texture[8];
 
     private GameObject[] adjustedPlayerDisplays;
-    private GameObject[] playerDisplays = new GameObject[13];
+    private readonly GameObject[] playerDisplays = new GameObject[13];
 
     // 1   2   9    3   10   4   C   5   11   6   12   7   8
     //[0] [1] [A2] [2] [A3] [3] [8] [4] [A5] [5] [A6] [6] [7]
@@ -137,17 +139,21 @@ public class DynamicPlayerNames : MonoBehaviour
 
     void SetPublicPlayerArrays()
     {
-        playerCountTexts = new Text[adjustedPlayerDisplays.Length];
-        playerNameTexts = new Text[adjustedPlayerDisplays.Length];
-        playerAnimators = new Animator[adjustedPlayerDisplays.Length];
-        playerPointTexts = new Text[adjustedPlayerDisplays.Length];
+        int l = adjustedPlayerDisplays.Length;
+        playerCountTexts = new Text[l];
+        playerNameTexts = new Text[l];
+        playerAnimators = new Animator[l];
+        playerPointTexts = new Text[l];
+        playerColorImages = new RawImage[l];
 
-        for (int i = 0; i < adjustedPlayerDisplays.Length; i++)
+        for (int i = 0; i < l; i++)
         {
-            playerCountTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(1).GetComponent<Text>();
-            playerNameTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(0).GetComponent<Text>();
-            playerAnimators[i] = adjustedPlayerDisplays[i].transform.GetChild(2).GetComponent<Animator>();
-            playerPointTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(2).GetComponent<Text>();
+            playerCountTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(2).GetComponent<Text>();
+            playerNameTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(1).GetComponent<Text>();
+            playerAnimators[i] = adjustedPlayerDisplays[i].transform.GetChild(3).GetComponent<Animator>();
+            playerPointTexts[i] = adjustedPlayerDisplays[i].transform.GetChild(3).GetComponent<Text>();
+            playerColorImages[i] = adjustedPlayerDisplays[i].transform.GetChild(0).GetComponent<RawImage>();
+            playerColorImages[i].texture = colorImages[i];
         }
     }
 

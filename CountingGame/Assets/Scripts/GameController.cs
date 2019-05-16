@@ -113,14 +113,18 @@ public class GameController : MonoBehaviour
     private int numberOfPlayers;
     public GameObject playersPanel;
     public DynamicPlayerNames dynamicPlayerNames;
-    public Text playerContextText;
+    public GameObject playerContext;
+    private Text playerContextText;
+    private Animator contextAnimator;
     public Text roundText;
     public Text answerText;
 
     //Winner UI
     public GameObject winnerPanel;
     List<Tuple<int, int>> winners = new List<Tuple<int, int>>();
-    public Text winnerName;
+    public GameObject winnerName;
+    private Text winnerNameText;
+    private Animator winnerNameAnimator;
     public Text winnerText;
 
     //Other
@@ -147,6 +151,12 @@ public class GameController : MonoBehaviour
 
         //Get AudioSource
         source = this.GetComponent<AudioSource>();
+
+        //Get text and animators
+        playerContextText = playerContext.GetComponent<Text>();
+        contextAnimator = playerContext.GetComponent<Animator>();
+        winnerNameText = winnerName.GetComponent<Text>();
+        winnerNameAnimator = winnerName.GetComponent<Animator>();
 
         //Make Sets
         Set purbleSwarm = new Set("purble", purbleAnim, purbleParade, new GameObject[] { purblex1, purblex2, purblex3, flyingPurble, batte } );
@@ -245,7 +255,6 @@ public class GameController : MonoBehaviour
 
     void GetPlayerScores()
     {
-        playerContextText.text = "AWARDING POINTS...";
         for (int i = 0; i < numberOfPlayers; i++)
         {
             Player p = players[i].GetComponent<Player>();
@@ -393,9 +402,14 @@ public class GameController : MonoBehaviour
         answerText.text += ". ";
         yield return new WaitForSeconds(0.5f); // SHOW MONSTER SUM
         answerText.text = "THERE WERE..." + monsterSum;
-        yield return new WaitForSeconds(2f); // AWARD POINTS TO PLAYERS
+        yield return new WaitForSeconds(1.8f); // AWARD POINTS TO PLAYERS
+        contextAnimator.SetTrigger("Switch");
+        yield return new WaitForSeconds(0.2f);
+        playerContextText.text = "AWARDING POINTS...";
         GetPlayerScores();
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(1.2f);
+        contextAnimator.SetTrigger("Switch");
+        yield return new WaitForSeconds(0.2f);
         playerContextText.text = "PLAYER SCORES";
         yield return new WaitForSeconds(2f); // HIDE PLAYER PANEL AND RESULTS PANEL
         animateUI.ShiftPlayersPanel();
@@ -411,23 +425,15 @@ public class GameController : MonoBehaviour
         WhoWon();
         yield return new WaitForSeconds(2f);
 
-        for (int i = 0; i < winners.Count; i++) //winner text 1 tab 2 enter repeat
+        for (int i = 0; i < winners.Count; i++)
         {
             int n = winners[i].Item2;
-            if (i % 2 != 0)
-            {
-                winnerName.text += dynamicPlayerNames.playerNameTexts[n].text;
-                if (i + 1 != winners.Count) winnerName.text += "\n";
-            }
-            else
-            {
-                winnerName.text += dynamicPlayerNames.playerNameTexts[n].text;
-                if (i + 1 != winners.Count) winnerName.text += "\t";
-            }
+            winnerNameText.text = dynamicPlayerNames.playerNameTexts[n].text;
+            winnerNameAnimator.SetTrigger("Bounce");
+            yield return new WaitForSeconds(1.66f);
         }
 
-
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(1f);
         if (gameLogic != null) gameLogic.SetMenuScreens();
         SceneManager.LoadScene("Lobby");
     }
