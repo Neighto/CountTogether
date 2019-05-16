@@ -17,26 +17,25 @@ The game will be available on AirConsole. Select *Count Together* on the website
 
 Get to know the cast:
 
-| Critter | Description |
+| Critter | Photo |
 | ------ | ------ |
-| Purble | |
-| Bluebey |  |
-| Greengo |  |
-| Greenon |  |
-| Doog |  |
-| Batte |  |
-| Birdple | | 
-| Roborg | | 
-| Cherb |  |
-| Fisk |  |
-| Ghost |  |
-| Gruub |  |
+| Batte | <img src="Images/batte.PNG"> |
+| Birdple | <img src="Images/birdple.PNG"> | 
+| Bluebey | <img src="Images/bluebey.PNG"> |
+| Cherb | <img src="Images/cherb.PNG"> |
+| Doog | <img src="Images/doog.PNG"> |
+| Fisk | <img src="Images/fisk.PNG"> |
+| Ghost | <img src="Images/ghost.PNG"> |
+| Greengo | <img src="Images/greengo.PNG"> |
+| Greenon | <img src="Images/greenon.PNG"> |
+| Gruub | <img src="Images/gruub.PNG"> |
+| Purble | <img src="Images/purble.PNG"> |
+| Roborg | <img src="Images/roborg.PNG"> | 
 
 # Pictures
 <img src="Images/Gameplay1.PNG" width="900px" height="500px">
 <img src="Images/Gameplay2.PNG" width="900px" height="500px">
 <img src="Images/Gameplay3.PNG" width="900px" height="500px">
-
 
 # Todos
 ```sh
