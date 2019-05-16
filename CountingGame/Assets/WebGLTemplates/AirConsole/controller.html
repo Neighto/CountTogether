@@ -81,11 +81,13 @@
             background-repeat: no-repeat;
             background-size: cover;
             height: 100%;
+            z-index: 1;
         }
 
         .button:active {
+            position: relative;
             opacity: 0.8;
-        }
+         }
 
         .wait {
             position: relative;
@@ -93,6 +95,7 @@
             background-repeat: no-repeat;
             background-size: cover;
             height: 100%;
+            z-index: 3;
         }
 
         .creaturePic {
@@ -137,18 +140,12 @@
         #wait-8 {
             background-image: url("PhoneUI/player8_wait.jpg");
         }
-        #greengo {
-            background-image: url("PhoneUI/greengo.png");
-        }
-        /*
+
         #ingame-button1 {
             background-image: url("PhoneUI/player1_button.jpg");
-        }*/
-        #ingame-button1 {
-            background-image: url("PhoneUI/player1_button_2.jpg");
         }
         #ingame-button2 {
-            background-image: url("PhoneUI/player2_button.png");
+            background-image: url("PhoneUI/player2_button.jpg");
         }
         #ingame-button3 {
             background-image: url("PhoneUI/player3_button.jpg");
@@ -168,9 +165,33 @@
         #ingame-button8 {
             background-image: url("PhoneUI/player8_button.jpg");
         }
-
         .button-active {
             border: solid #727272 2px;
+        }
+
+        #greengo {
+            background-image: url("PhoneUI/greengo.png");
+        }
+        #batte {
+            background-image: url("PhoneUI/batte.png");
+        }
+        #birdple {
+            background-image: url("PhoneUI/birdple.png");
+        }
+        #bluebey {
+            background-image: url("PhoneUI/bluebey.png");
+        }
+        #cherble {
+            background-image: url("PhoneUI/cherble.png");
+        }
+        #doog {
+            background-image: url("PhoneUI/doog.png");
+        }
+        #purble {
+            background-image: url("PhoneUI/purble.png");
+        }
+        #everything {
+            background-image: url("PhoneUI/everything.png");
         }
 
     </style>
@@ -184,7 +205,7 @@
       var me = this;
       me.airconsole = new AirConsole({ "orientation": "portrait", "synchronize_time": "true" });
 
-      //me.airconsole.getPremium(); //not working
+      me.airconsole.getPremium(); //not working
 
       //initialize the view manager and set the first view
       ViewManager.init();
@@ -238,8 +259,29 @@
     <div class="view" id="Error">
         <div class="wait" id="buttonerror"></div>
     </div>
-    <div class="creature" id="_Greengo">
+    <div class="creature" id="_greengo">
         <div class="creaturePic" id="greengo"></div>
+    </div>
+    <div class="creature" id="_batte">
+        <div class="creaturePic" id="batte"></div>
+    </div>
+    <div class="creature" id="_birdple">
+        <div class="creaturePic" id="birdple"></div>
+    </div>
+    <div class="creature" id="_bluebey">
+        <div class="creaturePic" id="bluebey"></div>
+    </div>
+    <div class="creature" id="_cherble">
+        <div class="creaturePic" id="cherble"></div>
+    </div>
+    <div class="creature" id="_doog">
+        <div class="creaturePic" id="doog"></div>
+    </div>
+    <div class="creature" id="_purble">
+        <div class="creaturePic" id="purble"></div>
+    </div>
+    <div class="creature" id="_everything">
+        <div class="creaturePic" id="everything"></div>
     </div>
     <div class="view" id="Count1">
         <div class="button" id="ingame-button1" ontouchstart="window.app.pressIngameScreenButton()"></div>

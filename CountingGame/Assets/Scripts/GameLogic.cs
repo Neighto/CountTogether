@@ -138,12 +138,12 @@ public class GameLogic : MonoBehaviour
         }
     }
 
-    public void SetGreengoScreens()
+    public void SetCreaturesOnScreens(string creature) //creature always start with '_'
     {
         for (int i = 0; i < numberOfPlayers && i < maxPlayers; i++)
         {
             int device_id = AirConsole.instance.ConvertPlayerNumberToDeviceId(i);
-            AirConsole.instance.Message(device_id, "_Greengo");
+            AirConsole.instance.Message(device_id, creature);
         }
     }
 

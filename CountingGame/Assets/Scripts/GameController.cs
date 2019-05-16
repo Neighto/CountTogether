@@ -157,7 +157,7 @@ public class GameController : MonoBehaviour
         Set allPurbles3 = new Set("bluebey", bluebeyAnim, powerInNumbers, new GameObject[] { purblex1, purblex2, flyingPurble, bluebey, bluebey, bluebey, bluebey, bluebey, bluebey, greengox1, greengox2 });
         easySets = new List<Set> { purbleSwarm, blueConfusion, blueConfusion2, greengoSwarm, purpleConfusion };
         hardSets = new List<Set> { birdsOfFeather, birdsOfFeather2, noPurbles, noPurbles2, allPurbles, allPurbles2, allPurbles3, weirdos };
-        countEverything = new Set("all", everything, countThemAll, new GameObject[] { purblex1, purblex2, purblex3, greengox2, greengox3, bluebey,
+        countEverything = new Set("everything", everything, countThemAll, new GameObject[] { purblex1, purblex2, purblex3, greengox2, greengox3, bluebey,
         purpleBird, gruub, fakeGreengo, cherb, cherbPurple, doog, ghost, batte, flyingGreengo});
 
         //Find GameLogic for SetView access
@@ -338,6 +338,7 @@ public class GameController : MonoBehaviour
                 fishSpawnRate = 0.5f * fishSpawnRate; //increase fish spawn rate
                 points = 50;
             }
+            //if curset.name == greengo {gameLogic.setgreengoscreens}
             StartCoroutine(StartRound());
         }
         else //when all rounds are over:
@@ -356,7 +357,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1f); // HIDE ROUND START TEXT / SHOW REMINDER PANEL / COUNTING ENABLED / SPAWNING ENABLED
         animateUI.ShiftDarkenBackground(); //Lighten
         yield return new WaitForSeconds(1f);
-        if (gameLogic != null) gameLogic.SetCountScreens();
+        if (gameLogic != null) SetupPhonesForRound(curSet.name);
         canSpawn = true;
         if (currentRound == 5)
         {
@@ -437,6 +438,12 @@ public class GameController : MonoBehaviour
         dynamicPlayerNames.Setup(numberOfPlayers);
         if (gameLogic != null) gameLogic.SetNames(dynamicPlayerNames.playerNameTexts);
         SetRound(currentRound); //initialized to 1
+    }
+
+    void SetupPhonesForRound(string creatureName)
+    {
+        gameLogic.SetCountScreens();
+        gameLogic.SetCreaturesOnScreens("_" + creatureName);
     }
 
     //Update for instantiating monsters in a timely fashion
