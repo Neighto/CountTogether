@@ -117,7 +117,7 @@ public class GameLogic : MonoBehaviour
             if (action == "menu-button")
             {
                 allReady = !allReady;
-                if (allReady) StartCoroutine(AllReadyDelay());
+                if (allReady) StartCoroutine(AllReadyDelay());          
             }
         }
     }

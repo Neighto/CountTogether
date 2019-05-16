@@ -68,6 +68,10 @@
     <style type=text/css>
         /* the style sheet dictates what our elements (buttons, backgrounds etc.) will look like. */
 
+        body {
+            position: relative;
+        }
+
         #Start {
             color:white; 
             text-align: center; 
@@ -76,31 +80,29 @@
         }
 
         .button {
-            position: relative;
             background-position: center;
-            background-repeat: no-repeat;
             background-size: cover;
+            background-repeat: no-repeat;
             height: 100%;
             z-index: 1;
         }
 
         .button:active {
-            position: relative;
             opacity: 0.8;
          }
 
         .wait {
-            position: relative;
             background-position: center;
-            background-repeat: no-repeat;
             background-size: cover;
+            background-repeat: no-repeat;
             height: 100%;
             z-index: 3;
         }
 
         .creaturePic {
             position: absolute;
-            background-size: contain;
+            background-position: center;
+            background-size: cover;
             background-repeat: no-repeat;
             width: 100%;
             height: 100%;
@@ -181,8 +183,8 @@
         #bluebey {
             background-image: url("PhoneUI/bluebey.png");
         }
-        #cherble {
-            background-image: url("PhoneUI/cherble.png");
+        #cherb {
+            background-image: url("PhoneUI/cherb.png");
         }
         #doog {
             background-image: url("PhoneUI/doog.png");
@@ -271,8 +273,8 @@
     <div class="creature" id="_bluebey">
         <div class="creaturePic" id="bluebey"></div>
     </div>
-    <div class="creature" id="_cherble">
-        <div class="creaturePic" id="cherble"></div>
+    <div class="creature" id="_cherb">
+        <div class="creaturePic" id="cherb"></div>
     </div>
     <div class="creature" id="_doog">
         <div class="creaturePic" id="doog"></div>

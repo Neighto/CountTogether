@@ -999,7 +999,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &175053965
 MonoBehaviour:
@@ -1021,7 +1021,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1358,7 +1358,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &273552741
 MonoBehaviour:
@@ -1380,7 +1380,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2763,7 +2763,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &561803599
 MonoBehaviour:
@@ -2785,7 +2785,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2944,7 +2944,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &595634931
 MonoBehaviour:
@@ -2966,7 +2966,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -3160,7 +3160,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &684901669
 MonoBehaviour:
@@ -3182,7 +3182,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -4130,7 +4130,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &874050985
 MonoBehaviour:
@@ -4152,7 +4152,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -5453,7 +5453,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1137430873
 MonoBehaviour:
@@ -5475,7 +5475,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -6282,7 +6282,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1239279610
 MonoBehaviour:
@@ -6304,7 +6304,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -6753,7 +6753,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1296541416
 MonoBehaviour:
@@ -6775,7 +6775,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -6825,7 +6825,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1302054354
 MonoBehaviour:
@@ -6847,7 +6847,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -8836,7 +8836,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1744237774
 MonoBehaviour:
@@ -8858,7 +8858,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -10191,7 +10191,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1978564226
 MonoBehaviour:
@@ -10213,7 +10213,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -10778,7 +10778,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -105}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 182, y: 182}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2052091835
 MonoBehaviour:
@@ -10800,7 +10800,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -11270,14 +11270,14 @@ MonoBehaviour:
   playerAnimators: []
   playerColorImages: []
   colorImages:
-  - {fileID: 2800000, guid: f10abb06392796b4f9c9e4694efcf80b, type: 3}
-  - {fileID: 2800000, guid: 9089202023dffbf4a94c8e39c3ea913e, type: 3}
-  - {fileID: 2800000, guid: 94a60352f6daa8e48a6ebf3b13d50718, type: 3}
-  - {fileID: 2800000, guid: c5b3d36f4045be84f9bd302113bf6a94, type: 3}
-  - {fileID: 2800000, guid: e4a44f6d935a8914cbdb3aedcdc8e090, type: 3}
-  - {fileID: 2800000, guid: 99afdd5b64fbdd641918e265282d3f98, type: 3}
-  - {fileID: 2800000, guid: e517ae06bbda9f5429de47f33668cb8d, type: 3}
-  - {fileID: 2800000, guid: 7e7fa727550412544b0536d07c405b7c, type: 3}
+  - {fileID: 2800000, guid: 03470458c3c0e2144a4a37b27ece4fd6, type: 3}
+  - {fileID: 2800000, guid: a92414c0c205fca4f8c51c14532b3254, type: 3}
+  - {fileID: 2800000, guid: 05a7d61c0bd3f144fb175b677b3ca6ad, type: 3}
+  - {fileID: 2800000, guid: 36f8759fde6a78f4093edc622f523940, type: 3}
+  - {fileID: 2800000, guid: f37fe1bbd2ee6b34da71dcb4c1fffcfb, type: 3}
+  - {fileID: 2800000, guid: b5e795e3003839940bd6bffa016de343, type: 3}
+  - {fileID: 2800000, guid: 4a82e71f7b00bae44891d3fea4bb1c05, type: 3}
+  - {fileID: 2800000, guid: e2ba156f89589154693c190530fac1e8, type: 3}
 --- !u!1 &2135624275
 GameObject:
   m_ObjectHideFlags: 0

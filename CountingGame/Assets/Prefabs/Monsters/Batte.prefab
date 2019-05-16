@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1597933005486919532}
-  - component: {fileID: 1597933005486919533}
   m_Layer: 0
   m_Name: Rotation_Root
   m_TagString: Untagged
@@ -28,57 +27,24 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1597933005930724305}
+  - {fileID: 1597933005611718349}
   m_Father: {fileID: 1597933006004000695}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1597933005486919533
+--- !u!114 &4885324988946212585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597933005486919535}
+  m_GameObject: {fileID: 1597933005611748077}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 070c9b7c8d4f9e748a31b91ee31e87b7, type: 3}
+  m_Script: {fileID: 11500000, guid: ac0d80071cc1946e286ff21fb08f2631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animations:
-  - name: run
-    prefab: {fileID: 1597933005611748077}
-    frameRate: 12
---- !u!1 &1597933005930724304
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1597933005930724305}
-  m_Layer: 0
-  m_Name: visuals
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1597933005930724305
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597933005930724304}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1597933005611718349}
-  m_Father: {fileID: 1597933005486919532}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  frameRate: 12
+  persistFrames: 0
 --- !u!1 &1597933006004000689
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +111,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1597933005930724305}
+    m_TransformParent: {fileID: 1597933005486919532}
     m_Modifications:
     - target: {fileID: 100026, guid: 04925503edda21a45859b3f6328757a0, type: 3}
       propertyPath: m_Name
@@ -165,7 +131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400026, guid: 04925503edda21a45859b3f6328757a0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400026, guid: 04925503edda21a45859b3f6328757a0, type: 3}
       propertyPath: m_LocalRotation.y

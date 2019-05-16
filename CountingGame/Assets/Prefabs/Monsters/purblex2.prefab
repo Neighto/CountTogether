@@ -1,36 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1353058036693948680
-GameObject:
+--- !u!114 &1304450861085977652
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1353058036693948683}
-  m_Layer: 0
-  m_Name: visuals
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1353058036693948683
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353058036693948680}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1353058036766413772}
-  m_Father: {fileID: 1353058037649350716}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1353058036766511084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0d80071cc1946e286ff21fb08f2631, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameRate: 12
+  persistFrames: 0
 --- !u!1 &1353058037649350717
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,7 +23,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1353058037649350716}
-  - component: {fileID: 1353058037649350719}
   m_Layer: 0
   m_Name: Rotation_Root
   m_TagString: Untagged
@@ -59,26 +41,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1353058036693948683}
+  - {fileID: 1353058036766413772}
   m_Father: {fileID: 1353058038029506986}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1353058037649350719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353058037649350717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 070c9b7c8d4f9e748a31b91ee31e87b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animations:
-  - name: run
-    prefab: {fileID: 100018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34, type: 3}
-    frameRate: 12
 --- !u!1 &1353058038029506987
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +111,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1353058036693948683}
+    m_TransformParent: {fileID: 1353058037649350716}
     m_Modifications:
     - target: {fileID: 100018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34, type: 3}
       propertyPath: m_Name
@@ -165,15 +131,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34, type: 3}
       propertyPath: m_LocalRotation.w
@@ -205,6 +171,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0451c5217dd08594e8a01612398c3993, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a9fc617a7cd2544a9d685b1f1f98b34, type: 3}
+--- !u!1 &1353058036766511084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34,
+    type: 3}
+  m_PrefabInstance: {fileID: 1353058036766542174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1353058036766413772 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400018, guid: 6a9fc617a7cd2544a9d685b1f1f98b34,
