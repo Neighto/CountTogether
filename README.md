@@ -2,7 +2,7 @@
 
 ### Put your observation skills to the test in this competitive counting game for up to 8 players!
 
-<img src="Cover.png" width="400px" height="400px">
+<img src="Images/Cover.png" width="400px" height="400px">
 
 # How to Play
 The game will be available on AirConsole. Select *Count Together* on the website. To play, go to www.airconsole.com or download the AirConsole app on your phone and enter the code shown on screen. Once everyone is in, the host can start the game. Each round will show you what critter to count before they dash across the screen. Tap anywhere on your phone to count how many you see! The closer the guess, the higher the score.
@@ -17,26 +17,25 @@ The game will be available on AirConsole. Select *Count Together* on the website
 
 Get to know the cast:
 
-| Critter | Description |
+| Critter | Photo |
 | ------ | ------ |
-| Purble | |
-| Bluebey |  |
-| Greengo |  |
-| Greenon |  |
-| Doog |  |
-| Batte |  |
-| Birdple | | 
-| Roborg | | 
-| Cherb |  |
-| Fisk |  |
-| Ghost |  |
-| Gruub |  |
+| Batte | <img src="Images/batte.PNG"> |
+| Birdple | <img src="Images/birdple.PNG"> | 
+| Bluebey | <img src="Images/bluebey.PNG"> |
+| Cherb | <img src="Images/cherb.PNG"> |
+| Doog | <img src="Images/doog.PNG"> |
+| Fisk | <img src="Images/fisk.PNG"> |
+| Ghost | <img src="Images/ghost.PNG"> |
+| Greengo | <img src="Images/greengo.PNG"> |
+| Greenon | <img src="Images/greenon.PNG"> |
+| Gruub | <img src="Images/gruub.PNG"> |
+| Purble | <img src="Images/purble.PNG"> |
+| Roborg | <img src="Images/roborg.PNG"> | 
 
 # Pictures
-<img src="Cover.png" width="800px" height="400px">
-<img src="Cover.png" width="800px" height="400px">
-<img src="Cover.png" width="800px" height="400px">
-
+<img src="Images/Gameplay1.PNG" width="900px" height="500px">
+<img src="Images/Gameplay2.PNG" width="900px" height="500px">
+<img src="Images/Gameplay3.PNG" width="900px" height="500px">
 
 # Todos
 ```sh
