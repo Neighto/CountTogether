@@ -1,6 +1,6 @@
 # Count Together
 
-Put your observation skills to the test in this competitive counting game for up to 8 players!
+### Put your observation skills to the test in this competitive counting game for up to 8 players!
 
 ![alt text](Cover.png)
 
@@ -32,13 +32,17 @@ Get to know the cast:
 | Ghost |  |
 | Gruub |  |
 
-### Todos
+# Pictures
+![alt text](Cover.png)
+<img src="Cover.png" width="400px" height="100px">
+
+# Todos
 ```sh
 Make winning feel rewarding
 Assess >3 player issue (potentially involving device_ids)
 ```
 
-### Credits
+# Credits
 - Nathan Ladd - Programming
 - Nick Ladd - Art and Assets
 - Kevin MacLeod - "Street Party" (incompetech.com)
