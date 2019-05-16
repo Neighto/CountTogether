@@ -433,6 +433,7 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1.66f);
         }
 
+        winnerText.text = "";
         yield return new WaitForSeconds(1f);
         if (gameLogic != null) gameLogic.SetMenuScreens();
         SceneManager.LoadScene("Lobby");
