@@ -120,12 +120,15 @@ public class GameController : MonoBehaviour
     public Text answerText;
 
     //Winner UI
-    public GameObject winnerPanel;
+    //public GameObject winnerPanel;
     List<Tuple<int, int>> winners = new List<Tuple<int, int>>();
     public GameObject winnerName;
     private Text winnerNameText;
     private Animator winnerNameAnimator;
-    public Text winnerText;
+    public GameObject crown;
+    public GameObject theWinnerIs;
+    public GameObject theWinnersAre;
+
 
     //Other
     private bool canSpawn = false;
@@ -304,8 +307,8 @@ public class GameController : MonoBehaviour
             }
         }
         winners.TrimExcess();
-        if (winners.Count > 1) winnerText.text = "AND THE WINNERS ARE";
-        else winnerText.text = "AND THE WINNER IS";
+        if (winners.Count > 1) theWinnersAre.SetActive(true);
+        else theWinnerIs.SetActive(true);
     }
 
     //Sets up UI for each round (panels, pictures, names, flavortext, etc)
@@ -421,9 +424,9 @@ public class GameController : MonoBehaviour
     IEnumerator EndGame()
     {
         yield return new WaitForSeconds(1f);
-        winnerPanel.SetActive(true);
         WhoWon();
         yield return new WaitForSeconds(2f);
+        crown.SetActive(true);
 
         for (int i = 0; i < winners.Count; i++)
         {
@@ -433,7 +436,9 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1.66f);
         }
 
-        winnerText.text = "";
+        theWinnerIs.SetActive(false);
+        theWinnersAre.SetActive(false);
+        crown.SetActive(false);
         yield return new WaitForSeconds(1f);
         if (gameLogic != null) gameLogic.SetMenuScreens();
         SceneManager.LoadScene("Lobby");
