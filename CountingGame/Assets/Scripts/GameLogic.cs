@@ -16,6 +16,7 @@ public class GameLogic : MonoBehaviour
     private Text timerTextShadow;
 
     [HideInInspector] public int numberOfPlayers;
+    [HideInInspector] public bool adShowing = false;
     private readonly int maxPlayers = 8;
     private bool inGame = false;
     private bool allReady = false;
@@ -132,6 +133,8 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    //Set functions
+
     public void SetCreaturesOnScreens(string creature) //creature always start with '_'
     {
         for (int i = 0; i < numberOfPlayers && i < maxPlayers; i++)
@@ -172,6 +175,20 @@ public class GameLogic : MonoBehaviour
         AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(0), "Menu");
     }
 
+    public void SetNames(Text[] playerNameTexts) //was text
+    {
+        for (int i = 0; i < playerNameTexts.Length; i++)
+        {
+            string name = AirConsole.instance.GetNickname(AirConsole.instance.GetActivePlayerDeviceIds[i]); //may or may not work
+            if (name != null)
+            {
+                playerNameTexts[i].text = name;
+            }
+        }
+    }
+
+    //End function
+
     IEnumerator AllReadyDelay()
     {
         for (int i = 5; i > 0; i--) //while everybody is ready OR timer ends
@@ -195,21 +212,25 @@ public class GameLogic : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
         else Debug.Log("Not everyone is ready!");
-
     }
 
-    //get nickname as user joins
-    public void SetNames(Text[] playerNameTexts) //was text
+    //Ad functions
+
+    public void GetAd() //request ad
     {
-        for (int i = 0; i < playerNameTexts.Length; i++)
-        {
-            string name = AirConsole.instance.GetNickname(AirConsole.instance.GetActivePlayerDeviceIds[i]); //may or may not work
-            if (name != null)
-            {
-                playerNameTexts[i].text = name;
-            }
-        }
+        AirConsole.instance.ShowAd();
     }
- 
+
+    void OnAdShow() //if ad is truly called
+    {
+        adShowing = true;
+    }
+
+    void OnAdComplete() //called if ad is closed
+    {
+        adShowing = false;
+    }
+
+
 #endif
 }

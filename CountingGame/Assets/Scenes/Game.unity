@@ -11159,5 +11159,15 @@ PrefabInstance:
       propertyPath: theWinnersAre
       value: 
       objectReference: {fileID: 1325776264}
+    - target: {fileID: 6922675735118482602, guid: 67371818827af3041b20748bd7fdecaa,
+        type: 3}
+      propertyPath: purbleSwarms
+      value: 
+      objectReference: {fileID: 2121365967}
+    - target: {fileID: 6922675735118482602, guid: 67371818827af3041b20748bd7fdecaa,
+        type: 3}
+      propertyPath: greengoSwarms
+      value: 
+      objectReference: {fileID: 734028441}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67371818827af3041b20748bd7fdecaa, type: 3}
