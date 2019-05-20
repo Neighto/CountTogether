@@ -21,7 +21,7 @@ public class MonsterStats : MonoBehaviour
         }
         else
         {
-            speed = Random.Range(0.9f * speed, 1.1f * speed);
+            speed = Random.Range(0.9f * speed, 1.2f * speed);
         }
     }
 

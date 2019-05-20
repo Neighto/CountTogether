@@ -224,11 +224,13 @@ public class GameLogic : MonoBehaviour
     void OnAdShow() //if ad is truly called
     {
         adShowing = true;
+        print("HEELLLO I PUT AN AD UP");
     }
 
     void OnAdComplete() //called if ad is closed
     {
         adShowing = false;
+        print("BYE AD OVER YP");
     }
 
 

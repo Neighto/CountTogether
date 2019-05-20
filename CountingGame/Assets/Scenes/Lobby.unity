@@ -254,6 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfPlayers: 0
+  adShowing: 0
 --- !u!4 &196255825
 Transform:
   m_ObjectHideFlags: 0
