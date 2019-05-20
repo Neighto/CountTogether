@@ -15,11 +15,15 @@ public class GameLogic : MonoBehaviour
     private Text timerText;
     private Text timerTextShadow;
 
-    [HideInInspector] public int numberOfPlayers;
+    [HideInInspector] public int numberOfPlayers = 0;
     [HideInInspector] public bool adShowing = false;
     private readonly int maxPlayers = 8;
     private bool inGame = false;
     private bool allReady = false;
+
+    private float refreshRate = 3f;
+    private float nextRefresh = 8f;
+    private bool readyCalled = false;
 
 #if !DISABLE_AIRCONSOLE
 
@@ -40,6 +44,8 @@ public class GameLogic : MonoBehaviour
         AirConsole.instance.onConnect += OnConnect;
         AirConsole.instance.onReady += OnReady;
         AirConsole.instance.onDisconnect += OnDisconnect;
+        AirConsole.instance.onAdShow += OnAdShow;
+        AirConsole.instance.onAdComplete += OnAdComplete;
         FindVariables();
     }
 
@@ -47,6 +53,7 @@ public class GameLogic : MonoBehaviour
     public void FindVariables()
     {
         inGame = false;
+        allReady = false;
         readySpots = GameObject.Find("ReadySpots");
         readyAnims = readySpots.GetComponentsInChildren<Animator>();
         timerText = GameObject.Find("timerText").GetComponent<Text>();
@@ -63,6 +70,7 @@ public class GameLogic : MonoBehaviour
             { "view", new JObject() }
         };
         AirConsole.instance.SetCustomDeviceState(newGameState);
+        readyCalled = true;
     }
 
     void OnConnect(int device_id)
@@ -74,9 +82,7 @@ public class GameLogic : MonoBehaviour
 
             if (numberOfPlayers <= maxPlayers)
             {
-                if (numberOfPlayers == 1) AirConsole.instance.Message(device_id, "Menu"); //player one can choose to start!
-                else SetWaitScreens(); //tell players to sit tight and wait!
-
+                SetWaitScreens();
                 for (int i = 0; i < numberOfPlayers; i++) readyAnims[i].SetBool("Joined", true);
             }
             else //Too many players!
@@ -86,7 +92,7 @@ public class GameLogic : MonoBehaviour
         }
         else //Game has started already!
         {
-            AirConsole.instance.Message(device_id, "Error");
+            AirConsole.instance.Message(device_id, "Error"); 
         }
     }
 
@@ -94,13 +100,10 @@ public class GameLogic : MonoBehaviour
     {
         if (!inGame)
         {
-            allReady = false;
+            allReady = false; //starting with disconnected / disconnecting players can cause problems
             numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
-
-            if (numberOfPlayers == 1) AirConsole.instance.Message(AirConsole.instance.GetActivePlayerDeviceIds[0], "Menu"); //player one can choose to start!
-            else SetWaitScreens(); //tell players to sit tight and wait!
-
+            SetWaitScreens();
             if (readyAnims[numberOfPlayers] != null) readyAnims[numberOfPlayers].SetBool("Joined", false);
         }
     }
@@ -132,6 +135,9 @@ public class GameLogic : MonoBehaviour
             AirConsole.instance.onConnect -= OnConnect;
             AirConsole.instance.onReady -= OnReady;
             AirConsole.instance.onMessage -= OnMessage;
+            AirConsole.instance.onDisconnect -= OnDisconnect;
+            AirConsole.instance.onAdShow -= OnAdShow;
+            AirConsole.instance.onAdComplete -= OnAdComplete;
         }
     }
 
@@ -187,7 +193,7 @@ public class GameLogic : MonoBehaviour
 
     IEnumerator AllReadyDelay()
     {
-        for (int i = 5; i > 0; i--) //while everybody is ready OR timer ends
+        for (int i = 4; i >= 0; i--) //while everybody is ready OR timer ends
         {
             timerText.text = "START IN " + i;
             timerTextShadow.text = "START IN " + i;
@@ -221,10 +227,27 @@ public class GameLogic : MonoBehaviour
         adShowing = true;
     }
 
-    void OnAdComplete() //called if ad is closed
+    void OnAdComplete(bool ad_was_shown) //called if ad is closed
     {
-        adShowing = false;
+        if (ad_was_shown)
+        {
+            adShowing = false;
+        }
     }
+
+    private void Update()
+    {
+        if (!inGame) //Fixes problems with players connected and not connected
+        {
+            if (Time.time > nextRefresh && readyCalled)
+            {
+                nextRefresh = Time.time + refreshRate;
+                AirConsole.instance.SetActivePlayers(numberOfPlayers);
+                SetWaitScreens();
+                print("Refresh");
+            }
+        }
+     }
 
 
 #endif

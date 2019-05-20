@@ -473,7 +473,7 @@ public class GameController : MonoBehaviour
     {
         if (gameLogic != null)
         {
-            while (gameLogic.adShowing) ;
+            while (gameLogic.adShowing);
             gameLogic.SetMenuScreens();
         }
 
