@@ -25,7 +25,7 @@ public class GameLogic : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (instance == null) //Only allow one instance of GameLogic
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
@@ -52,14 +52,16 @@ public class GameLogic : MonoBehaviour
         timerText = GameObject.Find("timerText").GetComponent<Text>();
         timerTextShadow = GameObject.Find("timerTextShadow").GetComponent<Text>();
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player")) p.GetComponent<Player>().score = 0;
-        for (int i = 0; i < numberOfPlayers; i++) readyAnims[i].SetBool("Joined", true);
+        for (int i = 0; i < numberOfPlayers && i < maxPlayers; i++) readyAnims[i].SetBool("Joined", true);
     }
 
     void OnReady(string code)
     {
         //Initialize Game State
-        JObject newGameState = new JObject();
-        newGameState.Add("view", new JObject());
+        JObject newGameState = new JObject
+        {
+            { "view", new JObject() }
+        };
         AirConsole.instance.SetCustomDeviceState(newGameState);
     }
 
@@ -69,20 +71,20 @@ public class GameLogic : MonoBehaviour
         {
             numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
-            
+
             if (numberOfPlayers <= maxPlayers)
             {
                 if (numberOfPlayers == 1) AirConsole.instance.Message(device_id, "Menu"); //player one can choose to start!
-                else SetWaitScreens(false); //tell players to sit tight and wait!
+                else SetWaitScreens(); //tell players to sit tight and wait!
 
                 for (int i = 0; i < numberOfPlayers; i++) readyAnims[i].SetBool("Joined", true);
             }
-            else
+            else //Too many players!
             {
                 AirConsole.instance.Message(device_id, "Error");
             }
         }
-        else
+        else //Game has started already!
         {
             AirConsole.instance.Message(device_id, "Error");
         }
@@ -97,7 +99,7 @@ public class GameLogic : MonoBehaviour
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
 
             if (numberOfPlayers == 1) AirConsole.instance.Message(AirConsole.instance.GetActivePlayerDeviceIds[0], "Menu"); //player one can choose to start!
-            else SetWaitScreens(false); //tell players to sit tight and wait!
+            else SetWaitScreens(); //tell players to sit tight and wait!
 
             if (readyAnims[numberOfPlayers] != null) readyAnims[numberOfPlayers].SetBool("Joined", false);
         }
@@ -148,26 +150,20 @@ public class GameLogic : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlayers && i < maxPlayers; i++)
         {
-            if (i == 0) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count1");
-            else if (i == 1) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count2");
-            else if (i == 2) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count3");
-            else if (i == 3) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count4");
-            else if (i == 4) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count5");
-            else if (i == 5) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count6");
-            else if (i == 6) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count7");
-            else if (i == 7) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(i), "Count8");
+            int device_id = AirConsole.instance.ConvertPlayerNumberToDeviceId(i);
+            AirConsole.instance.Message(device_id, "Count" + (i + 1));
         }
     }
 
-    public void SetWaitScreens(bool andMain)
+    public void SetWaitScreens()
     {
         for (int i = 0; i < numberOfPlayers; i++)
         {
             int device_id = AirConsole.instance.ConvertPlayerNumberToDeviceId(i);
-            if (i >= maxPlayers) AirConsole.instance.Message(device_id, "Error");
-            else AirConsole.instance.Message(device_id, "Wait" + (i + 1));
+            if (i == 0 && !inGame) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(0), "Menu");
+            else if (i < maxPlayers) AirConsole.instance.Message(device_id, "Wait" + (i + 1));
+            else AirConsole.instance.Message(device_id, "Error");
         }
-        if (!andMain) AirConsole.instance.Message(AirConsole.instance.ConvertPlayerNumberToDeviceId(0), "Menu");
     }
 
     public void SetMenuScreens()
@@ -177,9 +173,9 @@ public class GameLogic : MonoBehaviour
 
     public void SetNames(Text[] playerNameTexts) //was text
     {
-        for (int i = 0; i < playerNameTexts.Length; i++)
+        for (int i = 0; i < playerNameTexts.Length && i < maxPlayers; i++)
         {
-            string name = AirConsole.instance.GetNickname(AirConsole.instance.GetActivePlayerDeviceIds[i]); //may or may not work
+            string name = AirConsole.instance.GetNickname(AirConsole.instance.GetActivePlayerDeviceIds[i]);
             if (name != null)
             {
                 playerNameTexts[i].text = name;
@@ -208,10 +204,9 @@ public class GameLogic : MonoBehaviour
             numberOfPlayers = AirConsole.instance.GetControllerDeviceIds().Count;
             AirConsole.instance.SetActivePlayers(numberOfPlayers);
             inGame = true;
-            SetWaitScreens(true);
+            SetWaitScreens();
             SceneManager.LoadScene("Game");
         }
-        else Debug.Log("Not everyone is ready!");
     }
 
     //Ad functions
@@ -224,13 +219,11 @@ public class GameLogic : MonoBehaviour
     void OnAdShow() //if ad is truly called
     {
         adShowing = true;
-        print("HEELLLO I PUT AN AD UP");
     }
 
     void OnAdComplete() //called if ad is closed
     {
         adShowing = false;
-        print("BYE AD OVER YP");
     }
 
 

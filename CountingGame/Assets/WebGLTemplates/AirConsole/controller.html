@@ -73,10 +73,11 @@
         }
 
         #Start {
-            color:white; 
-            text-align: center; 
-            margin: 100px; 
-            font-size: x-large;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            background-image: url("PhoneUI/start.jpg");
         }
 
         .button {
@@ -255,12 +256,7 @@
 </head>
 <body onload="window.app = new App()">
 
-    <div class="view" id="Start">
-        <div>Loading...</div>
-    </div>
-    <div class="view" id="Error">
-        <div class="wait" id="buttonerror"></div>
-    </div>
+    <div class="view" id="Start"></div>
     <div class="creature" id="_greengo">
         <div class="creaturePic" id="greengo"></div>
     </div>
@@ -336,6 +332,9 @@
     <div class="view" id="Menu">
         <div class="button" id="menu-button" ontouchstart="window.app.pressMenuScreenButton()"></div>
         <div class="button-text">Menu Screen Button</div>
+    </div>
+    <div class="view" id="Error">
+        <div class="wait" id="buttonerror"></div>
     </div>
 </body>
 </html>

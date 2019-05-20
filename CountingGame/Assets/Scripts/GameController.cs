@@ -199,7 +199,7 @@ public class GameController : MonoBehaviour
         if (GameObject.Find("GameLogic"))
         {
             gameLogic = GameObject.Find("GameLogic").GetComponent<GameLogic>();
-            numberOfPlayers = gameLogic.numberOfPlayers;
+            numberOfPlayers = Mathf.Min(8, gameLogic.numberOfPlayers);
         }
 
         //Get players
@@ -412,7 +412,7 @@ public class GameController : MonoBehaviour
         else yield return new WaitForSeconds(9f); // SPAWNING DISABLED AFTER X SECONDS
         canSpawn = false;
         yield return new WaitForSeconds(8f); // SHOW ROUND END TEXT / DISABLE COUNTING / HIDE REMINDER PANEL
-        if (gameLogic != null) gameLogic.SetWaitScreens(true);
+        if (gameLogic != null) gameLogic.SetWaitScreens();
         endAnim.SetTrigger("End");
         GetPlayerEstimates();
         yield return new WaitForSeconds(0.5f);
