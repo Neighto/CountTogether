@@ -39,13 +39,15 @@ Get to know the cast:
 
 # Todos
 ```sh
-Make winning feel rewarding
 Assess >3 player issue (potentially involving device_ids)
+Add char limit to name text fields
+Fully pause game when showAd called
 ```
 
 # Credits
 - Nathan Ladd - Programming
 - Nick Ladd - Art and Assets
+- Denis Patrut - UnityQuillFBXAnim
 - Kevin MacLeod - "Street Party" (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0 License
 http://creativecommons.org/licenses/by/3.0/
