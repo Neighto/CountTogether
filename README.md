@@ -37,11 +37,10 @@ Get to know the cast:
 <img src="Images/Gameplay2.PNG" width="900px" height="500px">
 <img src="Images/Gameplay3.PNG" width="900px" height="500px">
 
-# Todos
+# Future Plans
 ```sh
-Assess >3 player issue (potentially involving device_ids)
-Add char limit to name text fields
-Fully pause game when showAd called
+Add new sets of monsters to count
+Have a 1/15 chance of spawning a giant version of certain critters
 ```
 
 # Credits
