@@ -47,7 +47,7 @@ Fully pause game when showAd called
 # Credits
 - Nathan Ladd - Programming
 - Nick Ladd - Art and Assets
-- Denis Patrut - UnityQuillFBXAnim
+- Wataru Kanzaki - UnityQuillFBXAnim
 - Kevin MacLeod - "Street Party" (incompetech.com)
 Licensed under Creative Commons: By Attribution 3.0 License
 http://creativecommons.org/licenses/by/3.0/
