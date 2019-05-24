@@ -450,30 +450,32 @@ public class GameController : MonoBehaviour
         WhoWon();
         yield return new WaitForSeconds(2f);
         crown.SetActive(true);
-
         for (int i = 0; i < winners.Count; i++)
         {
             int n = winners[i].Item2;
             winnerNameText.text = dynamicPlayerNames.playerNameTexts[n].text;
-            winnerNameAnimator.SetTrigger("Bounce");
-            yield return new WaitForSeconds(1.66f);
+            if (winners.Count == 1)
+            {
+                winnerNameAnimator.SetTrigger("Slow");
+                yield return new WaitForSeconds(3.33f);
+            }
+            else
+            {
+                winnerNameAnimator.SetTrigger("Quick");
+                yield return new WaitForSeconds(2f);
+            }
         }
         crown.SetActive(false);
         theWinnerIs.SetActive(false);
         theWinnersAre.SetActive(false);
+        if (gameLogic != null) gameLogic.GetAd();
         yield return new WaitForSeconds(2f);
         if (gameLogic != null)
         {
-            gameLogic.GetAd();
-        }
-        FromAdToLobby();
-    }
-
-    void FromAdToLobby()
-    {
-        if (gameLogic != null)
-        {
-            while (gameLogic.adShowing);
+            while (gameLogic.adShowing)
+            {
+                yield return new WaitForSeconds(0.4f);
+            }
             gameLogic.SetMenuScreens();
         }
 

@@ -225,6 +225,7 @@ public class GameLogic : MonoBehaviour
     void OnAdShow() //if ad is truly called
     {
         adShowing = true;
+        print("ad showing");
     }
 
     void OnAdComplete(bool ad_was_shown) //called if ad is closed
@@ -232,6 +233,7 @@ public class GameLogic : MonoBehaviour
         if (ad_was_shown)
         {
             adShowing = false;
+            print("ad done");
         }
     }
 
